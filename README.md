@@ -16,8 +16,8 @@ Esse conceito procura seguir a fisolofia de "build once", ou seja, o build do ar
 
 Para empacotar um código Terraform, você precisa garantir que o seu código possua um arquivo stack.conf com as seguintes variáveis:
 
-- STACK_NAME: o nome da Stack que será usado para nomear a imagem do container.
-- TERRAFORM_VERSION: a versão do Terraform que será usada como imagem base.
+- `STACK_NAME`: o nome da Stack que será usado para nomear a imagem do container.
+- `TERRAFORM_VERSION`: a versão do Terraform que será usada como imagem base.
 
 ### Executando
 
