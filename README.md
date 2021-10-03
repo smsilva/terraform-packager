@@ -83,29 +83,54 @@ ARM_SAS_TOKEN......................: 116
 
 ```bash
 scripts/azrun azure-dummy-stack:latest plan
+```
+
+```bash
 scripts/azrun azure-dummy-stack:latest apply
 ```
 
 ### 5. Executando o Container usando arquivos de variáveis personalizadas
 
-```bash
-export LOCAL_TERRAFORM_VARIABLES_DIRECTORY="${PWD}/example/azure-dummy-stack/variables"
+Embora não recomendável por ferir o princípio de que um artefato deveria sempre produzir o mesmo resultado, é possível passar um arquivo tfvars através de um volume para o container e usá-lo nos comandos Terraform.
 
-scripts/azrun azure-dummy-stack:latest plan -var-file=/opt/vars/sandbox.tfvars
-scripts/azrun azure-dummy-stack:latest apply -var-file=/opt/vars/sandbox.tfvars -auto-approve
+```bash
+export LOCAL_TERRAFORM_VARIABLES_DIRECTORY="${PWD}/example/azure-dummy-stack/environments/sandbox"
+
+scripts/azrun azure-dummy-stack:latest plan -var-file=/opt/vars/terraform.tfvars
+```
+
+```bash
+scripts/azrun azure-dummy-stack:latest apply -var-file=/opt/vars/terraform.tfvars -auto-approve
 ```
 
 ### 6. Criando Imagens Personalizadas
 
+#### Sandbox
+
 ```bash
 docker build --rm \
   --tag azure-dummy-stack/sandbox:latest "example/azure-dummy-stack/environments/sandbox"
+```
 
+```bash
+scripts/azrun azure-dummy-stack/sandbox:latest plan
+```
+
+```bash
+scripts/azrun azure-dummy-stack/sandbox:latest apply
+```
+
+#### Dev
+
+```bash
 docker build --rm \
   --tag azure-dummy-stack/dev:latest "example/azure-dummy-stack/environments/dev"
+```
 
-scripts/azrun azure-dummy-stack/sandbox:latest plan
-scripts/azrun azure-dummy-stack/sandbox:latest apply
+```bash
+scripts/azrun azure-dummy-stack/dev:latest plan
+```
 
-
+```bash
+scripts/azrun azure-dummy-stack/dev:latest apply
 ```
