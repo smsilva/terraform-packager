@@ -11,7 +11,7 @@ buildah bud \
   --layers \
   --tag azure-platform-cluster:latest .
 
-buildah push localhost/azure-platform-cluster:latest docker://docker.io/silviosilva/azure-platform-cluster:latest
+buildah push localhost/azure-platform-cluster:latest "docker://docker.io/silviosilva/azure-platform-cluster:latest"
 
 # kaniko
 docker run \
@@ -20,4 +20,4 @@ docker run \
   gcr.io/kaniko-project/executor:latest \
     --dockerfile=/opt/files/Dockerfile \
     --context=/opt/files/ \
-    --destination=acrbeessandbox.azurecr.io/silvios/azure-platform-cluster:latest
+    --destination="docker.io/silviosilva/azure-platform-cluster:latest"
