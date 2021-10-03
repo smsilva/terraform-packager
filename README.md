@@ -74,7 +74,7 @@ ARM_CLIENT_ID......................: 7dcc3fa0-2794-4ed7-b84f-cd31e244d34d
 ARM_CLIENT_SECRET..................: 36
 ARM_STORAGE_ACCOUNT_NAME...........: acmestorage
 ARM_STORAGE_ACCOUNT_CONTAINER_NAME.: terraform
-ARM_SAS_TOKEN......................: 116
+ARM_SAS_TOKEN......................: 0
 ```
 
 ### 3. Empacotando o Projeto de Exemplo
