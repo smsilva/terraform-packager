@@ -5,10 +5,10 @@ ENV DEBUG="${TF_PACKAGER_DEBUG_LEVEL}"
 RUN mkdir -p /opt/output/
 
 FROM terraform_base_image AS package
-ADD  src/             /opt/src
-ADD  scripts/         /opt/scripts
+ADD  src/ /opt/src
+ADD  scripts/ /opt/scripts
 ADD  credentials.conf /opt/credentials/credentials.conf
-ADD  .ssh/            /root/.ssh/
+ADD  .ssh/ /root/.ssh/
 WORKDIR /opt/src
 RUN chmod 600 /root/.ssh/config && \
     /opt/scripts/terraform_init
