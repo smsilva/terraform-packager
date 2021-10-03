@@ -1,0 +1,2 @@
+#!/bin/sh
+echo "instances/${STACK_INSTANCE_NAME-default}/terraform.state.json"

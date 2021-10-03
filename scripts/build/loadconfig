@@ -1,0 +1,14 @@
+#!/bin/sh
+
+CONFIGURATION_FILE="$1"
+
+if [ ! -e ${CONFIGURATION_FILE?} ]; then
+  echo "File not found: ${CONFIGURATION_FILE?}."
+  exit 1
+fi
+
+while read -r LINE; do
+  KEY_NAME=$(echo ${LINE} | awk -F "=" '{ print $1 }' | tr "[:lower:]" "[:upper:]" | tr -d " ")
+  KEY_VALUE=$(echo ${LINE} | awk -F "=" '{ print $2 }' | tr -d " ")
+  echo "export ${KEY_NAME}=${KEY_VALUE}"
+done < "${CONFIGURATION_FILE?}"

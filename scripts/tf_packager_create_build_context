@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Clear Context Build Diretory from previous execution
+rm -rf "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}"
+
+# Create Context Build Diretory
+mkdir -p "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}"
+
+# Terraform Source Code to Build Context src/ directory
+cp -R "${TF_SOURCE_CODE_DIRECTORY?}" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/src"
+
+# Scripts to add into Container Image
+cp -R "${TF_PACKAGER_SCRIPTS_DIRECTORY_BUILD}" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/scripts"
+
+# Credentials to Download Remote Modules on Private Git Repository
+cp -R "${HOME}/.ssh" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/.ssh"
+
+# SSH Config File with Strict Host Checking Disabled
+cp "${TF_PACKAGER_TEMPLATES_DIRECTORY_BUILD}/ssh_config" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/.ssh/config"
+
+# Stack Extensions to Override the Default Behavior
+STACK_EXTENSIONS_ROOT_DIRECTORY="${TF_SOURCE_CODE_DIRECTORY}/stack"
+STACK_EXTENSIONS_SCRIPTS_DIRECTORY="${STACK_EXTENSIONS_ROOT_DIRECTORY}/scripts"
+STACK_EXTENSION_REMOTE_STATE_SCRIPT="${STACK_EXTENSIONS_SCRIPTS_DIRECTORY}/terraform_remote_state_file_path"
+
+if [ -e "${STACK_EXTENSION_REMOTE_STATE_SCRIPT}" ]; then
+  echo "Stack Extension Scripts Detected"
+  echo ""
+  echo "  source.................: ${STACK_EXTENSION_REMOTE_STATE_SCRIPT}"
+  echo "  target.................: ${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY}/scripts/"
+  echo ""
+
+  cp "${STACK_EXTENSION_REMOTE_STATE_SCRIPT}" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/scripts/"
+fi
+
+# Template: Credentials
+envsubst < "${TF_PACKAGER_TEMPLATES_DIRECTORY_BUILD}/credentials.conf" > "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/credentials.conf"
+
+# Teamplate: Dockerfile
+envsubst < "${TF_PACKAGER_TEMPLATES_DIRECTORY_BUILD}/Dockerfile" > "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/Dockerfile"

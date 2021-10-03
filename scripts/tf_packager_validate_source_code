@@ -1,0 +1,32 @@
+#!/bin/bash
+SOURCE_CODE_DIRECTORY="${1}"
+
+if [ ! -e "${SOURCE_CODE_DIRECTORY}" ]; then
+  echo "Source Code Directory doesn't exists: ${SOURCE_CODE_DIRECTORY}"
+  exit 1
+fi
+
+if [ ! -e "${TF_PACKAGER_SOURCE_CODE_PROVIDER_FILE}" ]; then
+  echo "Provider file doesn't exists: ${TF_PACKAGER_SOURCE_CODE_PROVIDER_FILE}"
+  exit 1
+fi
+
+if [ ! -e "${TF_PACKAGER_SOURCE_CODE_STACK_CONFIG_FILE}" ]; then
+  echo "Stack Config File not found: ${TF_PACKAGER_SOURCE_CODE_STACK_CONFIG_FILE}"
+  exit 1
+fi
+
+if ! grep --quiet --extended-regexp "^TERRAFORM_VERSION" "${TF_PACKAGER_SOURCE_CODE_STACK_CONFIG_FILE}"; then
+  echo "A variable named 'TERRAFORM_VERSION' is expected on: ${TF_PACKAGER_SOURCE_CODE_STACK_CONFIG_FILE}"
+  exit 1
+fi
+
+if ! grep --quiet --extended-regexp "^STACK_NAME" "${TF_PACKAGER_SOURCE_CODE_STACK_CONFIG_FILE}"; then
+  echo "A variable named 'STACK_NAME' is expected on: ${TF_PACKAGER_SOURCE_CODE_STACK_CONFIG_FILE}"
+  exit 1
+fi
+
+if ! grep --quiet --extended-regexp "^STACK_VERSION" "${TF_PACKAGER_SOURCE_CODE_STACK_CONFIG_FILE}"; then
+  echo "A variable named 'STACK_VERSION' is expected on: ${TF_PACKAGER_SOURCE_CODE_STACK_CONFIG_FILE}"
+  exit 1
+fi

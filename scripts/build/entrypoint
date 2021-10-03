@@ -1,0 +1,20 @@
+#!/bin/sh
+export TERRAFORM_COMMAND="$@"
+export TERRAFORM_OUTPUT_DIRECTORY="/opt/output"
+export TERRAFORM_PLAN_FILE="${TERRAFORM_OUTPUT_DIRECTORY}/terraform.plan"
+export TERRAFORM_PLAN_JSON_FILE="${TERRAFORM_OUTPUT_DIRECTORY}/terraform.plan.json"
+export PATH=/opt/scripts/:${PATH}
+
+. terraform_init
+
+if [ "${TERRAFORM_COMMAND}" == "plan" ] || [ -z "${TERRAFORM_COMMAND}" ]; then
+  terraform_plan_with_output_file
+  exit 0
+fi
+
+if [ "${TERRAFORM_COMMAND}" == "apply" ]; then
+  terraform_apply_with_auto_approve
+  exit 0
+fi
+
+terraform "$@"

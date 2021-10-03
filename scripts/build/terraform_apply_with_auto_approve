@@ -1,0 +1,8 @@
+#!/bin/sh
+
+terraform apply \
+  -lock-timeout="${LOCK_TIMEOUT_SECONDS?}s" \
+  -auto-approve "${TERRAFORM_PLAN_FILE?}" && \
+terraform apply \
+  -auto-approve \
+  -refresh-only

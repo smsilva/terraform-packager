@@ -1,0 +1,9 @@
+#!/bin/bash
+
+source "${TF_PACKAGER_SOURCE_CODE_STACK_CONFIG_FILE?}"
+
+docker build \
+  --rm \
+  --tag "${STACK_NAME?}:latest" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}"
+
+docker system prune -f &> /dev/null

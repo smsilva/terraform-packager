@@ -1,0 +1,23 @@
+#!/bin/bash
+
+az acr login --name wasp.azurecr.io
+
+buildah pull wasp.azurecr.io/azure-platform-cluster:latest
+
+# https://github.com/containers/buildah/blob/main/docs/tutorials/01-intro.md
+buildah bud \
+  --file Dockerfile \
+  --rm \
+  --layers \
+  --tag azure-platform-cluster:latest .
+
+buildah push localhost/azure-platform-cluster:latest docker://docker.io/silviosilva/azure-platform-cluster:latest
+
+# kaniko
+docker run \
+  -v "${PWD}:/opt/files/" \
+  -v "${HOME}/.docker/config.json:/kaniko/.docker/config.json:ro" \
+  gcr.io/kaniko-project/executor:latest \
+    --dockerfile=/opt/files/Dockerfile \
+    --context=/opt/files/ \
+    --destination=acrbeessandbox.azurecr.io/silvios/azure-platform-cluster:latest

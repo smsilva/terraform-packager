@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# https://docs.microsoft.com/en-us/cli/azure/storage/account?view=azure-cli-latest#az_storage_account_generate_sas-examples
+
+END_DATE_TIME=$(date --utc --date "2 hours" '+%Y-%m-%dT%H:%MZ')
+ARM_SAS_TOKEN=$(az storage account generate-sas \
+  --permissions cdlruwap \
+  --account-name "${ARM_STORAGE_ACCOUNT_NAME?}" \
+  --services b \
+  --resource-types sco \
+  --expiry "${END_DATE_TIME?}" \
+  --output tsv \
+  --only-show-errors)
+
+echo "${ARM_SAS_TOKEN}"

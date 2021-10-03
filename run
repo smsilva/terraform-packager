@@ -1,0 +1,22 @@
+#!/bin/bash
+set -euo pipefail
+
+THIS_SCRIPT="${PWD}/${0}"
+TF_SOURCE_CODE_DIRECTORY="${1}"
+TF_PACKAGER_SCRIPTS_DIRECTORY="$(dirname "${THIS_SCRIPT}")/scripts"
+TF_PACKAGER_DEBUG_LEVEL="${TF_PACKAGER_DEBUG_LEVEL-1}"
+
+export PATH="${TF_PACKAGER_SCRIPTS_DIRECTORY}:${PATH}"
+export TF_PACKAGER_SCRIPTS_DIRECTORY
+export TF_PACKAGER_DEBUG_LEVEL
+export TF_SOURCE_CODE_DIRECTORY
+
+. tf_packager_init "${THIS_SCRIPT}"
+
+tf_packager_show_env_vars
+
+tf_packager_validate_source_code "${TF_SOURCE_CODE_DIRECTORY}"
+
+tf_packager_create_build_context
+
+tf_packager_build_container_image
