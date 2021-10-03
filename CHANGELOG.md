@@ -1,3 +1,9 @@
+## 0.1.3 (2021-10-03)
+
+### Refactor
+
+- **test**: A helper script was created to help with tests
+
 ## 0.1.2 (2021-10-03)
 
 ### Refactor
