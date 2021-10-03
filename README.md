@@ -14,6 +14,8 @@ Esse conceito procura seguir a fisolofia de "build once", ou seja, o build do ar
 
 ## Como usar
 
+Se preferir ver um vídeo curto: [Terraform Packager: empacotando código Terraform](https://youtu.be/DDpqmtHY0Aw)
+
 Para empacotar um código Terraform com o `terraform-packager` você precisa garantir que o seu código possua um arquivo `stack.conf` com as seguintes variáveis:
 
 - `STACK_NAME`: o nome da Stack que será usado para nomear a imagem do container.
