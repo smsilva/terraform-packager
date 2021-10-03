@@ -1,3 +1,9 @@
+## 0.2.0 (2021-10-03)
+
+### Feat
+
+- **build**: Adding dynamic support for docker, buildah and kaniko
+
 ## 0.1.3 (2021-10-03)
 
 ### Refactor
