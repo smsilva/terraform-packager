@@ -14,14 +14,14 @@ Esse conceito procura seguir a fisolofia de "build once", ou seja, o build do ar
 
 ## Como usar
 
-Para empacotar um código Terraform, você precisa garantir que o seu código possua um arquivo stack.conf com as seguintes variáveis:
+Para empacotar um código Terraform com o `terraform-packager` você precisa garantir que o seu código possua um arquivo `stack.conf` com as seguintes variáveis:
 
 - `STACK_NAME`: o nome da Stack que será usado para nomear a imagem do container.
 - `TERRAFORM_VERSION`: a versão do Terraform que será usada como imagem base.
 
 ### Executando
 
-O exemplo usado considera que você possua variáveis de ambiente do Azure Resource Manager configuradas:
+O exemplo usado considera que você possua variáveis de ambiente do **Azure Resource Manager** configuradas:
 
 ```bash
 ARM_SUBSCRIPTION_ID................: ID_DE_UMA_SUBSCRIPTION_NA_AZURE
