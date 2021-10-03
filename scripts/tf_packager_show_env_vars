@@ -9,6 +9,7 @@ if [ "${TF_PACKAGER_DEBUG_LEVEL}" == "1" ]; then
   echo "  terraform_version.............................: ${TERRAFORM_VERSION?}"
   echo ""
   echo "  TF_PACKAGER_DEBUG_LEVEL.......................: ${TF_PACKAGER_DEBUG_LEVEL} (set to 0 to disable debug)"
+  echo "  TF_PACKAGER_CONTAINER_BUILDER.................: ${TF_PACKAGER_CONTAINER_BUILDER} [ docker | buildah | kaniko ]"
   echo "  TF_PACKAGER_TEMPORARY_DIRECTORY...............: ${TF_PACKAGER_TEMPORARY_DIRECTORY}"
   echo "  TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY.: ${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY}"
   echo "  TF_PACKAGER_ENVIRONMENT_VARIABLES_FILE_NAME...: ${TF_PACKAGER_ENVIRONMENT_VARIABLES_FILE_NAME}"

@@ -1,0 +1,18 @@
+#!/bin/bash
+
+source "${TF_PACKAGER_SOURCE_CODE_STACK_CONFIG_FILE?}"
+
+KANIKO_IMAGES="${HOME}/.kaniko/images"
+
+mkdir -p "${KANIKO_IMAGES}"
+
+docker run \
+  -v "${KANIKO_IMAGES}:/opt/images/" \
+  -v "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY}:/opt/files/" \
+  -v "${HOME}/.docker/config.json:/kaniko/.docker/config.json:ro" \
+  gcr.io/kaniko-project/executor:latest \
+    --dockerfile=/opt/files/Dockerfile \
+    --context=/opt/files/ \
+    --no-push \
+    --destination="${STACK_NAME?}" \
+    --tarPath="/opt/images/${STACK_NAME?}.tar"
