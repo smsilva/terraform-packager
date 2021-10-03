@@ -39,7 +39,9 @@ Confira se as variáveis de ambiente estão configuradas antes de prosseguir:
 
 ```bash
 scripts/show_arm_variables
+```
 
+```bash
 ARM_SUBSCRIPTION_ID................: 7f65403e-eec5-45c4-a4ac-1eafc74192ca
 ARM_TENANT_ID......................: 16aaff56-7bcd-474f-a975-fe20562ee656
 ARM_CLIENT_ID......................: 7dcc3fa0-2794-4ed7-b84f-cd31e244d34d
@@ -63,7 +65,9 @@ Confira se as variáveis de ambiente estão configuradas antes de prosseguir:
 
 ```bash
 scripts/show_arm_variables
+```
 
+```bash
 ARM_SUBSCRIPTION_ID................: 7f65403e-eec5-45c4-a4ac-1eafc74192ca
 ARM_TENANT_ID......................: 16aaff56-7bcd-474f-a975-fe20562ee656
 ARM_CLIENT_ID......................: 7dcc3fa0-2794-4ed7-b84f-cd31e244d34d
