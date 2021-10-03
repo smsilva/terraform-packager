@@ -1,0 +1,2 @@
+#!/bin/bash
+./run "${PWD}/example/azure-dummy-stack/src"

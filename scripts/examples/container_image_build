@@ -12,7 +12,7 @@ buildah bud \
   --file Dockerfile \
   --rm \
   --layers \
-  --tag ${IMAGE_NAME} .
+  --tag ${IMAGE_NAME}:${IMAGE_TAG} .
 
 buildah push localhost/terraform-packager:latest "docker://docker.io/silviosilva/${IMAGE_NAME}:${IMAGE_TAG}"
 
