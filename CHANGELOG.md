@@ -1,3 +1,9 @@
+## 0.1.1 (2021-10-03)
+
+### Refactor
+
+- **templates/build/Dockerfile**: Removing some blank spaces
+
 ## 0.1.0 (2021-10-03)
 
 ### Feat
