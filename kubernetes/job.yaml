@@ -1,0 +1,38 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: azure-dummy-stack
+spec:
+  template:
+    spec:
+      initContainers:
+      - name: plan
+        image: silviosilva/azure-dummy-stack:latest
+        args: ["plan", "-no-color"]
+        envFrom:
+        - secretRef:
+            name: arm-credentials
+        env:
+        - name: DEBUG
+          value: "0"
+      - name: apply
+        image: silviosilva/azure-dummy-stack:latest
+        args: ["apply", "-auto-approve"]
+        envFrom:
+          - secretRef:
+              name: arm-credentials
+        env:
+          - name: DEBUG
+            value: "1"
+      containers:
+      - name: output
+        image: silviosilva/azure-dummy-stack:latest
+        args: ["output"]
+        envFrom:
+        - secretRef:
+            name: arm-credentials
+        env:
+        - name: DEBUG
+          value: "0"
+      restartPolicy: Never
+  backoffLimit: 4

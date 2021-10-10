@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: azure-dummy-stack
+  labels:
+    purpose: terraform
+    provider: azure
+spec:
+  containers:
+  - name: terraform
+    image: silviosilva/azure-dummy-stack:latest
+    args: ["plan", "-no-color"]
+    envFrom:
+    - secretRef:
+        name: arm-credentials
+  restartPolicy: OnFailure
