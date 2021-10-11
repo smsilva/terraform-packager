@@ -11,8 +11,7 @@ kubectl apply -f - <<EOF
 apiVersion: v1
 kind: Secret
 metadata:
-  name: arm-credentials
-  namespace: default
+  name: azure-credentials
 type: Opaque
 data:
   ARM_SUBSCRIPTION_ID:                ${BASE64ENCODED_ARM_SUBSCRIPTION_ID}
