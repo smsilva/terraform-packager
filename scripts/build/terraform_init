@@ -4,15 +4,15 @@ export PATH=/opt/scripts/:${PATH}
 BUILD_ONLY_CREDENTIALS_FILE="/opt/credentials/credentials.conf"
 
 if [ -e "${BUILD_ONLY_CREDENTIALS_FILE}" ]; then
-  sed -i '/backend.*local/ s/local/azurerm/' provider.tf
+  sed -i -e '/  backend/{r /opt/backend/fragment.hcl' -e 'd;}' /opt/src/provider.tf
 
   # shellcheck disable=SC2039
   # shellcheck disable=SC1090
   source "${BUILD_ONLY_CREDENTIALS_FILE}"
 fi
 
-# shellcheck disable=SC2091
-$(loadconfig /opt/src/stack.conf)
+# shellcheck disable=SC1090
+. "/opt/environment_variables.conf"
 
 TERRAFORM_REMOTE_STATE_FILE_PATH_CUSTOM="$(terraform_remote_state_file_path)"
 
@@ -26,29 +26,18 @@ TERRAFORM_REMOTE_STATE_FILE_PATH="stacks/${STACK_NAME?}/${TERRAFORM_REMOTE_STATE
 export TERRAFORM_REMOTE_STATE_FILE_PATH
 
 init() {
-  # -reconfigure    : due to change from 'local' to 'azurerm', reconfigure backend preventing migration of any existing state
-  # -upgrade=false  : do not download modules and plugins (this options is already false by default)
-  # -backend-config : pass backend partial config:
-  #                     - storage account name (an ARM_SAS_TOKEN Environment Variable needs to be set to access this)
-  #                     - container name (default is 'terraform' but can be any name)
-  #                     - key (tfstate file name)
+  show_debug_information
+
   terraform init \
     -reconfigure \
     -upgrade=false \
-    -backend-config=key="${TERRAFORM_REMOTE_STATE_FILE_PATH?}" \
-    -backend-config=storage_account_name="${ARM_STORAGE_ACCOUNT_NAME?}" \
-    -backend-config=container_name="${ARM_STORAGE_ACCOUNT_CONTAINER_NAME?}" \
-    -backend-config=sas_token="${ARM_SAS_TOKEN?}"
+    -backend-config /opt/src/backend.conf
 }
 
+generate_backend_configuration_file
+
 if [ "${DEBUG-0}" != "0" ]; then
-  show_debug_information
-
-  echo ""
-  echo "Terraform Initialization"
-
   init
-
 else
   init > /dev/null
 fi

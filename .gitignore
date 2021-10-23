@@ -3,3 +3,4 @@
 **/.terraform/
 **/output/
 **/terraform.tfstate*
+**/credentials.json

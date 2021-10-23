@@ -1,0 +1,20 @@
+#!/bin/sh
+generate_azurerm_backend() {
+  echo "AZURE BACKEND"
+}
+
+generate_gcs_backend() {
+cat <<EOF > /opt/src/backend.conf
+credentials = "/opt/credentials/service-account.json"
+bucket      = "${GOOGLE_BUCKET}"
+prefix      = "$(dirname "${TERRAFORM_REMOTE_STATE_FILE_PATH?}")"
+EOF
+}
+
+if [ "${TERRAFORM_BACKEND}" == "azurerm" ]; then
+  generate_azurerm_backend
+fi
+
+if [ "${TERRAFORM_BACKEND}" == "gcs" ]; then
+  generate_gcs_backend
+fi

@@ -1,2 +1,3 @@
 #!/bin/bash
-./run "${PWD}/example/azure-dummy-stack/src"
+clear
+./tfpack "./examples/gcp-fake-module"

@@ -1,5 +1,5 @@
 #!/bin/bash
-source "${TF_PACKAGER_SOURCE_CODE_STACK_CONFIG_FILE?}"
+source "${TF_PACKAGER_ENVIRONMENT_VARIABLES_FILE_NAME?}"
 
 docker build \
   --rm \

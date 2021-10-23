@@ -6,16 +6,19 @@ rm -rf "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}"
 # Create Context Build Diretory
 mkdir -p "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}"
 
-# Terraform Source Code to Build Context src/ directory
-cp -R "${TF_SOURCE_CODE_DIRECTORY?}" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/src"
+# Copy Terraform Source Code to Build Context src/ directory
+cp -RL "${TF_SOURCE_CODE_DIRECTORY?}" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/src"
 
-# Scripts to add into Container Image
+# Copy Scripts to add into Container Image
 cp -R "${TF_PACKAGER_SCRIPTS_DIRECTORY_BUILD}" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/scripts"
 
-# Credentials to Download Remote Modules on Private Git Repository
+# Copy Service Account Credentials to Build Context
+cp -L /opt/credentials/service-account.json "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/service-account.json"
+
+# Copy Credentials to Download Remote Modules on Private Git Repository
 cp -R "${HOME}/.ssh" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/.ssh"
 
-# SSH Config File with Strict Host Checking Disabled
+# Copy SSH Config File with Strict Host Checking Disabled
 cp "${TF_PACKAGER_TEMPLATES_DIRECTORY_BUILD}/ssh_config" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/.ssh/config"
 
 # Stack Extensions to Override the Default Behavior
@@ -36,5 +39,14 @@ fi
 # Template: Credentials
 envsubst < "${TF_PACKAGER_TEMPLATES_DIRECTORY_BUILD}/credentials.conf" > "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/credentials.conf"
 
-# Teamplate: Dockerfile
+# Template: Dockerfile
 envsubst < "${TF_PACKAGER_TEMPLATES_DIRECTORY_BUILD}/Dockerfile" > "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/Dockerfile"
+
+# Template: environment_variables.conf
+envsubst < "${TF_PACKAGER_ENVIRONMENT_VARIABLES_FILE_NAME_TEMPLATE}" > "${TF_PACKAGER_ENVIRONMENT_VARIABLES_FILE_NAME}"
+
+# Template: Terraform Backend Base Provider Config Fragment
+cp "${TERRAFORM_BACKEND_TEMPLATE_FRAGMENT}" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/backend_fragment.hcl"
+
+# Template: Terraform Backend Backend Config
+cp "${TERRAFORM_BACKEND_TEMPLATE_FILE}" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/backend.conf"

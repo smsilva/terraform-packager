@@ -6,29 +6,36 @@ if [ "${DEBUG-0}" != "0" ]; then
   echo "  name...............................: ${STACK_NAME}"
   echo "  instance_name......................: ${STACK_INSTANCE_NAME}"
   echo "  version............................: ${STACK_VERSION}"
+  echo "  terraform_provider.................: ${TERRAFORM_PROVIDER}"
+  echo "  terraform_backend..................: ${TERRAFORM_BACKEND}"
   echo "  terraform_version..................: ${TERRAFORM_VERSION}"
   echo "  terraform_lock_timeout.............: ${LOCK_TIMEOUT_SECONDS}"
   echo "  terraform_state_file...............: ${TERRAFORM_REMOTE_STATE_FILE_PATH}"
   echo ""
-  echo "Azure Resource Manager"
-  echo ""
 
-  if [ -n "${ARM_CLIENT_ID}" ]; then
+  if [ "${TERRAFORM_PROVIDER}" == "azurerm" ]; then
+    echo "Azure Resource Manager"
+    echo ""
     echo "  ARM_CLIENT_ID......................: ${ARM_CLIENT_ID}"
     echo "  ARM_CLIENT_SECRET..................: ${#ARM_CLIENT_SECRET}"
     echo "  ARM_SUBSCRIPTION_ID................: ${ARM_SUBSCRIPTION_ID}"
     echo "  ARM_TENANT_ID......................: ${ARM_TENANT_ID}"
   fi
 
-  echo "  ARM_STORAGE_ACCOUNT_NAME...........: ${ARM_STORAGE_ACCOUNT_NAME}"
-  echo "  ARM_STORAGE_ACCOUNT_CONTAINER_NAME.: ${ARM_STORAGE_ACCOUNT_CONTAINER_NAME}"
-  echo "  ARM_SAS_TOKEN......................: ${#ARM_SAS_TOKEN}"
-
-  if [ -n "${MONGODB_ATLAS_PRIVATE_KEY}" ]; then
-    echo ""
-    echo "Mongo Atlas"
-    echo ""
-    echo "  MONGODB_ATLAS_PRIVATE_KEY..........: ${#MONGODB_ATLAS_PRIVATE_KEY}"
-    echo "  MONGODB_ATLAS_PUBLIC_KEY...........: ${#MONGODB_ATLAS_PUBLIC_KEY}"
+  if [ "${TERRAFORM_BACKEND}" == "azurerm" ]; then
+    echo "  ARM_STORAGE_ACCOUNT_NAME...........: ${ARM_STORAGE_ACCOUNT_NAME}"
+    echo "  ARM_STORAGE_ACCOUNT_CONTAINER_NAME.: ${ARM_STORAGE_ACCOUNT_CONTAINER_NAME}"
+    echo "  ARM_SAS_TOKEN......................: ${ARM_SAS_TOKEN}"
   fi
+
+  if [ "${TERRAFORM_PROVIDER}" == "google" ]; then
+    echo "Google"
+    echo ""
+    echo "  GOOGLE_PROJECT.....................: ${GOOGLE_PROJECT}"
+    echo "  GOOGLE_BUCKET......................: ${GOOGLE_BUCKET}"
+    echo "  GOOGLE_PREFIX......................: ${GOOGLE_PREFIX}"
+  fi
+
+  echo ""
+  echo "Terraform Initialization"
 fi
