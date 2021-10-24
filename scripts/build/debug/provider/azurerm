@@ -1,0 +1,9 @@
+#!/bin/sh
+if [ "${DEBUG-0}" != "0" ]; then
+  echo "Azure Resource Manager"
+  echo ""
+  echo "  azurerm:"
+  echo "    tenant-id:            ${ARM_TENANT_ID}"
+  echo "    subscription-id:      ${ARM_SUBSCRIPTION_ID}"
+  echo "    service-principal-id: ${ARM_CLIENT_ID} [${#ARM_CLIENT_SECRET}]"
+fi

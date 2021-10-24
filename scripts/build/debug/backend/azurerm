@@ -1,0 +1,8 @@
+#!/bin/sh
+if [ "${DEBUG-0}" != "0" ]; then
+  echo ""
+  echo "    storage-account:"
+  echo "      name:               ${ARM_STORAGE_ACCOUNT_NAME}"
+  echo "      container:          ${ARM_STORAGE_ACCOUNT_CONTAINER_NAME}"
+  echo "      sas-token:          ${ARM_SAS_TOKEN}"
+fi

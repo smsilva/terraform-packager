@@ -11,13 +11,25 @@ LOCAL_TERRAFORM_OUTPUT_DIRECTORY="${HOME}/trash/terraform/output"
 # Generate empty folder and files to prevent creation as root user
 mkdir -p "${LOCAL_TERRAFORM_OUTPUT_DIRECTORY}"
 touch "${LOCAL_TERRAFORM_OUTPUT_DIRECTORY}/terraform.plan"
+touch "${LOCAL_TERRAFORM_OUTPUT_DIRECTORY}/terraform.plan.json"
 
-STACK_RUN_GENERATED_SCRIPT="stackrun-gen.sh"
+STACK_RUN_GENERATED_SCRIPT=".stackrun_generated.sh"
+
+TERRAFORM_PROVIDER=$(awk -F '-' '{ print $1 }' <<< "${COMMAND?}")
+
+echo "Stack Runner"
+echo ""
+echo "  terraform:"
+echo "    provider:  ${TERRAFORM_PROVIDER?}"
+echo "    variables: ${LOCAL_TERRAFORM_VARIABLES_DIRECTORY?}"
+echo "    output:    ${LOCAL_TERRAFORM_OUTPUT_DIRECTORY?}"
 
 generate_a_script_to_run_the_command() {
   echo "#!/bin/bash"
-  cat templates/run/template-run.conf
-  cat templates/run/template-env-var-google.conf
+  echo "LOCAL_TERRAFORM_VARIABLES_DIRECTORY=${LOCAL_TERRAFORM_VARIABLES_DIRECTORY}"
+  echo "LOCAL_TERRAFORM_OUTPUT_DIRECTORY=${LOCAL_TERRAFORM_OUTPUT_DIRECTORY}"
+  cat  "templates/stackrun.conf"
+  cat  "templates/provider/${TERRAFORM_PROVIDER?}/run-env-var.conf"
   echo "${COMMAND?}"
 }
 

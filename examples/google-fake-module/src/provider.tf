@@ -1,5 +1,5 @@
 provider "google" {
-  credentials = "/opt/credentials/service-account.json"
+  credentials = "/opt/terraform/credentials.json"
 }
 
 terraform {

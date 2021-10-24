@@ -8,8 +8,8 @@ FROM terraform_base_image AS package
 ADD  .ssh/                                 /root/.ssh/
 ADD  backend_fragment.hcl                  /opt/backend/fragment.hcl
 ADD  backend.conf                          /opt/backend/template.conf
-ADD  service-account.json                  /opt/credentials/service-account.json
-ADD  credentials.conf                      /opt/credentials/credentials.conf
+ADD  credentials.json                      /opt/terraform/credentials.json
+ADD  credentials.conf                      /opt/terraform/credentials.conf
 ADD  environment_variables.conf            /opt/environment_variables.conf
 ADD  scripts/                              /opt/scripts
 ADD  src/                                  /opt/src

@@ -12,14 +12,24 @@ Uma imagem criada usa o conceito de Stacks e contém essencialmente:
 
 Esse conceito procura seguir a fisolofia de "build once", ou seja, o build do artefato ocorre apenas uma vez e o mesmo artefato pode ser usado para criar várias instâncias da Stack usando diferentes credenciais.
 
+## Dependências
+
+1. Você precisará [instalar](https://github.com/smsilva/linux/blob/master/scripts/utilities/yq/install.sh) o `yq` utilitário para leitura de arquivos yaml.
+2. Docker
+3. Estes comandos foram testados no `Ubuntu 20.04`.
+
 ## Como usar
 
 Se preferir ver um vídeo curto: [Terraform Packager: empacotando código Terraform](https://youtu.be/DDpqmtHY0Aw)
 
-Para empacotar um código Terraform com o `terraform-packager` você precisa garantir que o seu código possua um arquivo `stack.conf` com as seguintes variáveis:
+Para empacotar um código Terraform com o `terraform-packager` você precisa garantir que o diretório root do seu Módulo Terraform possua um arquivo `stack.yaml` com as seguintes variáveis:
 
-- `STACK_NAME`: o nome da Stack que será usado para nomear a imagem do container.
-- `TERRAFORM_VERSION`: a versão do Terraform que será usada como imagem base.
+```yaml
+name: azure-nome-do-seu-modulo
+version: 0.1.0
+terraform:
+  version: 1.0.9
+```
 
 ### Executando
 
@@ -82,17 +92,17 @@ ARM_SAS_TOKEN......................: 0
 ### 3. Empacotando o Projeto de Exemplo
 
 ```bash
-./run "${PWD}/example/azure-dummy-stack/src"
+./pack "${PWD}/example/azure-fake-module"
 ```
 
 ### 4. Executando o Container usando os valores padrão
 
 ```bash
-scripts/azrun azure-dummy-stack:latest plan
+scripts/stackrun azure-fake-module:latest plan
 ```
 
 ```bash
-scripts/azrun azure-dummy-stack:latest apply
+scripts/stackrun azure-fake-module:latest apply
 ```
 
 ### 5. Executando o Container usando arquivos de variáveis personalizadas
@@ -100,13 +110,13 @@ scripts/azrun azure-dummy-stack:latest apply
 Embora não recomendável por ferir o princípio de que um artefato deveria sempre produzir o mesmo resultado, é possível passar um arquivo tfvars através de um volume para o container e usá-lo nos comandos Terraform.
 
 ```bash
-export LOCAL_TERRAFORM_VARIABLES_DIRECTORY="${PWD}/example/azure-dummy-stack/environments/sandbox"
+export LOCAL_TERRAFORM_VARIABLES_DIRECTORY="${PWD}/example/azure-fake-module/environments/sandbox"
 
-scripts/azrun azure-dummy-stack:latest plan -var-file=/opt/vars/terraform.tfvars
+scripts/stackrun azure-fake-module:latest plan -var-file=/opt/variables/terraform.tfvars
 ```
 
 ```bash
-scripts/azrun azure-dummy-stack:latest apply -var-file=/opt/vars/terraform.tfvars -auto-approve
+scripts/stackrun azure-fake-module:latest apply -var-file=/opt/variables/terraform.tfvars -auto-approve
 ```
 
 ### 6. Criando Imagens Personalizadas
@@ -115,28 +125,13 @@ scripts/azrun azure-dummy-stack:latest apply -var-file=/opt/vars/terraform.tfvar
 
 ```bash
 docker build --rm \
-  --tag azure-dummy-stack/sandbox:latest "example/azure-dummy-stack/environments/sandbox"
+  --tag azure-fake-module/sandbox:latest "examples/azure-fake-module/environments/sandbox"
 ```
 
 ```bash
-scripts/azrun azure-dummy-stack/sandbox:latest plan
+scripts/azrun azure-fake-module/sandbox:latest plan
 ```
 
 ```bash
-scripts/azrun azure-dummy-stack/sandbox:latest apply
-```
-
-#### Dev
-
-```bash
-docker build --rm \
-  --tag azure-dummy-stack/dev:latest "example/azure-dummy-stack/environments/dev"
-```
-
-```bash
-scripts/azrun azure-dummy-stack/dev:latest plan
-```
-
-```bash
-scripts/azrun azure-dummy-stack/dev:latest apply
+scripts/azrun azure-fake-module/sandbox:latest apply
 ```
