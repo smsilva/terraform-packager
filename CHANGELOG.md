@@ -1,3 +1,9 @@
+## 0.2.1 (2021-10-24)
+
+### Fix
+
+- **stackrun**: Create a templating engine to generate execution script
+
 ## 0.2.0 (2021-10-03)
 
 ### Feat
