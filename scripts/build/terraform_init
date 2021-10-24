@@ -1,31 +1,34 @@
 #!/bin/sh
 export PATH=/opt/scripts/:${PATH}
 
-BUILD_ONLY_CREDENTIALS_FILE="/opt/credentials/credentials.conf"
+initialization() {
+  BUILD_ONLY_CREDENTIALS_FILE="/opt/terraform/credentials.conf"
 
-if [ -e "${BUILD_ONLY_CREDENTIALS_FILE}" ]; then
-  sed -i -e '/  backend/{r /opt/backend/fragment.hcl' -e 'd;}' /opt/src/provider.tf
+  if [ -e "${BUILD_ONLY_CREDENTIALS_FILE}" ]; then
+    # Change backend config from local to specific Provider
+    sed -i -e '/  backend/{r /opt/backend/fragment.hcl' -e 'd;}' /opt/src/provider.tf
 
-  # shellcheck disable=SC2039
+    # shellcheck disable=SC2039
+    # shellcheck disable=SC1090
+    source "${BUILD_ONLY_CREDENTIALS_FILE}"
+  fi
+
   # shellcheck disable=SC1090
-  source "${BUILD_ONLY_CREDENTIALS_FILE}"
-fi
+  . "/opt/environment_variables.conf"
 
-# shellcheck disable=SC1090
-. "/opt/environment_variables.conf"
+  TERRAFORM_REMOTE_STATE_FILE_PATH_CUSTOM="$(terraform_remote_state_file_path)"
 
-TERRAFORM_REMOTE_STATE_FILE_PATH_CUSTOM="$(terraform_remote_state_file_path)"
+  if [ -z "${TERRAFORM_REMOTE_STATE_FILE_PATH_CUSTOM}" ]; then
+    echo "Please ensure the script 'terraform_remote_state_file_path' return a valid Terraform State File Path."
+    exit 1
+  fi
 
-if [ -z "${TERRAFORM_REMOTE_STATE_FILE_PATH_CUSTOM}" ]; then
-  echo "Please ensure the script 'terraform_remote_state_file_path' return a valid Terraform State File Path."
-  exit 1
-fi
+  TERRAFORM_REMOTE_STATE_FILE_PATH="stacks/${STACK_NAME?}/${TERRAFORM_REMOTE_STATE_FILE_PATH_CUSTOM?}"
 
-TERRAFORM_REMOTE_STATE_FILE_PATH="stacks/${STACK_NAME?}/${TERRAFORM_REMOTE_STATE_FILE_PATH_CUSTOM?}"
+  export TERRAFORM_REMOTE_STATE_FILE_PATH
 
-export TERRAFORM_REMOTE_STATE_FILE_PATH
+  generate_backend_configuration_file
 
-init() {
   show_debug_information
 
   terraform init \
@@ -34,10 +37,8 @@ init() {
     -backend-config /opt/src/backend.conf
 }
 
-generate_backend_configuration_file
-
 if [ "${DEBUG-0}" != "0" ]; then
-  init
+  initialization
 else
-  init > /dev/null
+  initialization > /dev/null
 fi

@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: azure-dummy-stack
+  name: azure-fake-module
   namespace: default
 spec:
   containers:
   - name: terraform
-    image: silviosilva/azure-dummy-stack:latest
+    image: silviosilva/azure-fake-module:latest
     args: ["plan", "-no-color"]
     env:
     - name: DEBUG

@@ -1,4 +1,4 @@
-name: gcp-fake-module
+name: azure-stack-name
 version: 0.1.0
 terraform:
   version: 1.0.7

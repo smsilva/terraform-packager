@@ -1,12 +1,15 @@
 #!/bin/bash
 if [ "${TF_PACKAGER_DEBUG_LEVEL}" == "1" ]; then
   echo ""
-  echo "Stack Image Build Settings"
+  echo "Stack Build"
   echo ""
-  echo "  source_code_directory.........................: ${TF_SOURCE_CODE_DIRECTORY?}"
-  echo "  name..........................................: ${STACK_NAME?}"
-  echo "  version.......................................: ${STACK_VERSION?}"
-  echo "  terraform_version.............................: ${TERRAFORM_VERSION?}"
-  echo "  build_context.................................: ${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY}"
+  echo "  stack:"
+  echo "    name:                   ${STACK_NAME?}"
+  echo "    version:                ${STACK_VERSION?}"
+  echo "    source-code:            ${TF_SOURCE_CODE_DIRECTORY?}"
+  echo ""
+  echo "  terraform:                ${TERRAFORM_VERSION?}"
+  echo "    version:                ${TERRAFORM_VERSION?}"
+  echo "    build-context:          ${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY}"
   echo ""
 fi

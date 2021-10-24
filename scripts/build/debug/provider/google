@@ -1,0 +1,7 @@
+#!/bin/sh
+if [ "${DEBUG-0}" != "0" ]; then
+  echo "Google"
+  echo ""
+  echo "  google:"
+  echo "    project:              ${GOOGLE_PROJECT}"
+fi
