@@ -1,4 +1,8 @@
+<<<<<<< HEAD:templates/stack.yaml
 name: azure-stack-name
+=======
+name: google-fake-module
+>>>>>>> Build with azurerm is working too:examples/google-fake-module/stack.yaml
 version: 0.1.0
 terraform:
   version: 1.0.7
