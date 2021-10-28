@@ -8,7 +8,7 @@ FROM terraform_base_image AS package
 ENV  TF_PLUGIN_CACHE_DIR="/opt/terraform/plugin_cache_dir"
 VOLUME ${TF_PLUGIN_CACHE_DIR}              /opt/terraform/plugin_cache_dir
 ADD  .ssh/                                 /root/.ssh/
-ADD  backend_fragment.hcl                  /opt/backend/fragment.hcl
+ADD  backend.hcl                           /opt/backend/fragment.hcl
 ADD  backend.conf                          /opt/backend/template.conf
 ADD  credentials.json                      /opt/terraform/credentials.json
 ADD  credentials.conf                      /opt/terraform/credentials.conf
