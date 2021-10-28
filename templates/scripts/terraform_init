@@ -27,9 +27,9 @@ initialization() {
 
   export TERRAFORM_REMOTE_STATE_FILE_PATH
 
-  generate_backend_configuration_file
+  generate_backend_configuration_file && \
 
-  show_debug_information
+  show_debug_information && \
 
   terraform init \
     -reconfigure \

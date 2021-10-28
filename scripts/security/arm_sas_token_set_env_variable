@@ -1,5 +1,0 @@
-#!/bin/bash
-THIS_SCRIPT_FILE_NAME="${0}"
-THIS_SCRIPT_DIRECTORY=$(dirname "${THIS_SCRIPT_FILE_NAME}")
-
-echo "export ARM_SAS_TOKEN=$("${THIS_SCRIPT_DIRECTORY}/arm_sas_token_new")"
