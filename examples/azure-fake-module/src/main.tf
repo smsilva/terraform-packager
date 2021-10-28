@@ -9,6 +9,11 @@ resource "random_string" "instance_id" {
   special     = false
 }
 
+resource "azurerm_resource_group" "default" {
+  name     = "${var.instance_name}-${random_string.instance_id.result}"
+  location = "centralus"
+}
+
 resource "null_resource" "message" {
   triggers = {
     value = var.message
