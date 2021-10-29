@@ -34,6 +34,7 @@ generate_a_script_to_run_the_command() {
   echo "#!/bin/bash"
   echo "LOCAL_TERRAFORM_VARIABLES_DIRECTORY=${LOCAL_TERRAFORM_VARIABLES_DIRECTORY}"
   echo "LOCAL_TERRAFORM_OUTPUT_DIRECTORY=${LOCAL_TERRAFORM_OUTPUT_DIRECTORY}"
+
   cat  "templates/stackrun.conf"
   cat  "templates/provider/${TERRAFORM_PROVIDER?}/credentials_run.conf"
 

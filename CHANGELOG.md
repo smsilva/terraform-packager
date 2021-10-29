@@ -1,3 +1,9 @@
+## 0.2.2 (2021-10-29)
+
+### Fix
+
+- **aws-provider**: AWS Provider support using Azure Storage Account as Terraform Backend
+
 ## 0.2.1 (2021-10-24)
 
 ### Fix
