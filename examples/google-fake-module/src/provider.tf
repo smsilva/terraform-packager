@@ -4,7 +4,7 @@ provider "google" {
 terraform {
   required_version = ">= 1.0.0, < 2.0.0"
 
-  backend "azurerm" {}
+  backend "local" {}
 
   required_providers {
     google = {

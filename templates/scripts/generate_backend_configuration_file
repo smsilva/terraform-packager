@@ -7,7 +7,6 @@ generate_azurerm_backend() {
 
 generate_gcs_backend() {
 cat <<EOF > /opt/src/backend.conf
-credentials = "/opt/terraform/credentials.json"
 bucket      = "${GOOGLE_BUCKET}"
 prefix      = "$(dirname "${TERRAFORM_REMOTE_STATE_FILE_PATH?}")"
 EOF

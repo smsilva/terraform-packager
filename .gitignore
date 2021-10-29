@@ -1,6 +1,5 @@
 **/.idea/
 **/.stackrun_generated.sh
-**/.terraform.lock.hcl
 **/.terraform/
 **/credentials.json
 **/output/

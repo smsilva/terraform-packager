@@ -10,7 +10,6 @@ VOLUME ${TF_PLUGIN_CACHE_DIR}              /opt/terraform/plugin_cache_dir
 ADD  .ssh/                                 /root/.ssh/
 ADD  backend.hcl                           /opt/backend/fragment.hcl
 ADD  backend.conf                          /opt/backend/template.conf
-ADD  credentials.json                      /opt/terraform/credentials.json
 ADD  credentials_provider.conf             /opt/terraform/credentials_provider.conf
 ADD  credentials_backend.conf              /opt/terraform/credentials_backend.conf
 ADD  environment_variables.conf            /opt/environment_variables.conf

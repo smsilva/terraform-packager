@@ -12,6 +12,8 @@ initialization() {
     # shellcheck disable=SC2039
     # shellcheck disable=SC1090
     source "${PROVIDER_CREDENTIALS_FILE}"
+    # shellcheck disable=SC2039
+    # shellcheck disable=SC1090
     source "${BACKEND_CREDENTIALS_FILE}"
   fi
 

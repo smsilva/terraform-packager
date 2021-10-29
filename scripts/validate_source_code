@@ -5,3 +5,13 @@ if [ ! -e "${SOURCE_CODE_DIRECTORY}" ]; then
   echo "Source Code Directory doesn't exists: ${SOURCE_CODE_DIRECTORY}"
   exit 1
 fi
+
+if [ ! -e "${SOURCE_CODE_DIRECTORY}/provider.tf" ]; then
+  echo "File 'provider.tf' doesn't exists at: ${SOURCE_CODE_DIRECTORY}"
+  exit 1
+fi
+
+if ! grep --quiet 'backend "local" {}' "${SOURCE_CODE_DIRECTORY}/provider.tf"; then
+  echo "Backend must be local. The real backend will be configured at runtime: ${SOURCE_CODE_DIRECTORY}/provider.tf"
+  exit 1
+fi
