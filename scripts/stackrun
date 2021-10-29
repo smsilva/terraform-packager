@@ -8,6 +8,7 @@ LOCAL_TERRAFORM_OUTPUT_DIRECTORY="${HOME}/trash/terraform/output"
 mkdir -p "${LOCAL_TERRAFORM_OUTPUT_DIRECTORY}"
 touch "${LOCAL_TERRAFORM_OUTPUT_DIRECTORY}/terraform.plan"
 touch "${LOCAL_TERRAFORM_OUTPUT_DIRECTORY}/terraform.plan.json"
+touch "${LOCAL_TERRAFORM_OUTPUT_DIRECTORY}/terraform.plan.txt"
 
 STACK_RUN_GENERATED_SCRIPT=".stackrun_generated.sh"
 
@@ -34,7 +35,7 @@ generate_a_script_to_run_the_command() {
   echo "LOCAL_TERRAFORM_VARIABLES_DIRECTORY=${LOCAL_TERRAFORM_VARIABLES_DIRECTORY}"
   echo "LOCAL_TERRAFORM_OUTPUT_DIRECTORY=${LOCAL_TERRAFORM_OUTPUT_DIRECTORY}"
   cat  "templates/stackrun.conf"
-  cat  "templates/provider/${TERRAFORM_PROVIDER?}/run-env-var.conf"
+  cat  "templates/provider/${TERRAFORM_PROVIDER?}/credentials_parameters.conf"
   echo "${COMMAND?}"
 }
 
