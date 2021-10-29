@@ -23,4 +23,8 @@ validate_source_code "${TF_SOURCE_CODE_DIRECTORY}"
 
 create_build_context
 
-build_container_image
+if [ "${TF_PACKAGER_DEBUG_LEVEL}" == "1" ]; then
+  build_container_image
+else
+  build_container_image > /dev/null
+fi

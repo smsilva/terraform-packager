@@ -1,4 +1,4 @@
 variable "name" {
   type    = string
-  default = "silvios-wasp-foundation"
+  default = "silvios-generic-bucket"
 }

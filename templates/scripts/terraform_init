@@ -12,6 +12,7 @@ initialization() {
     # shellcheck disable=SC2039
     # shellcheck disable=SC1090
     source "${PROVIDER_CREDENTIALS_FILE}"
+
     # shellcheck disable=SC2039
     # shellcheck disable=SC1090
     source "${BACKEND_CREDENTIALS_FILE}"
@@ -31,7 +32,7 @@ initialization() {
 
   export TERRAFORM_REMOTE_STATE_FILE_PATH
 
-  generate_backend_configuration_file && \
+  generate_backend_configuration_file > /opt/src/backend.conf && \
 
   show_debug_information && \
 
