@@ -15,12 +15,12 @@ export TF_PACKAGER_DEBUG_LEVEL
 export TF_SOURCE_CODE_DIRECTORY
 export TF_PACKAGER_CONTAINER_BUILDER
 
-. tf_packager_init "${THIS_SCRIPT}"
+. build_setup_variables "${THIS_SCRIPT}"
 
-tf_packager_show_env_vars
+show_build_parameters
 
-tf_packager_validate_source_code "${TF_SOURCE_CODE_DIRECTORY}"
+validate_source_code "${TF_SOURCE_CODE_DIRECTORY}"
 
-tf_packager_create_build_context
+create_build_context
 
-tf_packager_build_container_image
+build_container_image

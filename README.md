@@ -29,6 +29,7 @@ name: azure-nome-do-seu-modulo
 version: 0.1.0
 terraform:
   version: 1.0.9
+  backende: azurerm
 ```
 
 ### Executando
@@ -45,57 +46,13 @@ ARM_STORAGE_ACCOUNT_CONTAINER_NAME.: NOME_DO_STORAGE_ACCOUNT_CONTAINER
 ARM_SAS_TOKEN......................: UM_TOKEN_TEMPORARIO_USADO_PARA_ACESSAR_A_STORAGE_ACCOUNTS
 ```
 
-### 1. Azure CLI e Variáveis de Ambiente do Azure Resource Manager (ARM)
-
-Confira se as variáveis de ambiente estão configuradas antes de prosseguir:
+### 1. Empacotando o Projeto de Exemplo
 
 ```bash
-scripts/show_arm_variables
+scripts/stackbuild "examples/azure-fake-module"
 ```
 
-```bash
-ARM_SUBSCRIPTION_ID................: 7f65403e-eec5-45c4-a4ac-1eafc74192ca
-ARM_TENANT_ID......................: 16aaff56-7bcd-474f-a975-fe20562ee656
-ARM_CLIENT_ID......................: 7dcc3fa0-2794-4ed7-b84f-cd31e244d34d
-ARM_CLIENT_SECRET..................: 36
-ARM_STORAGE_ACCOUNT_NAME...........: acmestorage
-ARM_STORAGE_ACCOUNT_CONTAINER_NAME.: terraform
-ARM_SAS_TOKEN......................: 116
-```
-
-### 2. Obtendo um SAS Token
-
-O script `scripts/security/arm_sas_token_set_env_variable` obtém um SAS Token usando o Azure CLI.
-
-O SAS Token expira em 1 hora e será usado para acessar o Storage Account que armazenará o State File do Terraform.
-
-```bash
-`scripts/security/arm_sas_token_set_env_variable`
-```
-
-Confira se as variáveis de ambiente estão configuradas antes de prosseguir:
-
-```bash
-scripts/show_arm_variables
-```
-
-```bash
-ARM_SUBSCRIPTION_ID................: 7f65403e-eec5-45c4-a4ac-1eafc74192ca
-ARM_TENANT_ID......................: 16aaff56-7bcd-474f-a975-fe20562ee656
-ARM_CLIENT_ID......................: 7dcc3fa0-2794-4ed7-b84f-cd31e244d34d
-ARM_CLIENT_SECRET..................: 36
-ARM_STORAGE_ACCOUNT_NAME...........: acmestorage
-ARM_STORAGE_ACCOUNT_CONTAINER_NAME.: terraform
-ARM_SAS_TOKEN......................: 0
-```
-
-### 3. Empacotando o Projeto de Exemplo
-
-```bash
-./pack "${PWD}/example/azure-fake-module"
-```
-
-### 4. Executando o Container usando os valores padrão
+### 2. Executando o Container usando os valores padrão
 
 ```bash
 scripts/stackrun azure-fake-module:latest plan
@@ -105,7 +62,7 @@ scripts/stackrun azure-fake-module:latest plan
 scripts/stackrun azure-fake-module:latest apply
 ```
 
-### 5. Executando o Container usando arquivos de variáveis personalizadas
+### 3. Executando o Container usando arquivos de variáveis personalizadas
 
 Embora não recomendável por ferir o princípio de que um artefato deveria sempre produzir o mesmo resultado, é possível passar um arquivo tfvars através de um volume para o container e usá-lo nos comandos Terraform.
 
@@ -119,9 +76,7 @@ scripts/stackrun azure-fake-module:latest plan -var-file=/opt/variables/terrafor
 scripts/stackrun azure-fake-module:latest apply -var-file=/opt/variables/terraform.tfvars -auto-approve
 ```
 
-### 6. Criando Imagens Personalizadas
-
-#### Sandbox
+### 4. Criando Imagens Personalizadas
 
 ```bash
 docker build --rm \
@@ -129,9 +84,9 @@ docker build --rm \
 ```
 
 ```bash
-scripts/azrun azure-fake-module/sandbox:latest plan
+scripts/stackrun azure-fake-module/sandbox:latest plan
 ```
 
 ```bash
-scripts/azrun azure-fake-module/sandbox:latest apply
+scripts/stackrun azure-fake-module/sandbox:latest apply
 ```
