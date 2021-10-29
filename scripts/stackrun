@@ -35,7 +35,12 @@ generate_a_script_to_run_the_command() {
   echo "LOCAL_TERRAFORM_VARIABLES_DIRECTORY=${LOCAL_TERRAFORM_VARIABLES_DIRECTORY}"
   echo "LOCAL_TERRAFORM_OUTPUT_DIRECTORY=${LOCAL_TERRAFORM_OUTPUT_DIRECTORY}"
   cat  "templates/stackrun.conf"
-  cat  "templates/provider/${TERRAFORM_PROVIDER?}/credentials_parameters.conf"
+  cat  "templates/provider/${TERRAFORM_PROVIDER?}/credentials_run.conf"
+
+  for CREDENTIALS_FILE in $(find templates/backend -name credentials_run.conf); do
+    cat "${CREDENTIALS_FILE}"
+  done
+
   echo "${COMMAND?}"
 }
 
