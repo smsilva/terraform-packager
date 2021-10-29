@@ -35,6 +35,7 @@ generate_a_script_to_run_the_command() {
   echo "LOCAL_TERRAFORM_VARIABLES_DIRECTORY=${LOCAL_TERRAFORM_VARIABLES_DIRECTORY}"
   echo "LOCAL_TERRAFORM_OUTPUT_DIRECTORY=${LOCAL_TERRAFORM_OUTPUT_DIRECTORY}"
 
+  echo ""
   cat  "templates/stackrun.conf"
   cat  "templates/provider/${TERRAFORM_PROVIDER?}/credentials_run.conf"
 
@@ -46,5 +47,13 @@ generate_a_script_to_run_the_command() {
 }
 
 generate_a_script_to_run_the_command > "${STACK_RUN_GENERATED_SCRIPT}" && \
-chmod +x "${STACK_RUN_GENERATED_SCRIPT}" && \
+chmod +x "${STACK_RUN_GENERATED_SCRIPT}"
+
+if [ "${DEBUG}" != "0" ]; then
+  echo ""
+  echo "Stack Runner Command"
+  echo ""
+  awk '{ print "  " $0 }' < ./"${STACK_RUN_GENERATED_SCRIPT}"
+fi
+
 ./"${STACK_RUN_GENERATED_SCRIPT}"
