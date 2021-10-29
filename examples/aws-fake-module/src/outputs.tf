@@ -1,12 +1,7 @@
-variable "name" {
-  type    = string
-  default = "some value here"
+output "bucket_id" {
+  value = aws_s3_bucket.default.id
 }
 
-output "message" {
-  value = "input variable name value: ${var.name}"
-}
-
-output "something" {
-  value = "something message"
+output "bucket_regional_domain_name" {
+  value = aws_s3_bucket.default.bucket_regional_domain_name
 }

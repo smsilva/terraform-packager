@@ -1,8 +1,3 @@
-variable "name" {
-  type    = string
-  default = "some value here"
-}
-
-output "message" {
-  value = "input variable name value: ${var.name}"
+output "bucket_id" {
+  value = google_storage_bucket.default.id
 }

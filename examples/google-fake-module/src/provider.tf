@@ -1,11 +1,10 @@
 provider "google" {
-  credentials = "/opt/terraform/credentials.json"
 }
 
 terraform {
   required_version = ">= 1.0.0, < 2.0.0"
 
-  backend "local" {}
+  backend "azurerm" {}
 
   required_providers {
     google = {
