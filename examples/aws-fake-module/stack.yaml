@@ -1,0 +1,5 @@
+name: aws-fake-module
+version: 0.1.0
+terraform:
+  version: 1.0.9
+  backend: azurerm

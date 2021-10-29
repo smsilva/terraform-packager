@@ -11,7 +11,8 @@ ADD  .ssh/                                 /root/.ssh/
 ADD  backend.hcl                           /opt/backend/fragment.hcl
 ADD  backend.conf                          /opt/backend/template.conf
 ADD  credentials.json                      /opt/terraform/credentials.json
-ADD  credentials.conf                      /opt/terraform/credentials.conf
+ADD  credentials_provider.conf             /opt/terraform/credentials_provider.conf
+ADD  credentials_backend.conf              /opt/terraform/credentials_backend.conf
 ADD  environment_variables.conf            /opt/environment_variables.conf
 ADD  scripts/                              /opt/scripts
 ADD  src/                                  /opt/src

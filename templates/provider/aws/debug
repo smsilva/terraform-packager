@@ -1,0 +1,9 @@
+#!/bin/sh
+if [ "${DEBUG-0}" != "0" ]; then
+  echo "Amazon Web Services"
+  echo ""
+  echo "  aws:"
+  echo "    access-key:     ${AWS_ACCESS_KEY}"
+  echo "    secret-key:     ${#AWS_SECRET_KEY}"
+  echo "    default-region: ${AWS_DEFAULT_REGION}"
+fi

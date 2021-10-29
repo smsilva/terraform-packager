@@ -41,4 +41,5 @@ generate_a_script_to_run_the_command() {
 
 generate_a_script_to_run_the_command > "${STACK_RUN_GENERATED_SCRIPT}" && \
 chmod +x "${STACK_RUN_GENERATED_SCRIPT}" && \
-./"${STACK_RUN_GENERATED_SCRIPT}"
+#./"${STACK_RUN_GENERATED_SCRIPT}"
+batcat ./"${STACK_RUN_GENERATED_SCRIPT}"

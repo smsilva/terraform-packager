@@ -2,15 +2,17 @@
 export PATH=/opt/scripts/:${PATH}
 
 initialization() {
-  BUILD_ONLY_CREDENTIALS_FILE="/opt/terraform/credentials.conf"
+  PROVIDER_CREDENTIALS_FILE="/opt/terraform/credentials_provider.conf"
+  BACKEND_CREDENTIALS_FILE="/opt/terraform/credentials_backend.conf"
 
-  if [ -e "${BUILD_ONLY_CREDENTIALS_FILE}" ]; then
+  if [ -e "${PROVIDER_CREDENTIALS_FILE}" ]; then
     # Change backend config from local to specific Provider
     sed -i -e '/  backend/{r /opt/backend/fragment.hcl' -e 'd;}' /opt/src/provider.tf
 
     # shellcheck disable=SC2039
     # shellcheck disable=SC1090
-    source "${BUILD_ONLY_CREDENTIALS_FILE}"
+    source "${PROVIDER_CREDENTIALS_FILE}"
+    source "${BACKEND_CREDENTIALS_FILE}"
   fi
 
   # shellcheck disable=SC1090
