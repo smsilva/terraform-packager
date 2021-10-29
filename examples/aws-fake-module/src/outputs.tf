@@ -6,3 +6,7 @@ variable "name" {
 output "message" {
   value = "input variable name value: ${var.name}"
 }
+
+output "something" {
+  value = "something message"
+}
