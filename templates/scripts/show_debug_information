@@ -1,5 +1,5 @@
 #!/bin/sh
-if [ "${DEBUG-0}" != "0" ]; then
+if [ "${DEBUG-0}" -gt 0 ]; then
   echo ""
   echo "Stack Parameters"
   echo ""
@@ -14,16 +14,20 @@ if [ "${DEBUG-0}" != "0" ]; then
   echo "    backend:                ${TERRAFORM_BACKEND}"
   echo "    lock-timeout:           ${LOCK_TIMEOUT_SECONDS}"
   echo "    state-file:             ${TERRAFORM_REMOTE_STATE_FILE_PATH}"
-  echo ""
-  "/opt/scripts/debug-provider"
-  "/opt/scripts/debug-backend"
-  echo ""
-  echo "Terraform Initialization"
-  echo ""
-  echo "  provider.tf: |"
-  awk '{ print "    " $0 }' < "/opt/src/provider.tf"
 
-  echo ""
-  echo "  backend.conf: |"
-  awk '{ print "    " $0 }' < "/opt/src/backend.conf"
+  if [ "${DEBUG-0}" -gt 1 ]; then
+    echo ""
+    /opt/scripts/debug-provider
+    /opt/scripts/debug-backend
+
+    echo ""
+    echo "Terraform Initialization"
+    echo ""
+    echo "  provider.tf: |"
+    awk '{ print "    " $0 }' < "/opt/src/provider.tf"
+
+    echo ""
+    echo "  backend.conf: |"
+    awk '{ print "    " $0 }' < "/opt/src/backend.conf"
+  fi
 fi

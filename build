@@ -1,1 +1,2 @@
-scripts/stackbuild
+#!/bin/bash
+time env DEBUG=${DEBUG-2} scripts/stackbuild ${1}

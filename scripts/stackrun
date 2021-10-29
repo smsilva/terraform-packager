@@ -21,16 +21,15 @@ TERRAFORM_PROVIDER=$(awk -F '-' '{ print $1 }' <<< "${COMMAND?}")
 
 DEBUG=${DEBUG-1}
 
-if [ "${DEBUG}" != "0" ]; then
+if [ "${DEBUG}" -gt 0 ]; then
   echo ""
   echo "Stack Runner"
   echo ""
   echo "  terraform:"
-  echo "    command:  ${COMMAND?}"
-  echo "    provider:  ${TERRAFORM_PROVIDER?}"
-  echo "    variables: ${LOCAL_TERRAFORM_VARIABLES_DIRECTORY?}"
-  echo "    output:    ${LOCAL_TERRAFORM_OUTPUT_DIRECTORY?}"
-  echo ""
+  echo "    command:                ${COMMAND?}"
+  echo "    provider:               ${TERRAFORM_PROVIDER?}"
+  echo "    variables:              ${LOCAL_TERRAFORM_VARIABLES_DIRECTORY?}"
+  echo "    output:                 ${LOCAL_TERRAFORM_OUTPUT_DIRECTORY?}"
 fi
 
 export DEBUG
@@ -54,7 +53,7 @@ generate_a_script_to_run_the_command() {
 generate_a_script_to_run_the_command > "${STACK_RUN_GENERATED_SCRIPT}" && \
 chmod +x "${STACK_RUN_GENERATED_SCRIPT}"
 
-if [ "${DEBUG}" != "0" ]; then
+if [ "${DEBUG}" -gt 1 ]; then
   echo ""
   echo "Stack Runner Command"
   echo ""
