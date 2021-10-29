@@ -1,12 +1,33 @@
 #!/bin/bash
-set -euo pipefail
+# DEBUG Levels
+#   0 - No messages
+#   1 - Only Parameters
+#   2 - Parameters and Image Builder Outputs
+TF_PACKAGER_DEBUG_LEVEL="${DEBUG-2}"
 
 THIS_SCRIPT="${PWD}/${0}"
 TF_PROJECT_DIRECTORY="${1}"
+
+if [ -z "${TF_PROJECT_DIRECTORY}" ]; then
+  echo ""
+  echo "Stack Project Root Folder needs to be informed."
+  echo ""
+  echo "  Usage:"
+  echo ""
+  echo "    scripts/stackbuild examples/google-fake-module"
+  echo ""
+  exit 1
+fi
+
+set -euo pipefail
+
 TF_SOURCE_CODE_DIRECTORY="${TF_PROJECT_DIRECTORY?}/src"
 TF_PACKAGER_SCRIPTS_DIRECTORY="$(dirname "${THIS_SCRIPT}")/scripts"
-TF_PACKAGER_DEBUG_LEVEL="${TF_PACKAGER_DEBUG_LEVEL-1}"
 TF_PACKAGER_CONTAINER_BUILDER="${TF_PACKAGER_CONTAINER_BUILDER-docker}"
+
+echo "THIS_SCRIPT...................: ${THIS_SCRIPT}"
+echo "TF_PACKAGER_SCRIPTS_DIRECTORY.: ${TF_PACKAGER_SCRIPTS_DIRECTORY}"
+echo "TF_PACKAGER_DEBUG_LEVEL.......: ${THIS_SCRIPT}"
 
 export PATH="${TF_PACKAGER_SCRIPTS_DIRECTORY}:${PATH}"
 export TF_PROJECT_DIRECTORY
@@ -23,7 +44,7 @@ validate_source_code "${TF_SOURCE_CODE_DIRECTORY}"
 
 create_build_context
 
-if [ "${TF_PACKAGER_DEBUG_LEVEL}" == "1" ]; then
+if [ "${TF_PACKAGER_DEBUG_LEVEL}" == "2" ]; then
   build_container_image
 else
   build_container_image > /dev/null

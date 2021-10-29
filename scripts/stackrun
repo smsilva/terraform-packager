@@ -1,6 +1,11 @@
 #!/bin/bash
 COMMAND="$@"
 
+if [ -z "${COMMAND?}" ]; then
+  echo "Command not informed."
+  exit 1
+fi
+
 LOCAL_TERRAFORM_VARIABLES_DIRECTORY="${LOCAL_TERRAFORM_VARIABLES_DIRECTORY-${PWD}}"
 LOCAL_TERRAFORM_OUTPUT_DIRECTORY="${HOME}/trash/terraform/output"
 

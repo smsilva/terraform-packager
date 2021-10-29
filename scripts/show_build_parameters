@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ "${TF_PACKAGER_DEBUG_LEVEL}" == "1" ]; then
+if [ "${TF_PACKAGER_DEBUG_LEVEL-0}" -gt 0 ]; then
   echo ""
   echo "Stack Build"
   echo ""
@@ -8,7 +8,7 @@ if [ "${TF_PACKAGER_DEBUG_LEVEL}" == "1" ]; then
   echo "    version:                ${STACK_VERSION?}"
   echo "    source-code:            ${TF_SOURCE_CODE_DIRECTORY?}"
   echo ""
-  echo "  terraform:                ${TERRAFORM_VERSION?}"
+  echo "  terraform:"
   echo "    version:                ${TERRAFORM_VERSION?}"
   echo "    build-context:          ${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY}"
   echo ""
