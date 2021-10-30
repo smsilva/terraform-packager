@@ -1,7 +1,9 @@
 #!/bin/bash
+DEBUG="${DEBUG-1}"
+
 while read -r EXAMPLE_DIRECTORY; do
   time env \
-    DEBUG="${DEBUG-2}" \
+    DEBUG="${DEBUG}" \
     STACK_INSTANCE_NAME="${STACK_INSTANCE_NAME-blue}" \
     scripts/stackbuild "${EXAMPLE_DIRECTORY}"
 
