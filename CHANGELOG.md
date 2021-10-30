@@ -1,3 +1,9 @@
+## 0.2.3 (2021-10-30)
+
+### Fix
+
+- **plugin_cache_dir**: Fix plugin_cache_dir usage
+
 ## 0.2.2 (2021-10-29)
 
 ### Fix
