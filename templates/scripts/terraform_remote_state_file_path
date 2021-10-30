@@ -1,2 +1,2 @@
 #!/bin/sh
-echo "instances/${STACK_INSTANCE_NAME-default}.state.json"
+echo "${STACK_INSTANCE_NAME-default}.state.json"

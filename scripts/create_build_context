@@ -1,7 +1,9 @@
 #!/bin/bash
 
-# Clear Context Build Directory from previous execution
-rm -rf "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}"
+# Clear Context Build Directory from previous execution (except plugin_cache_dir)
+while read -r LINE; do
+  rm -rf "${LINE?}"
+done <<< "$(find "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}" -mindepth 1 -not -path '*plugin_cache_dir*')"
 
 # Create Context Build Directory
 mkdir -p "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}"
