@@ -5,7 +5,7 @@ while read -r LINE; do
   rm -rf "${LINE?}"
 done <<< "$(find "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}" -mindepth 1 -not -path '*plugin_cache_dir*')"
 
-# Create Context Build Directory
+# Create Context Build Directories
 mkdir -p "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/templates"
 
 # Copy Terraform Source Code to Build Context src/ directory
@@ -50,10 +50,6 @@ envsubst < "${TF_PACKAGER_TEMPLATES_DIRECTORY}/Dockerfile" > "${TF_PACKAGER_TEMP
 
 # Template: environment_variables.conf
 envsubst < "${TF_PACKAGER_ENVIRONMENT_VARIABLES_FILE_NAME_TEMPLATE}" > "${TF_PACKAGER_ENVIRONMENT_VARIABLES_FILE_NAME}"
-
-# Template: Backend Partial Configuration File:
-# https://www.terraform.io/docs/language/settings/backends/configuration.html#partial-configuration
-cp "${TERRAFORM_BACKEND_TEMPLATE_FILE}" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/backend.conf"
 
 # Debug Provider Script
 cp "${TF_PACKAGER_TEMPLATES_DIRECTORY}/provider/${TERRAFORM_PROVIDER}/debug" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/scripts/debug-provider"
