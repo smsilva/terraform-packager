@@ -31,11 +31,11 @@ if [ -z "${TF_PROJECT_DIRECTORY}" ]; then
   exit 1
 fi
 
+. build_setup_variables "${THIS_SCRIPT}"
+
 validate_source_code "${TF_SOURCE_CODE_DIRECTORY}"
 
 set -euo pipefail
-
-. build_setup_variables "${THIS_SCRIPT}"
 
 show_build_parameters
 

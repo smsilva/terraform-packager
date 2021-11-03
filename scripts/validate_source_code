@@ -1,20 +1,6 @@
 #!/bin/bash
 SOURCE_CODE_DIRECTORY="${1}"
 
-if [ ! -e "${TF_PACKAGER_STACK_CONFIG_YAML_FILE}" ]; then
-  echo "The stack.yaml file doesn't exists."
-  echo ""
-  echo "A file like the example below is expected:"
-
-  echo ""
-  echo "  ${TF_PACKAGER_STACK_CONFIG_YAML_FILE}"
-  echo ""
-  cat examples/google-bucket/stack.yaml
-  echo ""
-
-  exit 1
-fi
-
 if [ ! -e "${SOURCE_CODE_DIRECTORY}" ]; then
   echo "Source Code Directory doesn't exists: ${SOURCE_CODE_DIRECTORY}"
   exit 1
