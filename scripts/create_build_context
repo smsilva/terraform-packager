@@ -20,6 +20,9 @@ cp "${TF_PACKAGER_TEMPLATES_DIRECTORY}/ssh_config" "${TF_PACKAGER_TEMPORARY_BUIL
 # Copy Scripts to add into Container Image
 cp -R "${TF_PACKAGER_SCRIPTS_DIRECTORY_BUILD}" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/scripts"
 
+# Copy Provider Templates
+cp -R "${TF_PACKAGER_TEMPLATES_DIRECTORY}/provider" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/templates/provider"
+
 # Copy Backend Templates
 cp -R "${TF_PACKAGER_TEMPLATES_DIRECTORY}/backend" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/templates/backend"
 

@@ -1,5 +1,5 @@
 #!/bin/bash
-DEBUG="${DEBUG-1}"
+DEBUG="${DEBUG-2}"
 
 while read -r EXAMPLE_DIRECTORY; do
   time env \

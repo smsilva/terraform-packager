@@ -16,7 +16,7 @@ if [ "${DEBUG-0}" -gt 0 ]; then
   if [ "${DEBUG-0}" -gt 1 ]; then
     echo "  provider:"
     echo "    ${TERRAFORM_PROVIDER}:"
-    /opt/scripts/debug-provider
+    /opt/templates/provider/"${TERRAFORM_PROVIDER}"/debug
 
     echo "  backend:"
     echo "    ${TERRAFORM_BACKEND}:"
