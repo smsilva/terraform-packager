@@ -1,4 +1,4 @@
 #!/bin/sh
 while read -r LINE; do
   sh -c "echo ${LINE}"
-done < /opt/backend/template.conf
+done < /opt/templates/backend/"${TERRAFORM_BACKEND}"/backend.conf

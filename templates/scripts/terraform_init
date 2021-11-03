@@ -6,8 +6,10 @@ initialization() {
   BACKEND_CREDENTIALS_FILE="/opt/terraform/credentials_backend.conf"
 
   if [ -e "${PROVIDER_CREDENTIALS_FILE}" ]; then
-    # Change backend config from local to specific Provider
-    sed -i -e '/  backend/{r /opt/backend/fragment.hcl' -e 'd;}' /opt/src/provider.tf
+    SED_REPLACE_EXPRESSION=$(printf '/  backend/{r %s' "/opt/templates/backend/${TERRAFORM_BACKEND}/backend.hcl")
+
+    # Change backend config from local to a new one
+    sed -i -e "${SED_REPLACE_EXPRESSION?}" -e 'd;}' /opt/src/provider.tf
 
     # shellcheck disable=SC2039
     # shellcheck disable=SC1090
