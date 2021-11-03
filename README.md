@@ -29,7 +29,7 @@ name: azure-nome-do-seu-modulo
 version: 0.1.0
 terraform:
   version: 1.0.9
-  backende: azurerm
+  backend: azurerm
 ```
 
 ### Executando
