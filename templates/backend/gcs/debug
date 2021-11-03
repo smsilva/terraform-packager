@@ -1,5 +1,5 @@
 #!/bin/sh
 if [ "${DEBUG-0}" != "0" ]; then
-  echo "    bucket:               ${GOOGLE_BUCKET}"
-  echo "    prefix:               ${GOOGLE_PREFIX}"
+  echo "      bucket:               ${GOOGLE_BUCKET}"
+  echo "      prefix:               ${GOOGLE_PREFIX}"
 fi

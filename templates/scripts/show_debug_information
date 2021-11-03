@@ -10,15 +10,17 @@ if [ "${DEBUG-0}" -gt 0 ]; then
   echo ""
   echo "  terraform:"
   echo "    version:                ${TERRAFORM_VERSION}"
-  echo "    provider:               ${TERRAFORM_PROVIDER}"
-  echo "    backend:                ${TERRAFORM_BACKEND}"
   echo "    lock-timeout:           ${LOCK_TIMEOUT_SECONDS}"
   echo "    state-file:             ${TERRAFORM_REMOTE_STATE_FILE_PATH}"
 
   if [ "${DEBUG-0}" -gt 1 ]; then
-    echo ""
+    echo "  provider:"
+    echo "    ${TERRAFORM_PROVIDER}:"
     /opt/scripts/debug-provider
-    /opt/scripts/debug-backend
+
+    echo "  backend:"
+    echo "    ${TERRAFORM_BACKEND}:"
+    /opt/templates/backend/"${TERRAFORM_BACKEND}"/debug
 
     echo ""
     echo "Terraform Initialization"
