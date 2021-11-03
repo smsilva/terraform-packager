@@ -7,20 +7,6 @@ TF_PACKAGER_DEBUG_LEVEL="${DEBUG-2}"
 
 THIS_SCRIPT="${PWD}/${0}"
 TF_PROJECT_DIRECTORY="${1}"
-
-if [ -z "${TF_PROJECT_DIRECTORY}" ]; then
-  echo ""
-  echo "Stack Project Root Folder needs to be informed."
-  echo ""
-  echo "  Usage:"
-  echo ""
-  echo "    scripts/stackbuild examples/google-fake-module"
-  echo ""
-  exit 1
-fi
-
-set -euo pipefail
-
 TF_SOURCE_CODE_DIRECTORY="${TF_PROJECT_DIRECTORY?}/src"
 TF_PACKAGER_SCRIPTS_DIRECTORY="$(dirname "${THIS_SCRIPT}")"
 TF_PACKAGER_ROOT_DIRECTORY="${TF_PACKAGER_SCRIPTS_DIRECTORY}/.."
@@ -34,11 +20,24 @@ export TF_PACKAGER_DEBUG_LEVEL
 export TF_SOURCE_CODE_DIRECTORY
 export TF_PACKAGER_CONTAINER_BUILDER
 
+if [ -z "${TF_PROJECT_DIRECTORY}" ]; then
+  echo ""
+  echo "Stack Project Root Folder needs to be informed."
+  echo ""
+  echo "  Usage:"
+  echo ""
+  echo "    scripts/stackbuild examples/google-bucket"
+  echo ""
+  exit 1
+fi
+
+validate_source_code "${TF_SOURCE_CODE_DIRECTORY}"
+
+set -euo pipefail
+
 . build_setup_variables "${THIS_SCRIPT}"
 
 show_build_parameters
-
-validate_source_code "${TF_SOURCE_CODE_DIRECTORY}"
 
 create_build_context
 

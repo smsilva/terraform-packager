@@ -28,20 +28,6 @@ export TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY
 
 mkdir -p "${TF_PACKAGER_TEMPORARY_DIRECTORY}"
 
-if [ ! -e "${TF_PACKAGER_STACK_CONFIG_YAML_FILE}" ]; then
-  echo "The stack.yaml file doesn't exists."
-  echo ""
-  echo "A file like the example below is expected:"
-
-  echo ""
-  echo "  ${TF_PACKAGER_STACK_CONFIG_YAML_FILE}"
-  echo ""
-  cat templates/stack.yaml
-  echo ""
-
-  exit 1
-fi
-
 STACK_NAME=$(yq e .name "${TF_PACKAGER_STACK_CONFIG_YAML_FILE}")
 STACK_VERSION=$(yq e .version "${TF_PACKAGER_STACK_CONFIG_YAML_FILE}")
 
@@ -56,7 +42,7 @@ if [[ -z "${STACK_VERSION}" || "${STACK_VERSION}" == "null" ]]; then
 fi
 
 if [[ -z "${STACK_VERSION}" || "${STACK_VERSION}" == "null" ]]; then
-  STACK_VERSION="undefined"
+  STACK_VERSION="latest"
 fi
 
 TERRAFORM_VERSION=$(yq e .terraform.version "${TF_PACKAGER_STACK_CONFIG_YAML_FILE}")
