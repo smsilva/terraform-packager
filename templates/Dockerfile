@@ -8,7 +8,6 @@ RUN mkdir -p /opt/output/
 
 FROM terraform_base_image AS package
 ADD  .ssh/                                 /root/.ssh/
-ADD  backend.hcl                           /opt/backend/fragment.hcl
 ADD  backend.conf                          /opt/backend/template.conf
 ADD  credentials_provider.conf             /opt/terraform/credentials_provider.conf
 ADD  credentials_backend.conf              /opt/terraform/credentials_backend.conf

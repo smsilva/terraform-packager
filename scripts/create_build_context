@@ -42,7 +42,7 @@ fi
 # Template: Provider Credentials
 envsubst < "${TERRAFORM_PROVIDER_TEMPLATE_CREDENTIALS_FILE}" > "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/credentials_provider.conf"
 
-# Teamplate: Backed Credentials
+# Template: Backed Credentials
 envsubst < "${TERRAFORM_BACKEND_TEMPLATE_CREDENTIALS_FILE}" > "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/credentials_backend.conf"
 
 # Template: Dockerfile
@@ -51,10 +51,7 @@ envsubst < "${TF_PACKAGER_TEMPLATES_DIRECTORY}/Dockerfile" > "${TF_PACKAGER_TEMP
 # Template: environment_variables.conf
 envsubst < "${TF_PACKAGER_ENVIRONMENT_VARIABLES_FILE_NAME_TEMPLATE}" > "${TF_PACKAGER_ENVIRONMENT_VARIABLES_FILE_NAME}"
 
-# Template: Terraform Backend provider.tf backend fragment
-cp "${TERRAFORM_BACKEND_TEMPLATE_FRAGMENT}" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/backend.hcl"
-
-# Template: Terraform Template Backend Partial Configuration File:
+# Template: Backend Partial Configuration File:
 # https://www.terraform.io/docs/language/settings/backends/configuration.html#partial-configuration
 cp "${TERRAFORM_BACKEND_TEMPLATE_FILE}" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/backend.conf"
 
