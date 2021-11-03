@@ -1,4 +1,4 @@
-name: google-fake-module
+name: google-bucket
 version: 0.1.0
 terraform:
   version: 1.0.8

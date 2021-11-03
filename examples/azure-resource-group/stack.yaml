@@ -1,4 +1,4 @@
-name: azure-fake-module
+name: azure-resource-group
 version: 0.1.1
 terraform:
   version: 1.0.8
