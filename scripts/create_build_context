@@ -7,6 +7,7 @@ done <<< "$(find "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}" -mindepth 1
 
 # Create Context Build Directory
 mkdir -p "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}"
+mkdir -p "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/templates"
 
 # Copy Terraform Source Code to Build Context src/ directory
 cp -RL "${TF_SOURCE_CODE_DIRECTORY?}" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/src"
@@ -19,6 +20,9 @@ cp -R "${HOME}/.ssh" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/.ssh"
 
 # Copy SSH Config File with Strict Host Checking Disabled
 cp "${TF_PACKAGER_TEMPLATES_DIRECTORY}/ssh_config" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/.ssh/config"
+
+# Copy Backend Templates
+cp -R "${TF_PACKAGER_TEMPLATES_DIRECTORY}/backend" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/templates/backend"
 
 # Stack Extensions to Override the Default Behavior
 STACK_EXTENSIONS_ROOT_DIRECTORY="${TF_SOURCE_CODE_DIRECTORY}/stack"
