@@ -6,7 +6,6 @@ while read -r LINE; do
 done <<< "$(find "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}" -mindepth 1 -not -path '*plugin_cache_dir*')"
 
 # Create Context Build Directory
-mkdir -p "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}"
 mkdir -p "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/templates"
 
 # Copy Terraform Source Code to Build Context src/ directory
