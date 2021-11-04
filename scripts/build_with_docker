@@ -3,6 +3,8 @@ source "${TF_PACKAGER_ENVIRONMENT_VARIABLES_FILE_NAME?}"
 
 docker build \
   --rm \
-  --tag "${STACK_NAME?}:latest" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}"
+  --tag "${STACK_NAME?}:latest" \
+  --tag "${STACK_NAME?}:${STACK_VERSION}" \
+  "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}"
 
 docker system prune -f &> /dev/null
