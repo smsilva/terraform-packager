@@ -1,5 +1,6 @@
 **/.idea/
 **/.stackrun_generated.sh
+**/.terraform*
 **/.terraform/
 **/credentials.json
 **/output/
