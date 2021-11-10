@@ -14,14 +14,13 @@ locals {
   storage_bucket_name = "silvios${var.name}${random_string.storage_bucket_id.result}"
 }
 
-resource "azurerm_resource_group" "default" {
+data "azurerm_resource_group" "default" {
   name     = "demo"
-  location = var.location
 }
 
 resource "azurerm_storage_account" "default" {
   name                     = local.storage_bucket_name
-  resource_group_name      = azurerm_resource_group.default.name
+  resource_group_name      = data.azurerm_resource_group.default.name
   location                 = var.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
