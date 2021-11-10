@@ -1,3 +1,3 @@
 output "storage_account_id" {
-  value = "TODO"
+  value = azurerm_storage_account.default.id
 }
