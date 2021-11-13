@@ -1,6 +1,10 @@
 #!/bin/bash
 COMMAND="$@"
 
+THIS_SCRIPT="${0}"
+THIS_SCRIPT_FOLDER="$(dirname "${THIS_SCRIPT}")"
+TEMPLATES_FOLDER="${THIS_SCRIPT_FOLDER}/../templates"
+
 if [ -z "${COMMAND?}" ]; then
   echo "Command not informed."
   exit 1
@@ -15,7 +19,7 @@ touch "${LOCAL_TERRAFORM_OUTPUT_DIRECTORY}/terraform.plan"
 touch "${LOCAL_TERRAFORM_OUTPUT_DIRECTORY}/terraform.plan.json"
 touch "${LOCAL_TERRAFORM_OUTPUT_DIRECTORY}/terraform.plan.txt"
 
-STACK_RUN_GENERATED_SCRIPT=".stackrun_generated.sh"
+STACK_RUN_GENERATED_SCRIPT="${HOME}/.stackrun_generated.sh"
 
 TERRAFORM_PROVIDER=$(awk -F '-' '{ print $1 }' <<< "${COMMAND?}")
 
@@ -40,10 +44,10 @@ generate_a_script_to_run_the_command() {
   echo "LOCAL_TERRAFORM_OUTPUT_DIRECTORY=${LOCAL_TERRAFORM_OUTPUT_DIRECTORY}"
 
   echo ""
-  cat  "templates/stackrun.conf"
-  cat  "templates/provider/${TERRAFORM_PROVIDER?}/credentials_run.conf"
+  cat  "${TEMPLATES_FOLDER?}/stackrun.conf"
+  cat  "${TEMPLATES_FOLDER?}/provider/${TERRAFORM_PROVIDER?}/credentials_run.conf"
 
-  for CREDENTIALS_FILE in $(find templates/backend -name credentials_run.conf); do
+  for CREDENTIALS_FILE in $(find "${TEMPLATES_FOLDER?}/backend" -name credentials_run.conf); do
     cat "${CREDENTIALS_FILE}"
   done
 
@@ -57,7 +61,7 @@ if [ "${DEBUG}" -gt 1 ]; then
   echo ""
   echo "Stack Runner Command"
   echo ""
-  awk '{ print "  " $0 }' < ./"${STACK_RUN_GENERATED_SCRIPT}"
+  awk '{ print "  " $0 }' < "${STACK_RUN_GENERATED_SCRIPT}"
 fi
 
-./"${STACK_RUN_GENERATED_SCRIPT}"
+"${STACK_RUN_GENERATED_SCRIPT}"
