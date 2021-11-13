@@ -1,3 +1,9 @@
+## 0.2.5 (2021-11-13)
+
+### Fix
+
+- **stackrun**: fix run when use container registry with image name
+
 ## 0.2.4 (2021-11-13)
 
 ### Fix
