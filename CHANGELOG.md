@@ -1,3 +1,9 @@
+## 0.2.4 (2021-11-13)
+
+### Fix
+
+- **stackrun**: enable the script to be executed from anywhere since the scripts folder is in the PATH variable
+
 ## 0.2.3 (2021-10-30)
 
 ### Fix
