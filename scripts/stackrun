@@ -21,7 +21,7 @@ touch "${LOCAL_TERRAFORM_OUTPUT_DIRECTORY}/terraform.plan.txt"
 
 STACK_RUN_GENERATED_SCRIPT="${HOME}/.stackrun_generated.sh"
 
-TERRAFORM_PROVIDER=$(awk -F '-' '{ print $1 }' <<< "${COMMAND?}")
+TERRAFORM_PROVIDER=$(echo "${COMMAND?}" | awk '{ print $1 }' | sed "s|.*/||" | awk -F '-' '{ print $1 }')
 
 DEBUG=${DEBUG-1}
 
