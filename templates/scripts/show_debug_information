@@ -32,4 +32,6 @@ if [ "${DEBUG-0}" -gt 0 ]; then
     echo "  backend.conf: |"
     awk '{ print "    " $0 }' < "/opt/src/backend.conf"
   fi
+
+  echo ""
 fi
