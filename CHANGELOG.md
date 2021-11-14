@@ -1,3 +1,9 @@
+## 0.2.6 (2021-11-14)
+
+### Fix
+
+- **version**: commitizen version using when no version were provided
+
 ## 0.2.5 (2021-11-13)
 
 ### Fix
