@@ -1,6 +1,6 @@
 # Terraform Packager
 
-## TLDR / Direto ao ponto
+## Resumindo
 
 ```bash
 # Google Cloud Credentials / Service Account / Bucket para armazenar o Terraform State
@@ -42,7 +42,9 @@ env DEBUG=1 scripts/stackrun google-bucket:edge apply
 env DEBUG=0 scripts/stackrun google-bucket:edge output
 ```
 
-Terraform Packager é uma coleção de scripts para empacotar código Terrraform.
+## Introdução
+
+**_Terraform Packager_** é uma coleção de _scripts_ e **templates** para **empacotar** código **Terrraform**.
 
 O objetivo é criar um artefato que seja autosuficiente e personalizável.
 
@@ -52,7 +54,7 @@ Uma imagem criada usa o conceito de Stacks e contém essencialmente:
 - **HCL Code**: Código Terraform usado para criar recursos
 - **Providers**: Os Terraform Providers serão baixados somente durante o build da imagem.
 
-Esse conceito procura seguir a fisolofia de "build once", ou seja, o build do artefato ocorre apenas uma vez e o mesmo artefato pode ser usado para criar várias instâncias da Stack usando diferentes credenciais.
+Esse conceito procura seguir a fisolofia de **"build once"**, ou seja, o build do artefato ocorre apenas uma vez e o mesmo artefato pode ser usado para criar várias instâncias da Stack usando diferentes credenciais.
 
 ## Dependências
 
