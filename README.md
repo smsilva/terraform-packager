@@ -1,5 +1,11 @@
 # Terraform Packager
 
+## TLDR / Direto ao ponto
+
+```bash
+scripts/stackbuild 
+```
+
 Terraform Packager é uma coleção de scripts para empacotar código Terrraform.
 
 O objetivo é criar um artefato que seja autosuficiente e personalizável.
