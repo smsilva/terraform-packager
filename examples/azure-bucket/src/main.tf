@@ -15,7 +15,7 @@ locals {
 }
 
 data "azurerm_resource_group" "default" {
-  name     = "demo"
+  name = var.resource_group_name
 }
 
 resource "azurerm_storage_account" "default" {
