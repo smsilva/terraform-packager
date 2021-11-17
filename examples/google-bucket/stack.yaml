@@ -1,5 +1,5 @@
 name: google-bucket
-version: 0.4.0
+version: edge
 terraform:
-  version: 1.0.8
+  version: 1.0.11
   backend: gcs
