@@ -3,7 +3,43 @@
 ## TLDR / Direto ao ponto
 
 ```bash
-scripts/stackbuild 
+# Google Cloud Credentials / Service Account / Bucket para armazenar o Terraform State
+export GOOGLE_CREDENTIALS_FILE="${HOME}/trash/credentials.json"
+
+if [ -e "${GOOGLE_CREDENTIALS_FILE}" ]; then
+
+  if which jq > /dev/null; then
+    GOOGLE_PROJECT=$(jq .project_id ${GOOGLE_CREDENTIALS_FILE} -r)
+  else
+    GOOGLE_PROJECT="$(grep project_id ${GOOGLE_CREDENTIALS_FILE} | awk -F '"' '{ print $4 }')"
+  fi
+
+  export GOOGLE_PROJECT
+else
+  echo "File doesn't exists: ${GOOGLE_CREDENTIALS_FILE}"
+  exit 1
+fi
+
+export GOOGLE_CREDENTIALS=$(cat "${GOOGLE_CREDENTIALS_FILE}" | tr -d "\n")
+export GOOGLE_BACKEND_CREDENTIALS="${GOOGLE_CREDENTIALS}"
+export GOOGLE_BUCKET="silvios-wasp-foundation-k9z"
+export GOOGLE_PREFIX="terraform"
+export GOOGLE_CREDENTIALS_BASE64=$(        echo "${GOOGLE_CREDENTIALS}"         | base64 | tr -d "\n")
+export GOOGLE_BACKEND_CREDENTIALS_BASE64=$(echo "${GOOGLE_BACKEND_CREDENTIALS}" | base64 | tr -d "\n")
+
+# Empacotando o Projeto de Exemplo
+git clone https://github.com/smsilva/terraform-packager.git
+cd terraform-packager
+
+export STACK_INSTANCE_NAME=wasp-files
+
+# Build
+env DEBUG=2 scripts/stackbuild examples/google-bucket 
+
+# Run
+env DEBUG=1 scripts/stackrun google-bucket:edge plan 
+env DEBUG=1 scripts/stackrun google-bucket:edge apply
+env DEBUG=0 scripts/stackrun google-bucket:edge output
 ```
 
 Terraform Packager é uma coleção de scripts para empacotar código Terrraform.
