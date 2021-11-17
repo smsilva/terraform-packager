@@ -1,3 +1,9 @@
+## 0.2.7 (2021-11-17)
+
+### Refactor
+
+- **example**: google-bucket inputs and outputs
+
 ## 0.2.6 (2021-11-14)
 
 ### Fix
