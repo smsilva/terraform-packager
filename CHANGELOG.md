@@ -1,3 +1,5 @@
+## Unreleased
+
 ## 0.2.7 (2021-11-17)
 
 ### Refactor
@@ -33,11 +35,6 @@
 ### Fix
 
 - **aws-provider**: AWS Provider support using Azure Storage Account as Terraform Backend
-
-## 0.2.1 (2021-10-24)
-
-### Fix
-
 - **stackrun**: Create a templating engine to generate execution script
 
 ## 0.2.0 (2021-10-03)
@@ -51,11 +48,6 @@
 ### Refactor
 
 - **test**: A helper script was created to help with tests
-
-## 0.1.2 (2021-10-03)
-
-### Refactor
-
 - **Dockerfiles-dev-and-sandbox**: Customize the instance name for Terraform Sate
 
 ## 0.1.1 (2021-10-03)
