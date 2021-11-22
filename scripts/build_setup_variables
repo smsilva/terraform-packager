@@ -28,12 +28,12 @@ export TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY
 
 mkdir -p "${TF_PACKAGER_TEMPORARY_DIRECTORY}"
 
-STACK_NAME=$(yq e .name "${TF_PACKAGER_STACK_CONFIG_YAML_FILE}")
-STACK_VERSION=$(yq e .version "${TF_PACKAGER_STACK_CONFIG_YAML_FILE}")
+STACK_NAME=$(grep "^name:" "${TF_PACKAGER_STACK_CONFIG_YAML_FILE}" | awk '{ print $2}' | tr -d " ")
+STACK_VERSION=$(grep "^version:" "${TF_PACKAGER_STACK_CONFIG_YAML_FILE}" | awk '{ print $2}' | tr -d " ")
 
 if [[ -z "${STACK_VERSION}" || "${STACK_VERSION}" == "null" ]]; then
   if [ -e "${TF_PACKAGER_SOURCE_CODE_COMMITIZEN_FILE}" ]; then
-    STACK_VERSION=$(yq e .commitizen.version "${TF_PACKAGER_SOURCE_CODE_COMMITIZEN_FILE}")
+    STACK_VERSION=$(grep "^  version:" "${TF_PACKAGER_SOURCE_CODE_COMMITIZEN_FILE}" | awk '{ print $2}' | tr -d " ")
   else
     if [ -e "${TF_PROJECT_DIRECTORY?}/.git" ]; then
       STACK_VERSION="$(git -C "${TF_PROJECT_DIRECTORY?}" log -1 --pretty=%h)"
@@ -45,9 +45,9 @@ if [[ -z "${STACK_VERSION}" || "${STACK_VERSION}" == "null" ]]; then
   STACK_VERSION="latest"
 fi
 
-TERRAFORM_VERSION=$(yq e .terraform.version "${TF_PACKAGER_STACK_CONFIG_YAML_FILE}")
-TERRAFORM_BACKEND=$(yq e .terraform.backend "${TF_PACKAGER_STACK_CONFIG_YAML_FILE}")
-TERRAFORM_PROVIDER=$(grep "^provider" "${TF_PACKAGER_SOURCE_CODE_PROVIDER_FILE?}" | grep -oP '(?<=\")(.*)(?=\")')
+TERRAFORM_VERSION=$( grep "^  version:" "${TF_PACKAGER_STACK_CONFIG_YAML_FILE}" | awk '{ print $2}' | tr -d " ")
+TERRAFORM_BACKEND=$( grep "^  backend:" "${TF_PACKAGER_STACK_CONFIG_YAML_FILE}" | awk '{ print $2}' | tr -d " ")
+TERRAFORM_PROVIDER=$(grep "^provider"   "${TF_PACKAGER_SOURCE_CODE_PROVIDER_FILE?}" | grep -oP '(?<=\")(.*)(?=\")')
 
 TERRAFORM_PROVIDER_TEMPLATE_CREDENTIALS_FILE="${TF_PACKAGER_TEMPLATES_DIRECTORY}/provider/${TERRAFORM_PROVIDER}/credentials_build.conf"
 TERRAFORM_BACKEND_TEMPLATE_CREDENTIALS_FILE="${TF_PACKAGER_TEMPLATES_DIRECTORY}/backend/${TERRAFORM_BACKEND}/credentials_build.conf"

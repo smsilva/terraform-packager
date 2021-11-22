@@ -5,4 +5,6 @@ buildah bud \
   --file Dockerfile \
   --rm \
   --layers \
-  --tag "${STACK_NAME?}:latest" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}"
+  --tag "${STACK_NAME?}:latest" \
+  --tag "${STACK_NAME?}:${STACK_VERSION}" \
+  "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}"
