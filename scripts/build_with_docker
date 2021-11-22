@@ -7,4 +7,10 @@ docker build \
   --tag "${STACK_NAME?}:${STACK_VERSION}" \
   "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}"
 
+CODE_EXIT="$?"
+
+if [  "${CODE_EXIT-0}" != "0" ]; then
+  exit "${CODE_EXIT}"
+fi
+
 docker system prune -f &> /dev/null

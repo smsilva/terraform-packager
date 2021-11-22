@@ -42,6 +42,12 @@ initialization() {
     -reconfigure \
     -upgrade=false \
     -backend-config /opt/src/backend.conf
+
+  CODE_EXIT="$?"
+
+  if [  "${CODE_EXIT-0}" != "0" ]; then
+    exit "${CODE_EXIT}"
+  fi
 }
 
 if [ "${DEBUG-0}" != "0" ]; then

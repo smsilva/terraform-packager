@@ -2,3 +2,9 @@
 source "${TF_PACKAGER_ENVIRONMENT_VARIABLES_FILE_NAME?}"
 
 "${TF_PACKAGER_SCRIPTS_DIRECTORY}/build_with_${TF_PACKAGER_CONTAINER_BUILDER}"
+
+CODE_EXIT="$?"
+
+if [  "${CODE_EXIT-0}" != "0" ]; then
+  exit "${CODE_EXIT}"
+fi
