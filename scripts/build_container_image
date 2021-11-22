@@ -8,3 +8,9 @@ CODE_EXIT="$?"
 if [  "${CODE_EXIT-0}" != "0" ]; then
   exit "${CODE_EXIT}"
 fi
+
+FILE_RESULT="${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY}/build_result.txt"
+
+echo "${STACK_NAME?}:${STACK_VERSION}" > "${FILE_RESULT}"
+
+echo "terraform_packager_result_file=${FILE_RESULT}"
