@@ -1,4 +1,8 @@
-## Unreleased
+## 0.2.8 (2021-11-22)
+
+### Refactor
+
+- **remove-yq-use**: Remove yq use from scripts
 
 ## 0.2.7 (2021-11-17)
 
