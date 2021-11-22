@@ -1,3 +1,9 @@
+## 0.2.9 (2021-11-22)
+
+### Refactor
+
+- **terraform-hcl-code**: Remove unused reference
+
 ## 0.2.8 (2021-11-22)
 
 ### Refactor
