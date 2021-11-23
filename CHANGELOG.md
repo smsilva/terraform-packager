@@ -1,3 +1,9 @@
+## 0.2.11 (2021-11-22)
+
+### Fix
+
+- **google-credentials**: google credentials now gets from base64 environment variables
+
 ## 0.2.10 (2021-11-22)
 
 ### Fix
