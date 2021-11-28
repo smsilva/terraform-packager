@@ -1,3 +1,9 @@
+## 0.2.12 (2021-11-28)
+
+### Fix
+
+- **validate**: check if stack.yaml file exists
+
 ## 0.2.11 (2021-11-22)
 
 ### Fix
