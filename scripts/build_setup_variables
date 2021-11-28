@@ -28,6 +28,11 @@ export TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY
 
 mkdir -p "${TF_PACKAGER_TEMPORARY_DIRECTORY}"
 
+if ! [ -e "${TF_PACKAGER_STACK_CONFIG_YAML_FILE}" ]; then
+  echo "A file 'stack.yaml' should exists into Root Stack Directory."
+  exit 1
+fi
+
 STACK_NAME=$(grep "^name:" "${TF_PACKAGER_STACK_CONFIG_YAML_FILE}" | awk '{ print $2}' | tr -d " ")
 STACK_VERSION=$(grep "^version:" "${TF_PACKAGER_STACK_CONFIG_YAML_FILE}" | awk '{ print $2}' | tr -d " ")
 
