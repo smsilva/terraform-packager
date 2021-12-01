@@ -1,3 +1,9 @@
+## 0.2.13 (2021-12-01)
+
+### Fix
+
+- **backend**: add google bucket name for gcs backend config
+
 ## 0.2.12 (2021-11-28)
 
 ### Fix
