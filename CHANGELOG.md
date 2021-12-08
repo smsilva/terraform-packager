@@ -1,3 +1,9 @@
+## 0.2.14 (2021-12-08)
+
+### Refactor
+
+- **debug**: change debug azure provider
+
 ## 0.2.13 (2021-12-01)
 
 ### Fix
