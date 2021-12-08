@@ -2,5 +2,6 @@
 if [ "${DEBUG-0}" != "0" ]; then
   echo "      tenant-id:            ${ARM_TENANT_ID}"
   echo "      subscription-id:      ${ARM_SUBSCRIPTION_ID}"
-  echo "      service-principal-id: ${ARM_CLIENT_ID} [${#ARM_CLIENT_SECRET}]"
+  echo "      client-id:            ${ARM_CLIENT_ID}"
+  echo "      client-secret:        ${ARM_CLIENT_SECRET:0:3}"
 fi
