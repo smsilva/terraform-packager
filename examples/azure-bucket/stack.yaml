@@ -1,5 +1,5 @@
 name: azure-bucket
 version: 0.1.3
 terraform:
-  version: 1.0.10
+  version: 1.0.11
   backend: azurerm
