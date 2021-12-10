@@ -5,6 +5,10 @@ export TERRAFORM_PLAN_FILE="${TERRAFORM_OUTPUT_DIRECTORY}/terraform.plan"
 export TERRAFORM_PLAN_JSON_FILE="${TERRAFORM_OUTPUT_DIRECTORY}/terraform.plan.json"
 export PATH=/opt/scripts/:${PATH}
 
+if [ -n "${STACK_INSTANCE_NAME_FINAL}" ]; then
+  STACK_INSTANCE_NAME="${STACK_INSTANCE_NAME_FINAL}"
+fi
+
 . terraform_init
 
 if [ "${TERRAFORM_COMMAND}" == "plan" ] || [ -z "${TERRAFORM_COMMAND}" ]; then
