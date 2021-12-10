@@ -1,3 +1,11 @@
+## 0.3.0 (2021-12-10)
+
+### Feat
+
+- **resource-group**: resource-group creation instead of data
+- **state**: stack instance name for state
+- **examples**: azure-bucket terraform version
+
 ## 0.2.14 (2021-12-08)
 
 ### Refactor
