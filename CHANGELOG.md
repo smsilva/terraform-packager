@@ -1,3 +1,9 @@
+## 0.4.0 (2021-12-13)
+
+### Feat
+
+- **backend**: add access key to backend template
+
 ## 0.3.0 (2021-12-10)
 
 ### Feat
