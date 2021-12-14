@@ -1,3 +1,9 @@
+## 0.4.1 (2021-12-14)
+
+### Fix
+
+- **stackrun**: adding arm access key variable
+
 ## 0.4.0 (2021-12-13)
 
 ### Feat
