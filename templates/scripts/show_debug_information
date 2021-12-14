@@ -30,7 +30,10 @@ if [ "${DEBUG-0}" -gt 0 ]; then
 
     echo ""
     echo "  backend.conf: |"
-    awk '{ print "    " $0 }' < "/opt/src/backend.conf"
+    awk \
+      -e '  /access_key/ {$2=substr($3,2,5); print "    " $1 " = \"" $2 "...\"" }' \
+      -e '! /access_key/                   { print "    " $0 }' \
+      "/opt/src/backend.conf"
   fi
 
   echo ""
