@@ -1,6 +1,4 @@
 #!/bin/bash
-source "${TF_PACKAGER_SOURCE_CODE_STACK_CONFIG_FILE?}"
-
 KANIKO_IMAGES="${HOME}/.kaniko/images"
 
 mkdir -p "${KANIKO_IMAGES}"

@@ -1,3 +1,9 @@
+## 0.4.2 (2021-12-14)
+
+### Fix
+
+- **debug**: hide arm accees key when debug is 2
+
 ## 0.4.1 (2021-12-14)
 
 ### Fix
