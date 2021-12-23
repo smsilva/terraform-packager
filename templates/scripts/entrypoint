@@ -3,6 +3,7 @@ export TERRAFORM_COMMAND="$@"
 export TERRAFORM_OUTPUT_DIRECTORY="/opt/output"
 export TERRAFORM_PLAN_FILE="${TERRAFORM_OUTPUT_DIRECTORY}/terraform.plan"
 export TERRAFORM_PLAN_JSON_FILE="${TERRAFORM_OUTPUT_DIRECTORY}/terraform.plan.json"
+export TERRAFORM_PLAN_TXT_FILE="${TERRAFORM_OUTPUT_DIRECTORY}/terraform.plan.txt"
 export PATH=/opt/scripts/:${PATH}
 
 if [ -n "${STACK_INSTANCE_NAME_FINAL}" ]; then
@@ -10,6 +11,11 @@ if [ -n "${STACK_INSTANCE_NAME_FINAL}" ]; then
 fi
 
 . terraform_init
+
+if [ "${TERRAFORM_COMMAND}" == "plan-no-color" ]; then
+  terraform_plan_no_color
+  exit $?
+fi
 
 if [ "${TERRAFORM_COMMAND}" == "plan" ] || [ -z "${TERRAFORM_COMMAND}" ]; then
   terraform_plan_with_output_file

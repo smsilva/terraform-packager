@@ -1,0 +1,8 @@
+#!/bin/sh
+
+terraform plan \
+  -lock-timeout="${LOCK_TIMEOUT_SECONDS}s" \
+  -no-color \
+  -out "${TERRAFORM_PLAN_FILE?}" | tee "${TERRAFORM_PLAN_TXT_FILE?}" && \
+terraform show \
+  -json "${TERRAFORM_PLAN_FILE?}" > "${TERRAFORM_PLAN_JSON_FILE?}"
