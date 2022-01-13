@@ -1,8 +1,21 @@
 #!/bin/sh
 
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --args)
+            argsOption+=" $2"
+            shift 2
+            ;;
+        *)
+            shift
+            ;;
+    esac
+done
+
 terraform plan \
   -lock-timeout="${LOCK_TIMEOUT_SECONDS}s" \
   -no-color \
+  ${argsOption} \
   -out "${TERRAFORM_PLAN_FILE?}" | tee "${TERRAFORM_PLAN_TXT_FILE?}" && \
 terraform show \
   -json "${TERRAFORM_PLAN_FILE?}" > "${TERRAFORM_PLAN_JSON_FILE?}"
