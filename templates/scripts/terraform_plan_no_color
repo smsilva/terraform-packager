@@ -1,14 +1,13 @@
 #!/bin/sh
 
-while [[ $# -gt 0 ]]; do
+TEMP=$(getopt -a -o a: --long args: -- "$@")
+eval set -- "$TEMP"
+
+while true ; do
     case "$1" in
-        --args)
-            argsOption+=" $2"
-            shift 2
-            ;;
-        *)
-            shift
-            ;;
+        -a|--args) argsOption="${argsOption} $2" ; shift 2 ;;
+        --) shift ; break ;;
+        *) echo "Internal error!" ; exit 1 ;;
     esac
 done
 

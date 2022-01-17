@@ -1,7 +1,7 @@
 #!/bin/sh
 export TERRAFORM_COMMAND="$1"
 shift
-export TERRAFORM_COMMAND_OPTIONS=( "$@" )
+export TERRAFORM_COMMAND_OPTIONS="$@"
 export TERRAFORM_OUTPUT_DIRECTORY="/opt/output"
 export TERRAFORM_PLAN_FILE="${TERRAFORM_OUTPUT_DIRECTORY}/terraform.plan"
 export TERRAFORM_PLAN_JSON_FILE="${TERRAFORM_OUTPUT_DIRECTORY}/terraform.plan.json"
@@ -15,18 +15,18 @@ fi
 . terraform_init
 
 if [ "${TERRAFORM_COMMAND}" == "plan-no-color" ]; then
-  terraform_plan_no_color "${TERRAFORM_COMMAND_OPTIONS[@]}"
+  terraform_plan_no_color ${TERRAFORM_COMMAND_OPTIONS}
   exit $?
 fi
 
 if [ "${TERRAFORM_COMMAND}" == "plan" ] || [ -z "${TERRAFORM_COMMAND}" ]; then
-  terraform_plan_with_output_file "${TERRAFORM_COMMAND_OPTIONS[@]}"
+  terraform_plan_with_output_file ${TERRAFORM_COMMAND_OPTIONS}
   exit $?
 fi
 
 if [ "${TERRAFORM_COMMAND}" == "apply" ]; then
-  terraform_apply_with_auto_approve "${TERRAFORM_COMMAND_OPTIONS[@]}"
+  terraform_apply_with_auto_approve ${TERRAFORM_COMMAND_OPTIONS}
   exit $?
 fi
 
-terraform "${TERRAFORM_COMMAND} ${TERRAFORM_COMMAND_OPTIONS[@]}"
+terraform ${TERRAFORM_COMMAND} ${TERRAFORM_COMMAND_OPTIONS}
