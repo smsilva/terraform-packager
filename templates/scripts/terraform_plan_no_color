@@ -1,20 +1,11 @@
 #!/bin/sh
 
-TEMP=$(getopt -a -o a: --long args: -- "$@")
-eval set -- "$TEMP"
-
-while true ; do
-    case "$1" in
-        -a|--args) argsOption="${argsOption} $2" ; shift 2 ;;
-        --) shift ; break ;;
-        *) echo "Internal error!" ; exit 1 ;;
-    esac
-done
+extraArgs="$@"
 
 terraform plan \
   -lock-timeout="${LOCK_TIMEOUT_SECONDS}s" \
   -no-color \
-  ${argsOption} \
+  ${extraArgs} \
   -out "${TERRAFORM_PLAN_FILE?}" | tee "${TERRAFORM_PLAN_TXT_FILE?}" && \
 terraform show \
   -json "${TERRAFORM_PLAN_FILE?}" > "${TERRAFORM_PLAN_JSON_FILE?}"
