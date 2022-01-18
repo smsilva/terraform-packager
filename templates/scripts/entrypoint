@@ -8,7 +8,7 @@ export TERRAFORM_PLAN_JSON_FILE="${TERRAFORM_OUTPUT_DIRECTORY}/terraform.plan.js
 export TERRAFORM_PLAN_TXT_FILE="${TERRAFORM_OUTPUT_DIRECTORY}/terraform.plan.txt"
 export PATH=/opt/scripts/:${PATH}
 
-for i in "$@"; do
+for i in "${TERRAFORM_COMMAND_OPTIONS}"; do
   case $i in
     -args=*)
       extraArgs="${extraArgs} ${i#*=}"
