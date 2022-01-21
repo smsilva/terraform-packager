@@ -1,0 +1,5 @@
+#!/bin/sh
+if [ "${DEBUG-0}" != "0" ]; then
+  echo "      api-id:               ${INCAPSULA_API_ID}"
+  echo "      api-key:              ${INCAPSULA_API_KEY:0:3}"
+fi
