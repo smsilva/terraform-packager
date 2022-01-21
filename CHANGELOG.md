@@ -1,3 +1,26 @@
+## 0.5.0 (2022-01-21)
+
+### Feat
+
+- **providers**: create cloudamqp provider templates
+- **providers**: create imperva provider templates
+- **providers**: create atlas mongodb provider templates
+
+## 0.4.4 (2022-01-18)
+
+### Refactor
+
+- fix issue with $@
+- use correct var
+- change the args parser
+- add optional arguments to commands
+
+### Feat
+
+- **templates/entrypoint**: Add terraform command options for the pre-defined scripts
+
+## 0.4.3 (2021-12-22)
+
 ## 0.4.2 (2021-12-14)
 
 ### Fix
