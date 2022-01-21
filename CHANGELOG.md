@@ -1,3 +1,14 @@
+## 0.6.0 (2022-01-21)
+
+### Fix
+
+- fix a bug where you can't pass variable with plan file
+- **ssh_config**: update ssh_config template file
+
+### Feat
+
+- **providers**: create cloudamqp provider templates
+
 ## 0.5.0 (2022-01-21)
 
 ### Feat
