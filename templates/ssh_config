@@ -1,2 +1,5 @@
 Host *
+    User git
+    PubkeyAcceptedAlgorithms +ssh-rsa
+    HostkeyAlgorithms +ssh-rsa
     StrictHostKeyChecking no
