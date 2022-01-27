@@ -1,6 +1,5 @@
 #!/bin/sh
 if [ "${DEBUG-0}" != "0" ]; then
-  echo "      organization-id:      ${MONGODB_ATLAS_ORGANIZATION_ID}"
   echo "      private-key:          ${MONGODB_ATLAS_PRIVATE_KEY:0:3}"
   echo "      public-key:           ${MONGODB_ATLAS_PUBLIC_KEY:0:3}"
 fi
