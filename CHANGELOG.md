@@ -1,3 +1,9 @@
+## 0.6.1 (2022-01-27)
+
+### Fix
+
+- **mongodb-provider**: remove organization-id from mongodb provider template
+
 ## 0.6.0 (2022-01-21)
 
 ### Fix
