@@ -1,3 +1,9 @@
+## 0.6.2 (2022-02-01)
+
+### Fix
+
+- **templates**: change provider from atlas to mongodbatlas
+
 ## 0.6.1 (2022-01-27)
 
 ### Fix
