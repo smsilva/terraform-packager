@@ -8,4 +8,4 @@ terraform apply \
 terraform apply \
   ${extraArgs} \
   -auto-approve \
-  -refresh-only
+  -refresh=true
