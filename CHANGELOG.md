@@ -1,3 +1,9 @@
+## 0.6.3 (2022-02-08)
+
+### Fix
+
+- **scripts**: update terraform_apply_with_auto_approve script
+
 ## 0.6.2 (2022-02-01)
 
 ### Fix
