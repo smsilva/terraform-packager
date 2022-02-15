@@ -52,7 +52,7 @@ fi
 
 TERRAFORM_VERSION=$( grep "^  version:" "${TF_PACKAGER_STACK_CONFIG_YAML_FILE}" | awk '{ print $2}' | tr -d " ")
 TERRAFORM_BACKEND=$( grep "^  backend:" "${TF_PACKAGER_STACK_CONFIG_YAML_FILE}" | awk '{ print $2}' | tr -d " ")
-TERRAFORM_PROVIDER=$(grep "^provider"   "${TF_PACKAGER_SOURCE_CODE_PROVIDER_FILE?}" | grep -oP '(?<=\")(.*)(?=\")')
+TERRAFORM_PROVIDER=$(grep "^provider"   "${TF_PACKAGER_SOURCE_CODE_PROVIDER_FILE?}" | grep -oP -m 1 '(?<=\")(.*)(?=\")')
 
 TERRAFORM_PROVIDER_TEMPLATE_CREDENTIALS_FILE="${TF_PACKAGER_TEMPLATES_DIRECTORY}/provider/${TERRAFORM_PROVIDER}/credentials_build.conf"
 TERRAFORM_BACKEND_TEMPLATE_CREDENTIALS_FILE="${TF_PACKAGER_TEMPLATES_DIRECTORY}/backend/${TERRAFORM_BACKEND}/credentials_build.conf"
