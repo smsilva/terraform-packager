@@ -1,0 +1,5 @@
+#!/bin/sh
+if [ "${DEBUG-0}" != "0" ]; then
+  echo "      api-key:              ${CONFLUENT_CLOUD_API_KEY:0:3}"
+  echo "      api_secret:           ${CONFLUENT_CLOUD_API_SECRET:0:3}"
+fi
