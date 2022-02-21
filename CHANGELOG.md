@@ -1,3 +1,9 @@
+## 0.7.1 (2022-02-21)
+
+### Fix
+
+- **confluent-cloud**: make provider/confluent-cloud/debug executable
+
 ## 0.7.0 (2022-02-21)
 
 ### Feat
