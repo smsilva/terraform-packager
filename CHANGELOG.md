@@ -1,3 +1,17 @@
+## 0.7.0 (2022-02-21)
+
+### Feat
+
+- **confluentcloud**: add confluentcloud (kafka) as a provider option
+- **confluentcloud**: add confluentcloud (kafka) as a provider option
+
+## 0.6.5 (2022-02-15)
+
+### Fix
+
+- **build_setup_variables**: choose provider credentials based on the first ocurrence
+- **build_setup_variables**: use only the first provider of provider.tf file to choose the provider credentials
+
 ## 0.6.4 (2022-02-09)
 
 ### Fix
