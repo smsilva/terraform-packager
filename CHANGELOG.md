@@ -1,3 +1,9 @@
+## 0.8.0 (2022-03-15)
+
+### Feat
+
+- **azdevops**: declare azuredevops as a new available provider
+
 ## 0.7.1 (2022-02-21)
 
 ### Fix
