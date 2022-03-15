@@ -1,0 +1,5 @@
+#!/bin/sh
+if [ "${DEBUG-0}" != "0" ]; then
+  echo "      azdo-org-service-url:       ${AZDO_ORG_SERVICE_URL}"
+  echo "      azdo-personal-access-token: ${AZDO_PERSONAL_ACCESS_TOKEN}"
+fi
