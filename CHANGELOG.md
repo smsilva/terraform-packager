@@ -1,3 +1,11 @@
+## 0.9.0 (2022-03-16)
+
+### Feat
+
+- **scripts/stackrun**: Add the capacity to volume Multiple varfiles
+- **stack.yaml**: Update Terraform version to 1.1.7
+- **azdevops**: declare azuredevops as a new available provider
+
 ## 0.8.0 (2022-03-15)
 
 ### Feat
