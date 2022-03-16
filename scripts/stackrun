@@ -11,6 +11,8 @@ if [ -z "${COMMAND?}" ]; then
 fi
 
 LOCAL_TERRAFORM_VARIABLES_DIRECTORY="${LOCAL_TERRAFORM_VARIABLES_DIRECTORY-${PWD}}"
+LOCAL_TERRAFORM_VARIABLES_DIRECTORY_EXTRA="${LOCAL_TERRAFORM_VARIABLES_DIRECTORY_EXTRA}"
+
 LOCAL_TERRAFORM_OUTPUT_DIRECTORY="${HOME}/trash/terraform/output"
 
 # Generate empty folder and files to prevent creation as root user
@@ -33,6 +35,11 @@ if [ "${DEBUG}" -gt 0 ]; then
   echo "    command:                ${COMMAND?}"
   echo "    provider:               ${TERRAFORM_PROVIDER?}"
   echo "    variables:              ${LOCAL_TERRAFORM_VARIABLES_DIRECTORY?}"
+  
+  if [ -n "${LOCAL_TERRAFORM_VARIABLES_DIRECTORY_EXTRA}" ]; then
+    echo "    variables-extra:        ${LOCAL_TERRAFORM_VARIABLES_DIRECTORY_EXTRA}"
+  fi 
+  
   echo "    output:                 ${LOCAL_TERRAFORM_OUTPUT_DIRECTORY?}"
 fi
 
@@ -44,7 +51,17 @@ generate_a_script_to_run_the_command() {
   echo "LOCAL_TERRAFORM_OUTPUT_DIRECTORY=${LOCAL_TERRAFORM_OUTPUT_DIRECTORY}"
 
   echo ""
+
   cat  "${TEMPLATES_FOLDER?}/stackrun.conf"
+
+  if [ -e "${LOCAL_TERRAFORM_VARIABLES_DIRECTORY_EXTRA}" ]; then
+    while read FILE_NAME; do
+      BASE_FILE_NAME="$(basename "${FILE_NAME}")"
+      COMMAND_VOLUME="$(printf '"%s:/opt/src/%s"' "${FILE_NAME}" "${BASE_FILE_NAME}")"
+      echo "  -v ${COMMAND_VOLUME} \\"
+    done <<< "$(find ${LOCAL_TERRAFORM_VARIABLES_DIRECTORY_EXTRA} -type f | xargs -n 1)"
+  fi
+
   cat  "${TEMPLATES_FOLDER?}/provider/${TERRAFORM_PROVIDER?}/credentials_run.conf"
 
   for CREDENTIALS_FILE in $(find "${TEMPLATES_FOLDER?}/backend" -name credentials_run.conf); do
@@ -61,7 +78,8 @@ if [ "${DEBUG}" -gt 1 ]; then
   echo ""
   echo "Stack Runner Command"
   echo ""
-  awk '{ print "  " $0 }' < "${STACK_RUN_GENERATED_SCRIPT}"
+  echo "  ${STACK_RUN_GENERATED_SCRIPT}: |"
+  awk '{ print "    " $0 }' < "${STACK_RUN_GENERATED_SCRIPT}"
 fi
 
 "${STACK_RUN_GENERATED_SCRIPT}"

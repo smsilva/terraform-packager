@@ -1,21 +1,9 @@
-resource "random_string" "storage_bucket_id" {
-  keepers = {
-    prefix = var.name
-  }
-
-  length      = 3
-  min_lower   = 1
-  min_numeric = 2
-  lower       = true
-  special     = false
-}
-
 locals {
-  storage_bucket_name = "silvios${var.name}${random_string.storage_bucket_id.result}"
+  storage_bucket_name = "silvios${var.name}"
 }
 
 resource "azurerm_resource_group" "default" {
-  name     = local.storage_bucket_name
+  name     = var.resource_group_name
   location = var.location
 }
 
