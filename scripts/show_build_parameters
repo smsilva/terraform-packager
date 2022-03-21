@@ -12,6 +12,10 @@ if [ "${TF_PACKAGER_DEBUG_LEVEL-0}" -gt 0 ]; then
   echo "    version:      ${TERRAFORM_VERSION?}"
   echo "    provider:     ${TERRAFORM_PROVIDER?}"
   echo "    backend:      ${TERRAFORM_BACKEND?}"
+  echo "    providers:"
+  while read PROVIDER_NAME; do
+    echo "      - ${PROVIDER_NAME}" 
+  done <<< "${TERRAFORM_PROVIDER_LIST}"
   echo ""
   echo "  build-context:"
   echo "    source:"
