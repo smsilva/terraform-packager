@@ -1,4 +1,4 @@
 #!/bin/sh
 if [ "${DEBUG-0}" != "0" ]; then
-  echo "      user:                 ${NULL_RESOURCE_USER}"
+  echo "      user:                 ${USER}"
 fi
