@@ -23,8 +23,6 @@ touch "${LOCAL_TERRAFORM_OUTPUT_DIRECTORY}/terraform.plan.txt"
 
 STACK_RUN_GENERATED_SCRIPT="${HOME}/.stackrun_generated.sh"
 
-TERRAFORM_PROVIDER=$(echo "${COMMAND?}" | awk '{ print $1 }' | sed "s|.*/||" | awk -F '-' '{ print $1 }')
-
 DEBUG=${DEBUG-1}
 
 if [ "${DEBUG}" -gt 0 ]; then
@@ -33,7 +31,6 @@ if [ "${DEBUG}" -gt 0 ]; then
   echo ""
   echo "  terraform:"
   echo "    command:                ${COMMAND?}"
-  echo "    provider:               ${TERRAFORM_PROVIDER?}"
   echo "    variables:              ${LOCAL_TERRAFORM_VARIABLES_DIRECTORY?}"
   
   if [ -n "${LOCAL_TERRAFORM_VARIABLES_DIRECTORY_EXTRA}" ]; then
@@ -52,7 +49,7 @@ generate_a_script_to_run_the_command() {
 
   echo ""
 
-  cat  "${TEMPLATES_FOLDER?}/stackrun.conf"
+  cat "${TEMPLATES_FOLDER?}/stackrun.conf"
 
   if [ -e "${LOCAL_TERRAFORM_VARIABLES_DIRECTORY_EXTRA}" ]; then
     while read FILE_NAME; do
@@ -62,16 +59,21 @@ generate_a_script_to_run_the_command() {
     done <<< "$(find ${LOCAL_TERRAFORM_VARIABLES_DIRECTORY_EXTRA} -type f | xargs -n 1)"
   fi
 
-  cat  "${TEMPLATES_FOLDER?}/provider/${TERRAFORM_PROVIDER?}/credentials_run.conf"
+  (
+    for CREDENTIALS_FILE in $(find "${TEMPLATES_FOLDER?}/provider" -name credentials_run.conf); do
+      cat "${CREDENTIALS_FILE}"
+    done
 
-  for CREDENTIALS_FILE in $(find "${TEMPLATES_FOLDER?}/backend" -name credentials_run.conf); do
-    cat "${CREDENTIALS_FILE}"
-  done
+    for CREDENTIALS_FILE in $(find "${TEMPLATES_FOLDER?}/backend" -name credentials_run.conf); do
+      cat "${CREDENTIALS_FILE}"
+    done
+  ) | sort --unique
 
   echo "${COMMAND?}"
 }
 
-generate_a_script_to_run_the_command > "${STACK_RUN_GENERATED_SCRIPT}" && \
+generate_a_script_to_run_the_command | uniq > "${STACK_RUN_GENERATED_SCRIPT}"
+
 chmod +x "${STACK_RUN_GENERATED_SCRIPT}"
 
 if [ "${DEBUG}" -gt 1 ]; then
