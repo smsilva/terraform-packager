@@ -1,3 +1,23 @@
+## 0.10.0 (2022-03-22)
+
+### Feat
+
+- **templates/provider/rabbitmq/**: Add an empty provider folder
+- **scripts/stackrun**: Loop through templates/provider/*/credentials_run.conf files
+- **scripts/create_build_context**: Generate a new file with Provider Credentials into the Build Context Directory
+- **scripts/show_build_parameters**: Add debug information for Provider List
+- **templates/provider/null/**: Create new null Terraform Provider folder
+- **examples/azure-multi-provider/src/**: Create new azure-multi-provider example
+
+### Refactor
+
+- Removing unecessary last line spaces
+- **scripts/**: Change the name of credentials provider file and remove unused references
+
+### Fix
+
+- **templates/provider/null/**: Use USER Environment Variable
+
 ## 0.9.0 (2022-03-16)
 
 ### Feat
