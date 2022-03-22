@@ -72,7 +72,7 @@ generate_a_script_to_run_the_command() {
   echo "${COMMAND?}"
 }
 
-generate_a_script_to_run_the_command | uniq > "${STACK_RUN_GENERATED_SCRIPT}"
+generate_a_script_to_run_the_command > "${STACK_RUN_GENERATED_SCRIPT}"
 
 chmod +x "${STACK_RUN_GENERATED_SCRIPT}"
 
