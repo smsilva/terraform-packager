@@ -1,3 +1,9 @@
+## 0.10.1 (2022-03-26)
+
+### Fix
+
+- **entrypoint**: declare TF_CLI_ARGS_init='-no-color' to fix format output on plan-no-color command
+
 ## 0.10.0 (2022-03-22)
 
 ### Feat
