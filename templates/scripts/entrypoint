@@ -23,6 +23,10 @@ if [ -n "${STACK_INSTANCE_NAME_FINAL}" ]; then
   STACK_INSTANCE_NAME="${STACK_INSTANCE_NAME_FINAL}"
 fi
 
+if [ "${TERRAFORM_COMMAND}" == "plan-no-color" ]; then
+  export TF_CLI_ARGS_init="-no-color"
+fi
+
 . terraform_init
 
 if [ "${TERRAFORM_COMMAND}" == "plan-no-color" ]; then
