@@ -1,3 +1,15 @@
+## 0.12.0 (2022-03-27)
+
+### Feat
+
+- **templates/provider/azurerm/credentials_run.conf**: Add new ARM runtime variables
+
+## 0.11.0 (2022-03-26)
+
+### Feat
+
+- **templates/provider/helm/**: Add helm provider files
+
 ## 0.10.1 (2022-03-26)
 
 ### Fix
