@@ -1,0 +1,7 @@
+#!/bin/sh
+if [ "${DEBUG-0}" != "0" ]; then
+  echo "      tf_var_certificate_medusa_backup: ${CERTIFICATE_MEDUSA_BACKUP:0:3}"
+  echo "      tf_var_repository_pat:            ${REPOSITORY_PAT:0:3}"
+  echo "      tf_var_new_relic_license_key:     ${NEW_RELIC_LICENSE_KEY:0:3}"
+  echo "      tf_var_arm_client_secret:         ${ARM_CLIENT_SECRET:0:3}"
+fi
