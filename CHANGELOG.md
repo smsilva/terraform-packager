@@ -1,3 +1,9 @@
+## 0.13.0 (2022-03-30)
+
+### Feat
+
+- **hcvault**: a provider to a custom hcvault
+
 ## 0.12.0 (2022-03-27)
 
 ### Feat
