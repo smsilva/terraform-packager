@@ -1,0 +1,4 @@
+#!/bin/sh
+if [ "${DEBUG-0}" != "0" ]; then
+  echo "      local backend"
+fi
