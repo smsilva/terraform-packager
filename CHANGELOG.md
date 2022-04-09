@@ -1,3 +1,10 @@
+## 0.14.0 (2022-04-09)
+
+### Feat
+
+- **input-variables**: transmit all TF_VAR_ files of the environment to the stackrun command
+- **local-backend**: create a local backend option on templates
+
 ## 0.13.0 (2022-03-30)
 
 ### Feat
