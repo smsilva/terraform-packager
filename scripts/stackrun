@@ -59,6 +59,8 @@ generate_a_script_to_run_the_command() {
     done <<< "$(find ${LOCAL_TERRAFORM_VARIABLES_DIRECTORY_EXTRA} -type f | xargs -n 1)"
   fi
 
+  printenv | grep "^TF_VAR_" | cut -d= -f1 | xargs -n 1 -I '{}' echo '  -e {}="${{}}"\'
+
   (
     for CREDENTIALS_FILE in $(find "${TEMPLATES_FOLDER?}/provider" -name credentials_run.conf); do
       cat "${CREDENTIALS_FILE}"
