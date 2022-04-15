@@ -1,0 +1,6 @@
+site_name: terraform-packager
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: red
