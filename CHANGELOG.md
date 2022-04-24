@@ -1,3 +1,10 @@
+## 0.15.0 (2022-04-24)
+
+### Feat
+
+- **stackrun**: externalize LOCAL_TERRAFORM_OUTPUT_DIRECTORY, allowing reconfiguration
+- **examples/azure-multi-provider/src/provider.tf**: Enable most recent provider version
+
 ## 0.14.0 (2022-04-09)
 
 ### Feat
