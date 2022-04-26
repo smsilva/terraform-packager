@@ -1,3 +1,10 @@
+## 0.16.0 (2022-04-26)
+
+### Feat
+
+- **firewalldbs**: Create template folder for firewalldbs provider
+- **firewalldbs**: Create template folder for firewalldbs provider
+
 ## 0.15.1 (2022-04-26)
 
 ### Fix
