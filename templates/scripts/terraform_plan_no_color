@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 extraArgs="$@"
 
@@ -6,6 +6,18 @@ terraform plan \
   -lock-timeout="${LOCK_TIMEOUT_SECONDS}s" \
   -no-color \
   ${extraArgs} \
-  -out "${TERRAFORM_PLAN_FILE?}" | tee "${TERRAFORM_PLAN_TXT_FILE?}" && \
-terraform show \
-  -json "${TERRAFORM_PLAN_FILE?}" > "${TERRAFORM_PLAN_JSON_FILE?}"
+  -out "${TERRAFORM_PLAN_FILE?}" | tee "${TERRAFORM_PLAN_TXT_FILE?}"
+
+result=${PIPESTATUS[0]} 
+
+if echo "${extraArgs}" | grep -q "detailed-exitcode"; then
+  echo "Saving Plan command result=(${result}) in the ${TERRAFORM_OUTPUT_DIRECTORY}/plan_detailed_exitcode file."
+  echo "${result}" > "${TERRAFORM_OUTPUT_DIRECTORY}/plan_detailed_exitcode"
+fi
+
+if [ "${result}" == "0" ]; then
+  terraform show \
+    -json "${TERRAFORM_PLAN_FILE?}" > "${TERRAFORM_PLAN_JSON_FILE?}"
+fi
+
+exit ${result} 

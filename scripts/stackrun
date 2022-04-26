@@ -17,6 +17,7 @@ LOCAL_TERRAFORM_OUTPUT_DIRECTORY="${LOCAL_TERRAFORM_OUTPUT_DIRECTORY-${HOME}/tra
 
 # Generate empty folder and files to prevent creation as root user
 mkdir -p "${LOCAL_TERRAFORM_OUTPUT_DIRECTORY}"
+touch "${LOCAL_TERRAFORM_OUTPUT_DIRECTORY}/plan_detailed_exitcode"
 touch "${LOCAL_TERRAFORM_OUTPUT_DIRECTORY}/terraform.plan"
 touch "${LOCAL_TERRAFORM_OUTPUT_DIRECTORY}/terraform.plan.json"
 touch "${LOCAL_TERRAFORM_OUTPUT_DIRECTORY}/terraform.plan.txt"
