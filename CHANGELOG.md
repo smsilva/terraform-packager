@@ -1,3 +1,9 @@
+## 0.16.1 (2022-04-26)
+
+### Fix
+
+- **templates/provider/firewalldbs/**: Remove extra empty line
+
 ## 0.16.0 (2022-04-26)
 
 ### Feat
