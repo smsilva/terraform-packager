@@ -1,3 +1,9 @@
+## 0.15.1 (2022-04-26)
+
+### Fix
+
+- **terraform_plan_no_color**: preserve exit code of the plan command but still piping the output to a logfile
+
 ## 0.15.0 (2022-04-24)
 
 ### Feat
