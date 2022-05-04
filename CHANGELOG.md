@@ -1,3 +1,15 @@
+## 0.18.0 (2022-05-04)
+
+### Feat
+
+- Add New Relic Provider Template and azure-null-resource example
+
+## 0.17.0 (2022-05-04)
+
+### Feat
+
+- New provider template for confluent
+
 ## 0.16.2 (2022-05-02)
 
 ### Fix
