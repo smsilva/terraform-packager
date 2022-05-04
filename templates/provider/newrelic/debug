@@ -1,0 +1,6 @@
+#!/bin/sh
+if [ "${DEBUG-0}" != "0" ]; then
+  echo "      account-id:           ${NEW_RELIC_ACCOUNT_ID}"
+  echo "      api-key:              ${NEW_RELIC_API_KEY:0:5}"
+  echo "      region:               ${NEW_RELIC_REGION}"
+fi
