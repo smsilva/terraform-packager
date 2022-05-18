@@ -629,13 +629,16 @@
 ### Feat
 
 - **firewalldbs**: Create template folder for firewalldbs provider
-- **firewalldbs**: Create template folder for firewalldbs provider
 
 ## 0.15.1 (2022-04-26)
 
 ### Fix
 
 - **terraform_plan_no_color**: preserve exit code of the plan command but still piping the output to a logfile
+
+### Feat
+
+- **firewalldbs**: Create template folder for firewalldbs provider
 
 ## 0.15.0 (2022-04-24)
 
@@ -651,7 +654,7 @@
 - **input-variables**: transmit all TF_VAR_ files of the environment to the stackrun command
 - **local-backend**: create a local backend option on templates
 
-## 0.13.0 (2022-03-30)
+## 0.13.0 (2022-03-31)
 
 ### Feat
 
@@ -701,9 +704,8 @@
 
 - **scripts/stackrun**: Add the capacity to volume Multiple varfiles
 - **stack.yaml**: Update Terraform version to 1.1.7
-- **azdevops**: declare azuredevops as a new available provider
 
-## 0.8.0 (2022-03-15)
+## 0.8.0 (2022-03-26)
 
 ### Feat
 
@@ -740,6 +742,7 @@
 ### Fix
 
 - **scripts**: update terraform_apply_with_auto_approve script
+- **templates**: Make apply command compatible to older TF versions
 
 ## 0.6.2 (2022-02-01)
 
@@ -763,16 +766,16 @@
 ### Feat
 
 - **providers**: create cloudamqp provider templates
-
-## 0.5.0 (2022-01-21)
-
-### Feat
-
 - **providers**: create cloudamqp provider templates
 - **providers**: create imperva provider templates
 - **providers**: create atlas mongodb provider templates
 
 ## 0.4.4 (2022-01-18)
+
+### Feat
+
+- **templates/entrypoint**: Add terraform command options for the pre…
+- **templates/entrypoint**: Add terraform command options for the pre-defined scripts
 
 ### Refactor
 
@@ -780,10 +783,6 @@
 - use correct var
 - change the args parser
 - add optional arguments to commands
-
-### Feat
-
-- **templates/entrypoint**: Add terraform command options for the pre-defined scripts
 
 ## 0.4.3 (2021-12-22)
 

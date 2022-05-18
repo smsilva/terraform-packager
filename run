@@ -1,2 +1,0 @@
-#!/bin/bash
-time env DEBUG="${DEBUG-2}" scripts/stackrun "$@"
