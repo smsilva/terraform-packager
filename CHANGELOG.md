@@ -1,3 +1,9 @@
+## 0.19.0 (2022-05-23)
+
+### Feat
+
+- **stackbuild**: Incorporate a manifest.yaml during the build process with image build timestamp and other relevant metadata
+
 ## 0.18.0 (2022-05-04)
 
 ### Feat
