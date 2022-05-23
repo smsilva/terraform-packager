@@ -1,0 +1,7 @@
+name: ${STACK_NAME}
+version: ${STACK_VERSION}
+maintainer: ${STACK_MAINTAINER}
+releasedAt: ${STACK_BUILD_TIME}
+terraform:
+  version: ${TERRAFORM_VERSION}
+  backend: ${TERRAFORM_BACKEND}

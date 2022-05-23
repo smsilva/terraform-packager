@@ -35,6 +35,8 @@ fi
 
 STACK_NAME=$(grep "^name:" "${TF_PACKAGER_STACK_CONFIG_YAML_FILE}" | awk '{ print $2}' | tr -d " ")
 STACK_VERSION=$(grep "^version:" "${TF_PACKAGER_STACK_CONFIG_YAML_FILE}" | awk '{ print $2}' | tr -d " ")
+STACK_MAINTAINER=$(grep "^maintainer:" "${TF_PACKAGER_STACK_CONFIG_YAML_FILE}" | awk '{ print $2}' | tr -d " ")
+STACK_BUILD_TIME=$(date --utc +%FT%TZ)
 
 if [[ -z "${STACK_VERSION}" || "${STACK_VERSION}" == "null" ]]; then
   if [ -e "${TF_PACKAGER_SOURCE_CODE_COMMITIZEN_FILE}" ]; then
@@ -50,6 +52,10 @@ if [[ -z "${STACK_VERSION}" || "${STACK_VERSION}" == "null" ]]; then
   STACK_VERSION="latest"
 fi
 
+if [[ -z "${STACK_MAINTAINER}" || "${STACK_MAINTAINER}" == "null" ]]; then
+  STACK_MAINTAINER="Unknown"
+fi
+
 TERRAFORM_VERSION=$( grep "^  version:" "${TF_PACKAGER_STACK_CONFIG_YAML_FILE}" | awk '{ print $2}' | tr -d " ")
 TERRAFORM_BACKEND=$( grep "^  backend:" "${TF_PACKAGER_STACK_CONFIG_YAML_FILE}" | awk '{ print $2}' | tr -d " ")
 TERRAFORM_PROVIDER=$(grep "^provider"   "${TF_PACKAGER_SOURCE_CODE_PROVIDER_FILE?}" | grep -oP -m 1 '(?<=\")(.*)(?=\")')
@@ -61,6 +67,8 @@ TERRAFORM_BACKEND_TEMPLATE_FRAGMENT="${TF_PACKAGER_TEMPLATES_DIRECTORY}/backend/
 
 export STACK_NAME
 export STACK_VERSION
+export STACK_BUILD_TIME
+export STACK_MAINTAINER
 export STACK_INSTANCE_NAME=${STACK_INSTANCE_NAME-default}
 
 export TERRAFORM_VERSION

@@ -19,6 +19,13 @@ for i in "$@"; do
   esac
 done
 
+if [ "${TERRAFORM_COMMAND}" == "info" ]; then
+  echo ""
+  cat /opt/src/manifest.yaml
+  echo ""
+  exit $?
+fi
+
 if [ -n "${STACK_INSTANCE_NAME_FINAL}" ]; then
   STACK_INSTANCE_NAME="${STACK_INSTANCE_NAME_FINAL}"
 fi

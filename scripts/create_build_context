@@ -56,3 +56,6 @@ envsubst < "${TF_PACKAGER_TEMPLATES_DIRECTORY}/Dockerfile" > "${TF_PACKAGER_TEMP
 
 # Template: environment_variables.conf
 envsubst < "${TF_PACKAGER_ENVIRONMENT_VARIABLES_FILE_NAME_TEMPLATE}" > "${TF_PACKAGER_ENVIRONMENT_VARIABLES_FILE_NAME}"
+
+# Template: manifest.yaml
+envsubst < "${TF_PACKAGER_TEMPLATES_DIRECTORY}/manifest.yaml" > "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/src/manifest.yaml"
