@@ -1,0 +1,6 @@
+#!/bin/sh
+if [ "${DEBUG-0}" != "0" ]; then
+  echo "      tenant-id:            ${ARM_TENANT_ID}"
+  echo "      client-id:            ${ARM_CLIENT_ID}"
+  echo "      client-secret:        ${ARM_CLIENT_SECRET:0:3}"
+fi
