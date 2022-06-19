@@ -1,3 +1,11 @@
+## 0.20.0 (2022-06-19)
+
+### Feat
+
+- **templates/**: Add azuread provider and update azurerm backend to not use deprecated Microsoft Graph API
+- **examples/**: Update example's terraform version to 1.2.2
+- **examples/azure-null-resource/cz.yaml**: Create a symbolic link to the repository cz.yaml file
+
 ## 0.19.0 (2022-05-23)
 
 ### Feat
