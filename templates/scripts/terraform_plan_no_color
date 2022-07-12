@@ -10,14 +10,16 @@ terraform plan \
 
 result=${PIPESTATUS[0]} 
 
-if echo "${extraArgs}" | grep -q "detailed-exitcode"; then
-  echo "Saving Plan command result=(${result}) in the ${TERRAFORM_OUTPUT_DIRECTORY}/plan_detailed_exitcode file."
+detailed_exit_code_flag=$(echo "${extraArgs}" | grep "detailed-exitcode")
+
+if [ "${detailed_exit_code_flag}" != "" ]; then
+  echo "Saving Plan command-result=(${result}) in ${TERRAFORM_OUTPUT_DIRECTORY}/plan_detailed_exitcode"
   echo "${result}" > "${TERRAFORM_OUTPUT_DIRECTORY}/plan_detailed_exitcode"
 fi
 
-if [ "${result}" == "0" ]; then
-  terraform show \
-    -json "${TERRAFORM_PLAN_FILE?}" > "${TERRAFORM_PLAN_JSON_FILE?}"
+if [[ "${result}" == "0" || ("${result}" == "2" && "${detailed_exit_code_flag}" != "") ]]; then
+  echo "Saving Plan json-file in ${TERRAFORM_PLAN_JSON_FILE}"
+  terraform show -json "${TERRAFORM_PLAN_FILE?}" > "${TERRAFORM_PLAN_JSON_FILE?}"
 fi
 
 exit ${result} 
