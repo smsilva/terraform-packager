@@ -1,3 +1,9 @@
+## 0.20.1 (2022-07-12)
+
+### Fix
+
+- **terraform_plan_no_color**: generate json file even if detailed-exit-code execution returns 2
+
 ## 0.20.0 (2022-06-19)
 
 ### Feat
