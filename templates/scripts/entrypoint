@@ -53,4 +53,9 @@ if [ -z "${terraformDefaultArgs}" ]; then
   fi
 fi
 
+if [ "${TERRAFORM_COMMAND}" == "destroy-twice" ]; then
+  terraform_destroy_twice ${terraformDefaultArgs}
+  exit $?
+fi
+
 terraform ${TERRAFORM_COMMAND} ${terraformDefaultArgs}
