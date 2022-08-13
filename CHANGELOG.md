@@ -1,3 +1,9 @@
+## 0.21.0 (2022-08-13)
+
+### Feat
+
+- **destroy-twice-command**: create an alias command to deal with situations when a double attempt is demanded to destroy de resources
+
 ## 0.20.1 (2022-07-12)
 
 ### Fix
