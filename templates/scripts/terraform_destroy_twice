@@ -1,0 +1,13 @@
+#!/bin/bash
+
+## SOMETIMES A STACK DEMANDS DESTROY TWICE IN ORDER TO
+## GET A WELL-SUCCEEDED FEEDBACK, E.G: STACKS THAT MANAGE
+## KEY-VAULT SECRETS ON A SOFT-DELETE ENABLED KEY VAULT.
+
+args="$@"
+
+terraform destroy ${args}
+
+echo ""
+echo "Retry destroy command"
+terraform destroy ${args}
