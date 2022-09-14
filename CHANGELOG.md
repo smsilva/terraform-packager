@@ -1,3 +1,9 @@
+## 0.2.0 (2022-09-14)
+
+### Feat
+
+- Add a fastly Provider support
+
 ## 0.21.0 (2022-08-13)
 
 ### Feat
