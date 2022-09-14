@@ -1,0 +1,4 @@
+#!/bin/sh
+if [ "${DEBUG-0}" != "0" ]; then
+  echo "      api-key:              ${FASTLY_API_KEY:0:3}"
+fi
