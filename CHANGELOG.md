@@ -1,3 +1,10 @@
+## 0.22.1 (2022-09-25)
+
+### Fix
+
+- **scripts/stackrun**: Remove not needed xargs parameter
+- **examples/fastly-demo/src/provider.tf**: Update version restriction and provider block
+
 ## 0.22.0 (2022-09-14)
 
 ### Feat
