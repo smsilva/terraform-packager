@@ -9,6 +9,10 @@ resource "null_resource" "default" {
   }
 }
 
-output "name" {
+output "name_id" {
   value = null_resource.default.id
+}
+
+output "name_input" {
+  value = var.name
 }
