@@ -93,17 +93,17 @@ ARM_SAS_TOKEN......................: UM_TOKEN_TEMPORARIO_USADO_PARA_ACESSAR_A_ST
 ### 1. Empacotando o Projeto de Exemplo
 
 ```bash
-scripts/stackbuild "examples/azure-fake-module"
+scripts/stackbuild "examples/azure-null-resource"
 ```
 
 ### 2. Executando o Container usando os valores padrão
 
 ```bash
-scripts/stackrun azure-fake-module:latest plan
+scripts/stackrun azure-null-resource:latest plan
 ```
 
 ```bash
-scripts/stackrun azure-fake-module:latest apply
+scripts/stackrun azure-null-resource:latest apply
 ```
 
 ### 3. Executando o Container usando arquivos de variáveis personalizadas
@@ -111,26 +111,29 @@ scripts/stackrun azure-fake-module:latest apply
 Embora não recomendável por ferir o princípio de que um artefato deveria sempre produzir o mesmo resultado, é possível passar um arquivo tfvars através de um volume para o container e usá-lo nos comandos Terraform.
 
 ```bash
-export LOCAL_TERRAFORM_VARIABLES_DIRECTORY="${PWD}/example/azure-fake-module/environments/sandbox"
+export LOCAL_TERRAFORM_VARIABLES_DIRECTORY="${PWD}/examples/docker/custom-image"
 
-scripts/stackrun azure-fake-module:latest plan -var-file=/opt/variables/terraform.tfvars
+scripts/stackrun azure-null-resource:latest plan -var-file=/opt/variables/terraform.tfvars
 ```
 
 ```bash
-scripts/stackrun azure-fake-module:latest apply -var-file=/opt/variables/terraform.tfvars -auto-approve
+scripts/stackrun azure-null-resource:latest apply -var-file=/opt/variables/terraform.tfvars -auto-approve
 ```
 
 ### 4. Criando Imagens Personalizadas
 
 ```bash
-docker build --rm \
-  --tag azure-fake-module/sandbox:latest "examples/azure-fake-module/environments/sandbox"
+scripts/stackbuild examples/azure-null-resource
+
+docker build \
+  --rm \
+  --tag mystack:latest "examples/docker/custom-image"
 ```
 
 ```bash
-scripts/stackrun azure-fake-module/sandbox:latest plan
+scripts/stackrun mystack:latest plan
 ```
 
 ```bash
-scripts/stackrun azure-fake-module/sandbox:latest apply
+scripts/stackrun mystack:latest apply
 ```
