@@ -1,0 +1,15 @@
+#!/bin/bash
+
+FIRST_VERSION=$1
+SECOND_VERSION=$2
+
+list_versions() {
+  cat <<EOF
+${FIRST_VERSION}
+${SECOND_VERSION}
+EOF
+}
+
+list_versions \
+| sort -V \
+| tail -n 1

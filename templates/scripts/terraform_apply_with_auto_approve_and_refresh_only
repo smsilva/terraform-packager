@@ -1,0 +1,11 @@
+#!/bin/sh
+
+extraArgs="$@"
+
+terraform apply \
+  -lock-timeout="${LOCK_TIMEOUT_SECONDS?}s" \
+  -auto-approve "${TERRAFORM_PLAN_FILE?}" && \
+terraform apply \
+  ${extraArgs} \
+  -auto-approve \
+  -refresh-only
