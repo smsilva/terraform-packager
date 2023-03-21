@@ -1,3 +1,15 @@
+## 0.24.0 (2023-03-21)
+
+### Feat
+
+- Adding confluentcustom Provider
+
+## 0.23.0 (2023-03-02)
+
+### Feat
+
+- Update examples
+
 ## 0.22.1 (2022-09-25)
 
 ### Fix
