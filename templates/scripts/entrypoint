@@ -26,6 +26,11 @@ if [ "${TERRAFORM_COMMAND}" == "info" ]; then
   exit $?
 fi
 
+if [ "${TERRAFORM_COMMAND}" == "help" ]; then
+  show_help
+  exit 0
+fi
+
 if [ -n "${STACK_INSTANCE_NAME_FINAL}" ]; then
   STACK_INSTANCE_NAME="${STACK_INSTANCE_NAME_FINAL}"
 fi
@@ -49,6 +54,11 @@ if [ -z "${terraformDefaultArgs}" ]; then
 
   if [ "${TERRAFORM_COMMAND}" == "apply" ]; then
     terraform_apply_with_auto_approve ${extraArgs}
+    exit $?
+  fi
+
+  if [ "${TERRAFORM_COMMAND}" == "apply-refresh-only" ]; then
+    terraform_apply_with_auto_approve_and_refresh_only ${extraArgs}
     exit $?
   fi
 fi

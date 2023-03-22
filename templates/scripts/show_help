@@ -1,0 +1,115 @@
+#!/bin/bash
+
+TERRAFORM_PLAN_FILE=${TERRAFORM_PLAN_FILE-plan-file-name.json}
+LOCK_TIMEOUT_SECONDS=${LOCK_TIMEOUT_SECONDS-300}
+
+cat <<EOF
+
+  Environemnt Variables:
+
+    DEBUG
+
+      The Debug Log level:
+
+        0 - Only terraform binary output
+        1 - Extra logs from terraform-packager
+        2 - Full detailed logs
+
+
+        Examples:
+    
+          1. Set the DEBUG value for one time execution:
+    
+              env DEBUG=2 stackrun azure-storage-account:latest plan
+    
+    
+          2. Set the DEBUG value for more than one execution in the same shell session:
+    
+              export DEBUG=2
+              stackrun azure-storage-account:latest plan
+              stackrun azure-storage-account:latest apply
+                      
+                      
+    STACK_INSTANCE_NAME
+                        
+      It will define the name of the terraform instance file.
+    
+      If it's not defined, the scrits will assume the "default" value.
+
+
+    STACK_INSTANCE_NAME_FINAL
+                        
+      It will override STACK_INSTANCE_NAME at runtime and cannot be changed.
+
+      To use it, you need to create a new image with this variable defined at the build time.
+
+      Dockerfile: |
+        FROM azure-storage-account:latest
+        ADD terraform.tfvars /opt/src/terraform.auto.tfvars
+        ENV STACK_INSTANCE_NAME_FINAL="mystack-custom-instance"     
+
+    
+    LOCAL_TERRAFORM_VARIABLES_DIRECTORY_EXTRA
+                        
+      If this variable is set, all the files there will be copied to /opt/src 
+      along with all the other terraform stack files.
+
+
+  Commands:
+
+    help                Show this message
+
+    info                Show manifest.yaml contents from /opt/src/manifest.yaml
+
+
+  Intercepted Terraform commands:
+
+    apply               terraform apply \\
+                          -lock-timeout="${LOCK_TIMEOUT_SECONDS}s" \\
+                          -auto-approve "${TERRAFORM_PLAN_FILE}"
+
+
+    apply-refresh-only  terraform apply \\
+                          -lock-timeout="${LOCK_TIMEOUT_SECONDS}s" \\
+                          -auto-approve "${TERRAFORM_PLAN_FILE}" && \\
+                        terraform apply \\
+                          \${extraArgs} \\
+                          -auto-approve \\
+                          -refresh-only
+
+
+    destroy-twice       terraform destroy \${extraArgs}; terraform destroy \${extraArgs}
+
+                        Example:
+
+                          stackrun azure-storage-account:latest destroy-twice -auto-approve
+
+
+    plan                terraform plan -out  ${TERRAFORM_PLAN_FILE} && \\
+                        terraform show -json ${TERRAFORM_PLAN_FILE}
+
+
+    plan-no-color       terraform plan -no-color
+
+
+  Default Terraform commands:
+
+    Any terraform command can be used.
+
+
+    Examples:
+
+      stackrun azure-storage-account:latest -no-color -detailed-exitcode -parallelism=2
+
+      stackrun azure-storage-account:latest state list
+
+      stackrun azure-storage-account:latest state show azurerm_resource_group.default
+
+      stackrun azure-storage-account:latest output
+
+      env DEBUG=0 stackrun azure-storage-account:latest output -json
+
+      env DEBUG=0 stackrun azure-storage-account:latest output -raw storage_account_id
+
+
+EOF

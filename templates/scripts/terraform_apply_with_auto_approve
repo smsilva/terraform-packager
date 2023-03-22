@@ -1,11 +1,33 @@
-#!/bin/sh
+#!/bin/bash
 
 extraArgs="$@"
 
 terraform apply \
   -lock-timeout="${LOCK_TIMEOUT_SECONDS?}s" \
-  -auto-approve "${TERRAFORM_PLAN_FILE?}" && \
-terraform apply \
-  ${extraArgs} \
-  -auto-approve \
-  -refresh=true
+  -auto-approve "${TERRAFORM_PLAN_FILE?}"
+
+TERRAFORM_APPLY_EXECUTION_RESULT=$?
+
+if [ ${TERRAFORM_APPLY_EXECUTION_RESULT} -eq 0 ]; then
+  log ""
+
+  TERRAFORM_VERSION_COMPATIBLE_WITH_REFRESH_ONLY=$(terraform_version_compatible_with_refresh_only)
+  
+  if [ "${TERRAFORM_VERSION_COMPATIBLE_WITH_REFRESH_ONLY}" == "y" ]; then
+    log "apply -refresh-only"
+    log ""
+
+    terraform apply \
+      ${extraArgs} \
+      -auto-approve \
+      -refresh-only
+  else
+    log "apply -refresh=true"
+    log ""
+
+    terraform apply \
+      ${extraArgs} \
+      -auto-approve \
+      -refresh=true
+  fi
+fi
