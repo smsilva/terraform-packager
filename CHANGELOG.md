@@ -1,3 +1,9 @@
+## 0.25.0 (2023-03-22)
+
+### Feat
+
+- Improvements, -refreh-only/-refresh=true based on terraform version and help command
+
 ## 0.24.0 (2023-03-21)
 
 ### Feat
