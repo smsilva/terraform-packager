@@ -1,4 +1,5 @@
+---
 commitizen:
   name: cz_conventional_commits
   tag_format: $version
-  version: 0.25.0
+  version: 0.26.0

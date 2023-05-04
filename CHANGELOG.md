@@ -1,3 +1,13 @@
+## 0.26.0 (2023-05-04)
+
+### Feat
+
+- **scripts/stackrun**: Use LOCAL_EXTRA_VOLUMES variable
+
+### Refactor
+
+- Remove unused files
+
 ## 0.25.0 (2023-03-22)
 
 ### Feat
