@@ -12,7 +12,7 @@ fi
 
 LOCAL_TERRAFORM_VARIABLES_DIRECTORY="${LOCAL_TERRAFORM_VARIABLES_DIRECTORY-${PWD}}"
 LOCAL_TERRAFORM_VARIABLES_DIRECTORY_EXTRA="${LOCAL_TERRAFORM_VARIABLES_DIRECTORY_EXTRA}"
-
+LOCAL_EXTRA_VOLUMES="${LOCAL_EXTRA_VOLUMES}"
 LOCAL_TERRAFORM_OUTPUT_DIRECTORY="${LOCAL_TERRAFORM_OUTPUT_DIRECTORY-${HOME}/trash/terraform/output}"
 
 # Generate empty folder and files to prevent creation as root user
@@ -32,13 +32,16 @@ if [ "${DEBUG}" -gt 0 ]; then
   echo ""
   echo "  terraform:"
   echo "    command:                ${COMMAND?}"
+  echo "    output:                 ${LOCAL_TERRAFORM_OUTPUT_DIRECTORY?}"
   echo "    variables:              ${LOCAL_TERRAFORM_VARIABLES_DIRECTORY?}"
   
   if [ -n "${LOCAL_TERRAFORM_VARIABLES_DIRECTORY_EXTRA}" ]; then
     echo "    variables-extra:        ${LOCAL_TERRAFORM_VARIABLES_DIRECTORY_EXTRA}"
   fi 
-  
-  echo "    output:                 ${LOCAL_TERRAFORM_OUTPUT_DIRECTORY?}"
+
+  if [ -n "${LOCAL_EXTRA_VOLUMES}" ]; then
+    echo "    volumes-extra:          ${LOCAL_EXTRA_VOLUMES}"
+  fi 
 fi
 
 export DEBUG
@@ -58,6 +61,14 @@ generate_a_script_to_run_the_command() {
       COMMAND_VOLUME="$(printf '"%s:/opt/src/%s"' "${FILE_NAME}" "${BASE_FILE_NAME}")"
       echo "  -v ${COMMAND_VOLUME} \\"
     done <<< "$(find ${LOCAL_TERRAFORM_VARIABLES_DIRECTORY_EXTRA} -type f | xargs -n 1)"
+  fi
+
+  if [ -n "${LOCAL_EXTRA_VOLUMES}" ]; then
+      echo "${LOCAL_EXTRA_VOLUMES}" \
+      | tr ";" "\n" \
+      | while read VOLUME_FILE; do
+      echo "  -v ${VOLUME_FILE} \\"
+      done
   fi
 
   printenv | grep "^TF_VAR_" | cut -d= -f1 | xargs -I '{}' echo ' -e {}="${{}}"\'
