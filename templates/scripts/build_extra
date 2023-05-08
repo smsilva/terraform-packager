@@ -1,0 +1,28 @@
+#!/bin/bash
+export TFP_BUILD_SCRIPTS="/opt/scripts/tfp/build"
+
+execution() {
+  if [ -e "${TFP_BUILD_SCRIPTS}" ]; then
+    find "${TFP_BUILD_SCRIPTS}" -type f \
+    | sort -u \
+    | while read SCRIPT_FILE_NAME; do
+        echo "${SCRIPT_FILE_NAME}"
+
+        "${SCRIPT_FILE_NAME}"
+
+        CODE_EXIT="$?"
+
+        echo "${SCRIPT_FILE_NAME} CODE_EXIT: ${CODE_EXIT}"
+
+        if [ "${CODE_EXIT-0}" != "0" ]; then
+          exit "${CODE_EXIT}"
+        fi
+      done
+  fi
+}
+
+if [ "${DEBUG-0}" != "0" ]; then
+  execution
+else
+  execution > /dev/null
+fi

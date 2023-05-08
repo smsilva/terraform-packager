@@ -45,7 +45,7 @@ initialization() {
 
   CODE_EXIT="$?"
 
-  if [  "${CODE_EXIT-0}" != "0" ]; then
+  if [ "${CODE_EXIT-0}" != "0" ]; then
     exit "${CODE_EXIT}"
   fi
 }

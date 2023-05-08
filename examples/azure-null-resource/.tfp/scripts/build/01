@@ -1,0 +1,22 @@
+#!/bin/bash
+
+echo "#### Stack Build Extra 01 ####"
+echo "#### Stack Build Extra 01 ####"
+echo "#### Stack Build Extra 01 ####"
+
+mkdir -p /example
+
+cat <<EOF > /example/file.txt
+line 1
+line 2
+line 3
+EOF
+
+echo "/example contents:"
+
+find /example -type f
+
+echo "/example/file.txt contents:"
+cat /example/file.txt
+
+sleep 3
