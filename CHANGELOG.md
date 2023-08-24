@@ -1,3 +1,9 @@
+## 0.27.1 (2023-08-24)
+
+### Fix
+
+- **scripts/stackrun**: Check the directories and extra files
+
 ## 0.27.0 (2023-05-10)
 
 ### Feat
