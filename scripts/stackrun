@@ -56,11 +56,13 @@ generate_a_script_to_run_the_command() {
   cat "${TEMPLATES_FOLDER?}/stackrun.conf"
 
   if [ -e "${LOCAL_TERRAFORM_VARIABLES_DIRECTORY_EXTRA}" ]; then
-    while read FILE_NAME; do
-      BASE_FILE_NAME="$(basename "${FILE_NAME}")"
-      COMMAND_VOLUME="$(printf '"%s:/opt/src/%s"' "${FILE_NAME}" "${BASE_FILE_NAME}")"
+    files=$(find ${LOCAL_TERRAFORM_VARIABLES_DIRECTORY_EXTRA} -type f)
+    IFS=$'\n'
+    for file in ${files} ; do
+      BASE_FILE_NAME="$(basename "${file}")"
+      COMMAND_VOLUME="$(printf "\"${file}:/opt/src${file}"\" "${file}" "${BASE_FILE_NAME}")"
       echo "  -v ${COMMAND_VOLUME} \\"
-    done <<< "$(find ${LOCAL_TERRAFORM_VARIABLES_DIRECTORY_EXTRA} -type f | xargs -n 1)"
+    done
   fi
 
   if [ -n "${LOCAL_EXTRA_VOLUMES}" ]; then
