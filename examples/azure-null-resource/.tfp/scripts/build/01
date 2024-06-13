@@ -18,5 +18,3 @@ find /example -type f
 
 echo "/example/file.txt contents:"
 cat /example/file.txt
-
-sleep 3

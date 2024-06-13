@@ -1,0 +1,55 @@
+#!/bin/bash
+THIS_SCRIPT="$0"
+THIS_SCRIPT_DIRECTORY="$(dirname "${THIS_SCRIPT?}")"
+THIS_SCRIPT_NAME=$(basename "${THIS_SCRIPT?}")
+
+PATH="${THIS_SCRIPT_DIRECTORY}:${PATH}"
+
+show_usage() {
+  cat <<EOF
+
+  ${THIS_SCRIPT_NAME} \\
+    --image   azure-null-resource:0.27.1 \\
+    --command "plan -no-color" \\
+    --dry-run
+
+EOF
+}
+
+while [[ "$1" =~ ^- && ! "$1" == "--" ]]; do
+case $1 in
+  -h | --help )
+    show_usage
+    exit
+    ;;
+
+  -i | --image )
+    shift; STACK_IMAGE=$1
+    ;;
+
+  -c | --command )
+    shift; STACK_COMMAND=$1
+    ;;
+
+esac; shift; done
+
+if [[ "$1" == '--' ]]; then shift; fi
+
+if [[ -z "${STACK_IMAGE}" ]]; then
+  echo "Missing --image"
+  show_usage
+  exit 1
+fi
+
+if [[ -z "${STACK_COMMAND}" ]]; then
+  STACK_COMMAND="plan"
+fi
+
+which stackrun &> /dev/null
+
+if [[ $? -ne 0 ]]; then
+  echo "Terraform Packager not found in PATH"
+  exit 1
+fi
+
+stackrun ${STACK_IMAGE} "${STACK_COMMAND}"

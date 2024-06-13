@@ -1,4 +1,5 @@
 #!/bin/sh
 if [ "${DEBUG-0}" != "0" ]; then
-  echo "      local backend"
+  echo "      file:"
+  echo "        path:               /opt/output/${TERRAFORM_STATE_FILE}"
 fi

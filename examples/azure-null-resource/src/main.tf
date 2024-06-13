@@ -9,10 +9,17 @@ resource "null_resource" "default" {
   }
 }
 
-output "name_id" {
+output "id" {
   value = null_resource.default.id
 }
 
-output "name_input" {
+output "name" {
   value = var.name
+}
+
+output "composite" {
+  value = {
+    id = null_resource.default.id
+    name = var.name
+  }
 }

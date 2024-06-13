@@ -1,0 +1,24 @@
+#!/bin/bash
+COMMAND="$@"
+
+DOCKER_SOCKET="/var/run/docker.sock"
+DOCKER_SOCKET_GROUP=$(stat -c '%g' ${DOCKER_SOCKET?})
+
+SCRIPT_TO_RUN="${HOME}/trash/terraform-packager"
+
+generate-script-to-run() {
+  cat <<EOF
+#!/bin/bash
+docker run \\
+  --volume ${DOCKER_SOCKET?}:${DOCKER_SOCKET?} \\
+  --group-add ${DOCKER_SOCKET_GROUP?} \\
+  terraform-packager \\
+    ${COMMAND?}
+EOF
+}
+
+generate-script-to-run > ${SCRIPT_TO_RUN?}
+
+chmod +x ${SCRIPT_TO_RUN?}
+
+${SCRIPT_TO_RUN?}
