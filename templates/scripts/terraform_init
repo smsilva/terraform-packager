@@ -30,9 +30,11 @@ initialization() {
     exit 1
   fi
 
-  TERRAFORM_REMOTE_STATE_FILE_PATH="stacks/${STACK_NAME?}/${TERRAFORM_REMOTE_STATE_FILE_PATH_CUSTOM?}"
-
-  export TERRAFORM_REMOTE_STATE_FILE_PATH
+  if [ "${TERRAFORM_BACKEND}" = "local" ] && [ -n "${TERRAFORM_STATE_FILE}" ]; then
+    export TERRAFORM_REMOTE_STATE_FILE_PATH="/opt/output/${TERRAFORM_STATE_FILE}"
+  else
+    export TERRAFORM_REMOTE_STATE_FILE_PATH="stacks/${STACK_NAME?}/${TERRAFORM_REMOTE_STATE_FILE_PATH_CUSTOM?}"
+  fi
 
   generate_backend_configuration_file > /opt/src/backend.conf && \
 
