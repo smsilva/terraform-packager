@@ -1,3 +1,9 @@
+## 0.28.0 (2024-06-14)
+
+### Feat
+
+- Customize the local backend file name for terraform state
+
 ## 0.27.1 (2023-08-24)
 
 ### Fix
