@@ -37,6 +37,10 @@ fi
 
 if [ "${TERRAFORM_COMMAND}" == "plan-no-color" ]; then
   export TF_CLI_ARGS_init="-no-color"
+else
+  if echo "${terraformDefaultArgs}${extraArgs}" | grep -q -- "\-no\-color"; then
+    export TF_CLI_ARGS_init="-no-color"
+  fi
 fi
 
 . terraform_init
