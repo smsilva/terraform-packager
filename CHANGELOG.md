@@ -1,3 +1,9 @@
+## 0.28.1 (2024-06-14)
+
+### Fix
+
+- **templates/scripts/terraform_init**: Show state-file info based on the backend
+
 ## 0.28.0 (2024-06-14)
 
 ### Feat
