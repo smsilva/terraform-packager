@@ -10,10 +10,14 @@ if [ -z "${COMMAND?}" ]; then
   exit 1
 fi
 
+export DEBUG=${DEBUG-1}
 LOCAL_TERRAFORM_VARIABLES_DIRECTORY="${LOCAL_TERRAFORM_VARIABLES_DIRECTORY-${PWD}}"
 LOCAL_TERRAFORM_VARIABLES_DIRECTORY_EXTRA="${LOCAL_TERRAFORM_VARIABLES_DIRECTORY_EXTRA}"
 LOCAL_EXTRA_VOLUMES="${LOCAL_EXTRA_VOLUMES}"
 LOCAL_TERRAFORM_OUTPUT_DIRECTORY="${LOCAL_TERRAFORM_OUTPUT_DIRECTORY-${HOME}/trash/terraform/output}"
+
+export TERRAFORM_STATE_FILE="${TERRAFORM_STATE_FILE-terraform.state}"
+LOCAL_TERRAFORM_STATE_FILE="${LOCAL_TERRAFORM_OUTPUT_DIRECTORY}/${TERRAFORM_STATE_FILE}"
 
 # Generate empty folder and files to prevent creation as root user
 mkdir -p "${LOCAL_TERRAFORM_OUTPUT_DIRECTORY}"
@@ -21,10 +25,10 @@ touch "${LOCAL_TERRAFORM_OUTPUT_DIRECTORY}/plan_detailed_exitcode"
 touch "${LOCAL_TERRAFORM_OUTPUT_DIRECTORY}/terraform.plan"
 touch "${LOCAL_TERRAFORM_OUTPUT_DIRECTORY}/terraform.plan.json"
 touch "${LOCAL_TERRAFORM_OUTPUT_DIRECTORY}/terraform.plan.txt"
+mkdir -p $(dirname "${LOCAL_TERRAFORM_STATE_FILE}")
+touch "${LOCAL_TERRAFORM_STATE_FILE}"
 
 STACK_RUN_GENERATED_SCRIPT="${HOME}/.stackrun_generated.sh"
-
-DEBUG=${DEBUG-1}
 
 if [ "${DEBUG}" -gt 0 ]; then
   echo ""
@@ -43,8 +47,6 @@ if [ "${DEBUG}" -gt 0 ]; then
     echo "    volumes-extra:          ${LOCAL_EXTRA_VOLUMES}"
   fi 
 fi
-
-export DEBUG
 
 generate_a_script_to_run_the_command() {
   echo "#!/bin/bash"

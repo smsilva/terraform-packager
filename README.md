@@ -137,3 +137,63 @@ scripts/stackrun mystack:latest plan
 ```bash
 scripts/stackrun mystack:latest apply
 ```
+
+### 5. Externalizando o Terraform State com backend `local`
+
+#### 5.1. Informe o backend no arquivo `stack.yaml`:
+
+```yaml
+name: azure-null-resource
+terraform:
+  version: 1.8.5
+  backend: local
+```
+
+#### 5.2. Por padrão o state será gerado no diretório configurado na variável de ambiente `LOCAL_TERRAFORM_OUTPUT_DIRECTORY`:
+
+```bash
+export LOCAL_TERRAFORM_OUTPUT_DIRECTORY="$(mktemp -d -t terraform-XXXXXXXXXX)"
+echo "Terraform output directory: ${LOCAL_TERRAFORM_OUTPUT_DIRECTORY}"
+```
+
+#### 5.3. Execute o build
+
+```bash
+env DEBUG=2 scripts/stackbuild examples/azure-null-resource
+```
+
+#### 5.4. Configure o nome do arquivo de state
+
+```bash
+export TERRAFORM_STATE_FILE="azure-null-resource/terraform.state.json"
+```
+
+#### 5.5. Execute o plan e o apply
+
+```bash
+env DEBUG=2 scripts/stackrun azure-null-resource plan
+env DEBUG=2 scripts/stackrun azure-null-resource apply
+```
+
+#### 5.6. Verifique os arquivos gerados
+
+```bash
+find "${LOCAL_TERRAFORM_OUTPUT_DIRECTORY?}" -type f
+```
+
+Exemplo de saída:
+
+```bash
+/tmp/terraform-Q72cCQBbWz/terraform.state
+/tmp/terraform-Q72cCQBbWz/azure-null-resource/terraform.state.json
+/tmp/terraform-Q72cCQBbWz/terraform.plan.json
+/tmp/terraform-Q72cCQBbWz/terraform.plan
+/tmp/terraform-Q72cCQBbWz/plan_detailed_exitcode
+/tmp/terraform-Q72cCQBbWz/terraform.plan.txt
+```
+
+#### 5.7. Verificando o state
+
+```bash
+cat /tmp/terraform-Q72cCQBbWz/azure-null-resource/terraform.state.json
+```
