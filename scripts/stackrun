@@ -3,7 +3,8 @@ COMMAND="$@"
 
 THIS_SCRIPT="${0}"
 THIS_SCRIPT_FOLDER="$(dirname "${THIS_SCRIPT}")"
-TEMPLATES_FOLDER="${THIS_SCRIPT_FOLDER}/../templates"
+TFP_ROOT_DIRECTORY="$(dirname "${THIS_SCRIPT_FOLDER}")"
+TFP_TEMPLATES_FOLDER="${TFP_ROOT_DIRECTORY}/templates"
 
 if [ -z "${COMMAND?}" ]; then
   echo "Command not informed."
@@ -55,7 +56,7 @@ generate_a_script_to_run_the_command() {
 
   echo ""
 
-  cat "${TEMPLATES_FOLDER?}/stackrun.conf"
+  cat "${TFP_TEMPLATES_FOLDER?}/stackrun.conf"
 
   if [ -d "${LOCAL_TERRAFORM_VARIABLES_DIRECTORY_EXTRA}" ]; then
     while read FILE_NAME; do
@@ -78,11 +79,11 @@ generate_a_script_to_run_the_command() {
   printenv | grep "^TF_VAR_" | cut -d= -f1 | xargs -I '{}' echo ' -e {}="${{}}"\'
 
   (
-    for CREDENTIALS_FILE in $(find "${TEMPLATES_FOLDER?}/provider" -name credentials_run.conf); do
+    for CREDENTIALS_FILE in $(find "${TFP_TEMPLATES_FOLDER?}/provider" -name credentials_run.conf); do
       cat "${CREDENTIALS_FILE}"
     done
 
-    for CREDENTIALS_FILE in $(find "${TEMPLATES_FOLDER?}/backend" -name credentials_run.conf); do
+    for CREDENTIALS_FILE in $(find "${TFP_TEMPLATES_FOLDER?}/backend" -name credentials_run.conf); do
       cat "${CREDENTIALS_FILE}"
     done
   ) | sort --unique
