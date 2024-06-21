@@ -57,6 +57,22 @@ generate_a_script_to_run_the_command() {
 
   cat "${TEMPLATES_FOLDER?}/stackrun.conf"
 
+  TF_PACKAGER_AZURE_ACCESS_TOKEN_FILE="${TF_PACKAGER_AZURE_ACCESS_TOKEN_FILE-${HOME}/.azure/access_token.json}"
+  TF_PACKAGER_AZURE_PROFILE_FILE="${TF_PACKAGER_AZURE_PROFILE_FILE-${HOME}/.azure/azureProfile.json}"
+  TF_PACKAGER_AZURE_MSAL_TOKEN_CACHE_FILE="${TF_PACKAGER_AZURE_MSAL_TOKEN_CACHE_FILE-${HOME}/.azure/msal_token_cache.json}"
+
+  # If Azure credentials are not informed, but the az-cli files are present, use them to authenticate az-cli
+  if [[ -z "${ARM_CLIENT_ID}"                           ]] && \
+     [[ -f "${TF_PACKAGER_AZURE_ACCESS_TOKEN_FILE}"     ]] && \
+     [[ -f "${TF_PACKAGER_AZURE_PROFILE_FILE}"          ]] && \
+     [[ -f "${TF_PACKAGER_AZURE_MSAL_TOKEN_CACHE_FILE}" ]]; then
+    cat <<EOF
+  -v "${TF_PACKAGER_AZURE_ACCESS_TOKEN_FILE}:/root/.azure/accessTokens.json" \\
+  -v "${TF_PACKAGER_AZURE_PROFILE_FILE}:/root/.azure/azureProfile.json" \\
+  -v "${TF_PACKAGER_AZURE_MSAL_TOKEN_CACHE_FILE}:/root/.azure/msal_token_cache.json" \\
+EOF
+  fi
+
   if [ -d "${LOCAL_TERRAFORM_VARIABLES_DIRECTORY_EXTRA}" ]; then
     while read FILE_NAME; do
       if [ -f "${FILE_NAME}" ]; then

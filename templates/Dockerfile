@@ -13,6 +13,7 @@ RUN  /opt/scripts/build_extra
 
 FROM terraform_base_image AS package
 ADD  .ssh/                      /root/.ssh/
+ADD  .azure/                    /root/.azure/
 ADD  credentials_provider.conf  /opt/terraform/credentials_provider.conf
 ADD  credentials_backend.conf   /opt/terraform/credentials_backend.conf
 ADD  environment_variables.conf /opt/environment_variables.conf

@@ -1,8 +1,10 @@
 #!/bin/bash
 source "${TF_PACKAGER_ENVIRONMENT_VARIABLES_FILE_NAME?}"
 
+TF_PACKAGER_DOCKER_PROGRESS="${TF_PACKAGER_DOCKER_PROGRESS:-auto}" # auto, plain, tty, rawjson
+
 docker build \
-  --rm \
+  --progress ${TF_PACKAGER_DOCKER_PROGRESS?} \
   --tag "${STACK_NAME?}:latest" \
   --tag "${STACK_NAME?}:${STACK_VERSION}" \
   "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}"
@@ -12,5 +14,3 @@ CODE_EXIT="$?"
 if [  "${CODE_EXIT-0}" != "0" ]; then
   exit "${CODE_EXIT}"
 fi
-
-docker system prune -f &> /dev/null

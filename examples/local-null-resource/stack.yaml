@@ -1,0 +1,4 @@
+name: local-null-resource
+terraform:
+  version: 1.8.5
+  backend: local

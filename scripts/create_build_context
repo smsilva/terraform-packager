@@ -17,6 +17,47 @@ cp -R "${HOME}/.ssh" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/.ssh"
 # Copy SSH Config File with Strict Host Checking Disabled
 cp "${TF_PACKAGER_TEMPLATES_DIRECTORY}/ssh_config" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/.ssh/config"
 
+# Check if Azure Access Token exists
+TF_PACKAGER_AZURE_ACCESS_TOKEN_FILE="${TF_PACKAGER_AZURE_ACCESS_TOKEN_FILE-${HOME}/.azure/access_token.json}"
+TF_PACKAGER_AZURE_PROFILE_FILE="${TF_PACKAGER_AZURE_PROFILE_FILE-${HOME}/.azure/azureProfile.json}"
+TF_PACKAGER_AZURE_MSAL_TOKEN_CACHE_FILE="${TF_PACKAGER_AZURE_MSAL_TOKEN_CACHE_FILE-${HOME}/.azure/msal_token_cache.json}"
+mkdir -p "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/.azure"
+
+# If ARM_CLIENT_ID is not set, it means that the authentication assumed is using Azure CLI
+if [[ -z "${ARM_CLIENT_ID}" ]]; then
+  if [[ -e "${TF_PACKAGER_AZURE_ACCESS_TOKEN_FILE}" ]]; then
+    # Retrieves expiration date of the Azure Access Token
+    AZURE_ACCESS_TOKEN_EXPIRES_ON_DATE=$(grep "expires_on" ${TF_PACKAGER_AZURE_ACCESS_TOKEN_FILE?} | awk '{ print $2 }' | tr -d ",")
+
+    # Get current timestamp
+    CURRENT_SYSTEM_TIMESTAMP=$(date +%s)
+
+    # Check if Azure Access Token has expired
+    if [[ ${AZURE_ACCESS_TOKEN_EXPIRES_ON_DATE} -lt ${CURRENT_SYSTEM_TIMESTAMP} ]]; then
+      AZURE_ACCESS_TOKEN_EXPIRES_ON_DATE_FORMATED=$(date -d @${AZURE_ACCESS_TOKEN_EXPIRES_ON_DATE} +"%Y-%m-%d %H:%M:%S %:z")
+      cat <<EOF
+Environment variable ARM_CLIENT_ID is not set but the authentication method using Azure CLI needs to use an Access Token that has expired since: ${AZURE_ACCESS_TOKEN_EXPIRES_ON_DATE_FORMATED}
+
+Please generate a new one and try again:
+
+  az account get-access-token > ${TF_PACKAGER_AZURE_ACCESS_TOKEN_FILE}
+
+EOF
+      exit 1
+    fi
+
+    cp "${TF_PACKAGER_AZURE_ACCESS_TOKEN_FILE}" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/.azure/access_token.json"
+  fi
+
+  if [[ -e "${TF_PACKAGER_AZURE_PROFILE_FILE}" ]]; then
+    cp "${TF_PACKAGER_AZURE_PROFILE_FILE}" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/.azure/azureProfile.json"
+  fi
+
+  if [[ -e "${TF_PACKAGER_AZURE_MSAL_TOKEN_CACHE_FILE}" ]]; then
+    cp "${TF_PACKAGER_AZURE_MSAL_TOKEN_CACHE_FILE}" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/.azure/msal_token_cache.json"
+  fi
+fi
+
 # Copy Scripts to add into Container Image
 cp -R "${TF_PACKAGER_SCRIPTS_DIRECTORY_BUILD}" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/scripts"
 
