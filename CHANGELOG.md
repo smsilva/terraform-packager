@@ -1,3 +1,9 @@
+## 0.29.0 (2024-06-24)
+
+### Feat
+
+- add azure-cli credentials during the build time
+
 ## 0.28.1 (2024-06-14)
 
 ### Fix
