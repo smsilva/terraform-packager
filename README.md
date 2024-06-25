@@ -227,6 +227,32 @@ pip install azure-cli
 az version
 ```
 
+## Scripts para executar durante runtime
+
+Se você precisar executar scripts durante runtime, você pode criar um diretório `.tfp/scripts/runtime` na raiz do seu repositório.
+
+```bash
+.
+├── .tfp
+│   └── scripts
+│       └── runtime
+│           ├── after-apply
+│           ├── after-destroy
+│           ├── after-init
+│           ├── after-plan
+│           ├── before-apply
+│           ├── before-destroy
+│           ├── before-init
+│           └── before-plan
+├── README.md
+├── cz.yaml -> ../../cz.yaml
+├── src
+│   ├── main.tf
+│   └── provider.tf
+└── stack.yaml
+```
+
+
 ### Azure Credentials
 
 O script `stackrun' vai montar os arquivos de credenciais do Azure CLI no container caso os arquivos existam e a variável de ambiente `ARM_CLIENT_ID` esteja vazia.

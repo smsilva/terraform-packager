@@ -1,0 +1,30 @@
+#!/bin/bash
+TFP_RUNTIME_SCRIPTS="/opt/scripts/tfp/runtime"
+
+EXECUTION_MOMENT=${1}
+TERRAFORM_BASE_COMMAND=${2}
+
+execution() {
+  if [ ${DEBUG-0} -gt 2 ]; then
+    echo "tfp:trigger:${EXECUTION_MOMENT}:${TERRAFORM_BASE_COMMAND}"
+  fi
+
+  if [ -e "${TFP_RUNTIME_SCRIPTS}" ]; then
+    find "${TFP_RUNTIME_SCRIPTS}" -type f -name "${EXECUTION_MOMENT}-${TERRAFORM_BASE_COMMAND}*" \
+    | while read SCRIPT_FILE_NAME; do
+        "${SCRIPT_FILE_NAME}"
+
+        CODE_EXIT="$?"
+
+        if [ "${CODE_EXIT-0}" != "0" ]; then
+          exit "${CODE_EXIT}"
+        fi
+      done
+  fi
+}
+
+if [ "${DEBUG-0}" != "0" ]; then
+  execution
+else
+  execution > /dev/null
+fi
