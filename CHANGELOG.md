@@ -1,3 +1,10 @@
+## 0.30.0 (2024-06-26)
+
+### Feat
+
+- discovering terraform command name
+- adding runtime scripts
+
 ## 0.29.0 (2024-06-24)
 
 ### Feat
