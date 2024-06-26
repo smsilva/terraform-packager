@@ -47,6 +47,8 @@ runtime_extra before init
 . terraform_init
 runtime_extra after init
 
+TERRAFORM_COMMAND_NAME=$(terraform_command_name "${TERRAFORM_COMMAND} ${terraformDefaultArgs}")
+
 if [ "${TERRAFORM_COMMAND}" == "plan-no-color" ]; then
   runtime_extra before plan
   terraform_plan_no_color ${extraArgs}
@@ -57,18 +59,18 @@ fi
 
 if [ -z "${terraformDefaultArgs}" ]; then
   if [ "${TERRAFORM_COMMAND}" == "plan" ] || [ -z "${TERRAFORM_COMMAND}" ]; then
-    runtime_extra before plan
+    runtime_extra before ${TERRAFORM_COMMAND_NAME}
     terraform_plan_with_output_file ${extraArgs}
     RESULT=$?
-    runtime_extra after plan
+    runtime_extra after ${TERRAFORM_COMMAND_NAME}
     exit ${RESULT}
   fi
 
   if [ "${TERRAFORM_COMMAND}" == "apply" ]; then
-    runtime_extra before apply
+    runtime_extra before ${TERRAFORM_COMMAND_NAME}
     terraform_apply_with_auto_approve ${extraArgs}
     RESULT=$?
-    runtime_extra after apply
+    runtime_extra after ${TERRAFORM_COMMAND_NAME}
     exit ${RESULT}
   fi
 
@@ -89,8 +91,8 @@ if [ "${TERRAFORM_COMMAND}" == "destroy-twice" ]; then
   exit ${RESULT}
 fi
 
-runtime_extra before ${TERRAFORM_COMMAND}
+runtime_extra before ${TERRAFORM_COMMAND_NAME}
 terraform ${TERRAFORM_COMMAND} ${terraformDefaultArgs}
 RESULT=$?
-runtime_extra after ${TERRAFORM_COMMAND}
+runtime_extra after ${TERRAFORM_COMMAND_NAME}
 exit ${RESULT}

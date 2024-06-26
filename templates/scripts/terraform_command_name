@@ -1,0 +1,14 @@
+#!/bin/bash
+COMMAND_EXPRESSION="$1"
+
+# If commmand expression has "apply" and "-destroy", then the command name is "destroy"
+if [[ "${COMMAND_EXPRESSION}" =~ "apply"    ]] && \
+   [[ "${COMMAND_EXPRESSION}" =~ "-destroy" ]]; then
+  COMMAND_NAME="destroy"
+fi
+
+if [[ -z "${COMMAND_NAME}" ]]; then
+  COMMAND_NAME=$(echo "${COMMAND_EXPRESSION}" | awk '{print $1}')
+fi
+
+echo ${COMMAND_NAME-unknown}
