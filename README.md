@@ -261,7 +261,7 @@ Caso necessite, você pode alterar as variáveis que identificam os arquivos de 
 
 ```bash
 # Abaixo as variáveis usadas pelo terraform-packager para identificar os arquivos de credenciais do Azure CLI com seus respectivos valores padrão
-export TF_PACKAGER_AZURE_ACCESS_TOKEN_FILE="${HOME}/.azure/accessTokens.json"
+export TF_PACKAGER_AZURE_ACCESS_TOKEN_FILE="${HOME}/.azure/access_token.json"
 export TF_PACKAGER_AZURE_PROFILE_FILE="${HOME}/.azure/azureProfile.json"
 export TF_PACKAGER_AZURE_MSAL_TOKEN_CACHE_FILE="${HOME}/.azure/msal_token_cache.json"
 ```
@@ -269,7 +269,7 @@ export TF_PACKAGER_AZURE_MSAL_TOKEN_CACHE_FILE="${HOME}/.azure/msal_token_cache.
 > **ATENÇÃO**: Antes de executar `stackbuild` ou `stackrun`, certifique-se de ter obtido um token de acesso usando o comando:
 
 ```bash
-export TF_PACKAGER_AZURE_ACCESS_TOKEN_FILE="${HOME}/.azure/accessTokens.json"
+export TF_PACKAGER_AZURE_ACCESS_TOKEN_FILE="${HOME}/.azure/access_token.json"
 export TF_PACKAGER_AZURE_PROFILE_FILE="${HOME}/.azure/azureProfile.json"
 export TF_PACKAGER_AZURE_MSAL_TOKEN_CACHE_FILE="${HOME}/.azure/msal_token_cache.json"
 
@@ -287,7 +287,7 @@ stackrun azure-cli-auth-example:latest plan
 | `LOCAL_TERRAFORM_VARIABLES_DIRECTORY_EXTRA`     | Todos os arquivos do diretórios serão volumados em `/opt/src`     | `LOCAL_TERRAFORM_VARIABLES_DIRECTORY_EXTRA="${PWD}/examples/custom-image"`           |
 | `LOCAL_TERRAFORM_VARIABLES_DIRECTORY`           | Diretório local que será volumado em `/opt/variables`             | `LOCAL_TERRAFORM_VARIABLES_DIRECTORY="${PWD}/examples/custom-image/tfvars-files"`      |
 | `TERRAFORM_STATE_FILE`                          | Nome do arquivo de state                                          | `TERRAFORM_STATE_FILE="azure-null-resource/terraform.state.json"`                      |
-| `TF_PACKAGER_AZURE_ACCESS_TOKEN_FILE`           | Arquivo de token de acesso do Azure CLI                           | `TF_PACKAGER_AZURE_ACCESS_TOKEN_FILE="${HOME}/.azure/accessTokens.json"`               |
+| `TF_PACKAGER_AZURE_ACCESS_TOKEN_FILE`           | Arquivo de token de acesso do Azure CLI                           | `TF_PACKAGER_AZURE_ACCESS_TOKEN_FILE="${HOME}/.azure/access_token.json"`               |
 | `TF_PACKAGER_AZURE_MSAL_TOKEN_CACHE_FILE`       | Arquivo de cache de token MSAL do Azure CLI                       | `TF_PACKAGER_AZURE_MSAL_TOKEN_CACHE_FILE="${HOME}/.azure/msal_token_cache.json"`       |
 | `TF_PACKAGER_AZURE_PROFILE_FILE`                | Arquivo de perfil do Azure CLI                                    | `TF_PACKAGER_AZURE_PROFILE_FILE="${HOME}/.azure/azureProfile.json"`                    |
 | `TF_PACKAGER_DOCKER_PROGRESS`                   | Definie como exibir p progresso do build do container Docker      | `TF_PACKAGER_DOCKER_PROGRESS=plain` (`auto`, `plain`, `tty`, `rawjson`)                |
