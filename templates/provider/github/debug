@@ -1,4 +1,5 @@
 #!/bin/sh
 if [ "${DEBUG-0}" != "0" ]; then
+  echo "      owner:                ${GITHUB_OWNER}"
   echo "      token:                ${GITHUB_TOKEN:0:3}"
 fi
