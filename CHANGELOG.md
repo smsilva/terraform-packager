@@ -1,3 +1,9 @@
+## 0.31.2 (2024-07-04)
+
+### Fix
+
+- **templates/provider/github**: default owner environment variable
+
 ## 0.31.1 (2024-07-04)
 
 ### Fix
