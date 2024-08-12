@@ -9,6 +9,11 @@ execution() {
     echo "tfp:trigger:${EXECUTION_MOMENT}:${TERRAFORM_BASE_COMMAND}"
   fi
 
+  # Check if the moment is "after" and the command is "apply"
+  if [ "${EXECUTION_MOMENT}" = "after" ] && [ "${TERRAFORM_BASE_COMMAND}" = "apply" ]; then
+    terraform_output_save
+  fi
+
   if [ -e "${TFP_RUNTIME_SCRIPTS}" ]; then
     find "${TFP_RUNTIME_SCRIPTS}" -type f -name "${EXECUTION_MOMENT}-${TERRAFORM_BASE_COMMAND}*" \
     | while read SCRIPT_FILE_NAME; do

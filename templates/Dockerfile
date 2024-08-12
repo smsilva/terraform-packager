@@ -1,5 +1,5 @@
 FROM hashicorp/terraform:${TERRAFORM_VERSION} AS terraform_base_image
-RUN  apk add --no-cache bash
+RUN  apk add --no-cache bash jq
 ENV  LOCK_TIMEOUT_SECONDS=300
 ENV  STACK_INSTANCE_NAME_FINAL=""
 ENV  STACK_INSTANCE_NAME="${STACK_INSTANCE_NAME}"
