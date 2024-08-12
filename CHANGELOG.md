@@ -1,3 +1,10 @@
+## 0.32.0 (2024-08-12)
+
+### Feat
+
+- scripts for outputs retrieval
+- save terraform outputs as json and install jq
+
 ## 0.31.2 (2024-07-04)
 
 ### Fix
