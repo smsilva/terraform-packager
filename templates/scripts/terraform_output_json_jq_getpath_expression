@@ -1,0 +1,50 @@
+#!/bin/bash
+# This script takes a field expression as an argument and returns the field names with the value string
+#
+#   Example: 
+#  
+#     terraform_output_json_jq_getpath_expression "composite.project.id"
+#  
+#   Output: 
+#  
+#      "composite","value","project","value","id"
+#  
+#   This ouputs is inteded to be used in jq queries to get the value of a field in a json object
+#  
+#   Example: 
+#  
+#     jq '.composite.value.project.value.id' terraform-output.json
+
+FIELD_EXPRESSION="$1"
+
+# Check if the field expression is empty
+if [[ -z "${FIELD_EXPRESSION}" ]]; then
+  exit 1
+fi
+
+# Split the field expression by '.' and store it in an array
+IFS='.' read -r -a FIELD_ARRAY <<< "${FIELD_EXPRESSION}"
+
+FIELD_ARRAY_SIZE=${#FIELD_ARRAY[@]}
+
+# Add the ,"value", string after each field
+QUOTED_FIELD_NAMES_WITH_VALUE_QUOTED_STRING=""
+for element in "${FIELD_ARRAY[@]}"; do
+  # Check if the element is a number
+  if [[ "$element" =~ ^[0-9]+$ ]]; then
+    QUOTED_FIELD_NAMES_WITH_VALUE_QUOTED_STRING+="$element,"
+  else
+    QUOTED_FIELD_NAMES_WITH_VALUE_QUOTED_STRING+="\"$element\","
+  fi
+done
+
+# Remove the last field only if the field expression has more than one field
+if [[ "${FIELD_ARRAY_SIZE}" -gt 1 ]]; then
+  # Remove last comma
+  QUOTED_FIELD_NAMES_WITH_VALUE_QUOTED_STRING="${QUOTED_FIELD_NAMES_WITH_VALUE_QUOTED_STRING%,}"
+fi
+
+# Change ',' to ',"value",' and remove the last comma
+echo "${QUOTED_FIELD_NAMES_WITH_VALUE_QUOTED_STRING}" \
+| sed 's|,|,"value",| g' \
+| sed 's|,$||'

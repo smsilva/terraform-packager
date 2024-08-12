@@ -12,3 +12,17 @@ fi
 
 echo "Checking jq installation"
 jq --version
+
+echo "Retrieving outputs"
+
+ID=$(terraform_output_value "id")
+NAME=$(terraform_output_value "name")
+COMPOSITE_ID=$(terraform_output_value "composite.id")
+COMPOSITE_NONEXISTENT=$(terraform_output_value "composite.nonexistent" "default-value")
+
+cat <<EOF
+id......................: ${ID}
+name....................: ${NAME}
+composite.id............: ${COMPOSITE_ID}
+composite.nonexistent...: ${COMPOSITE_NONEXISTENT}
+EOF

@@ -1,0 +1,34 @@
+#! /bin/bash
+FIELD_EXPRESSION=$1
+FILE_DEFAULT_VALUE=$2
+
+if [[ -z $FIELD_EXPRESSION ]]; then
+  echo "Field expression is required"
+  exit 1
+fi
+
+if [[ -z $TERRAFORM_OUTPUT_JSON_FILE ]]; then
+  echo "Terraform output json file is required"
+  exit 1
+fi
+
+if [[ ! -f $TERRAFORM_OUTPUT_JSON_FILE ]]; then
+  echo "Terraform output json file does not exist"
+  exit 1
+fi
+
+JQ_GETPATH_EXPRESSION_TEMPLATE='getpath([%s])'
+
+JQ_GETPATH_FIELDS=$(terraform_output_json_jq_getpath_expression ${FIELD_EXPRESSION})
+
+JQ_EXPRESSION=$(printf ${JQ_GETPATH_EXPRESSION_TEMPLATE} "${JQ_GETPATH_FIELDS}")
+
+RETRIEVED_VALUE=$(jq -r ${JQ_EXPRESSION} "${TERRAFORM_OUTPUT_JSON_FILE}")
+
+if [[ -n "${RETRIEVED_VALUE}" ]] && [[ ! "${RETRIEVED_VALUE}" = "null" ]]; then
+  echo "${RETRIEVED_VALUE}"
+else
+  if [[ -n "${FILE_DEFAULT_VALUE}" ]]; then
+    echo "${FILE_DEFAULT_VALUE}"
+  fi
+fi
