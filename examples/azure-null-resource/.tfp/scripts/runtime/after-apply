@@ -1,2 +1,14 @@
 #!/bin/bash
 echo "#### AFTER APPLY ####"
+
+echo "Check if the output file exists (TERRAFORM_OUTPUT_JSON_FILE=${TERRAFORM_OUTPUT_JSON_FILE})"
+
+if [ -f "${TERRAFORM_OUTPUT_JSON_FILE}" ]; then
+  echo "Output file ${TERRAFORM_OUTPUT_JSON_FILE} contents:"
+  cat "${TERRAFORM_OUTPUT_JSON_FILE}"
+else
+  echo "Output file ${TERRAFORM_OUTPUT_JSON_FILE} does not exist"
+fi
+
+echo "Checking jq installation"
+jq --version
