@@ -1,5 +1,5 @@
 #!/bin/bash
-TFP_RUNTIME_SCRIPTS="/opt/scripts/tfp/runtime"
+TFP_RUNTIME_SCRIPTS="${TFP_RUNTIME_SCRIPTS-/opt/scripts/tfp/runtime}"
 
 EXECUTION_MOMENT=${1}
 EXECUTION_COMMAND=${2}
@@ -15,16 +15,15 @@ execution() {
   fi
 
   if [ -e "${TFP_RUNTIME_SCRIPTS}" ]; then
-    find "${TFP_RUNTIME_SCRIPTS}" -type f -name "${EXECUTION_MOMENT}-${EXECUTION_COMMAND}*" \
-    | while read SCRIPT_FILE_NAME; do
-        "${SCRIPT_FILE_NAME}"
+    while read SCRIPT_FILE_NAME; do
+      . "${SCRIPT_FILE_NAME}"
 
-        EXIT_CODE="$?"
+      EXIT_CODE="$?"
 
-        if [ "${EXIT_CODE-0}" != "0" ]; then
-          exit "${EXIT_CODE}"
-        fi
-      done
+      if [ "${EXIT_CODE-0}" != "0" ]; then
+        exit "${EXIT_CODE}"
+      fi
+    done < <(find "${TFP_RUNTIME_SCRIPTS}" -type f -name "${EXECUTION_MOMENT}-${EXECUTION_COMMAND}*")
   fi
 }
 

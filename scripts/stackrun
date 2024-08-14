@@ -62,8 +62,7 @@ generate_a_script_to_run_the_command() {
   TF_PACKAGER_AZURE_MSAL_TOKEN_CACHE_FILE="${TF_PACKAGER_AZURE_MSAL_TOKEN_CACHE_FILE-${HOME}/.azure/msal_token_cache.json}"
 
   # If Azure credentials are not informed, but the az-cli files are present, use them to authenticate az-cli
-  if [[ -z "${ARM_CLIENT_ID}"                           ]] && \
-     [[ -f "${TF_PACKAGER_AZURE_ACCESS_TOKEN_FILE}"     ]] && \
+  if [[ -f "${TF_PACKAGER_AZURE_ACCESS_TOKEN_FILE}"     ]] && \
      [[ -f "${TF_PACKAGER_AZURE_PROFILE_FILE}"          ]] && \
      [[ -f "${TF_PACKAGER_AZURE_MSAL_TOKEN_CACHE_FILE}" ]]; then
     cat <<EOF
