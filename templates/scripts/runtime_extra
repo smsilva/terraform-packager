@@ -2,27 +2,27 @@
 TFP_RUNTIME_SCRIPTS="/opt/scripts/tfp/runtime"
 
 EXECUTION_MOMENT=${1}
-TERRAFORM_BASE_COMMAND=${2}
+EXECUTION_COMMAND=${2}
 
 execution() {
   if [ ${DEBUG-0} -gt 2 ]; then
-    echo "tfp:trigger:${EXECUTION_MOMENT}:${TERRAFORM_BASE_COMMAND}"
+    echo "tfp:trigger:${EXECUTION_MOMENT}:${EXECUTION_COMMAND}"
   fi
 
   # Check if the moment is "after" and the command is "apply"
-  if [ "${EXECUTION_MOMENT}" = "after" ] && [ "${TERRAFORM_BASE_COMMAND}" = "apply" ]; then
+  if [ "${EXECUTION_MOMENT}" = "after" ] && [ "${EXECUTION_COMMAND}" = "apply" ]; then
     terraform_output_save
   fi
 
   if [ -e "${TFP_RUNTIME_SCRIPTS}" ]; then
-    find "${TFP_RUNTIME_SCRIPTS}" -type f -name "${EXECUTION_MOMENT}-${TERRAFORM_BASE_COMMAND}*" \
+    find "${TFP_RUNTIME_SCRIPTS}" -type f -name "${EXECUTION_MOMENT}-${EXECUTION_COMMAND}*" \
     | while read SCRIPT_FILE_NAME; do
         "${SCRIPT_FILE_NAME}"
 
-        CODE_EXIT="$?"
+        EXIT_CODE="$?"
 
-        if [ "${CODE_EXIT-0}" != "0" ]; then
-          exit "${CODE_EXIT}"
+        if [ "${EXIT_CODE-0}" != "0" ]; then
+          exit "${EXIT_CODE}"
         fi
       done
   fi

@@ -44,6 +44,8 @@ else
   fi
 fi
 
+runtime_extra before all
+
 runtime_extra before init
 . terraform_init
 runtime_extra after init
