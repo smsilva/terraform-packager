@@ -9,11 +9,11 @@ on:
       - synchronize
     branches:
       - main
-      - pull-request-validation
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: sandbox
 
     steps:
       - name: checkout
@@ -22,6 +22,9 @@ jobs:
       - name: ssh-configuration
         shell: bash
         run: |
+          echo "SSH_PRIVATE_KEY.: ${SSH_PRIVATE_KEY:0:36}"
+          echo "SSH_PUBLIC_KEY..: ${SSH_PUBLIC_KEY:0:16}"
+
           mkdir -p ~/.ssh
           echo "${SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa
           echo "${SSH_PUBLIC_KEY}"  > ~/.ssh/id_rsa.pub
@@ -29,13 +32,24 @@ jobs:
           ssh-keyscan github.com  >> ~/.ssh/known_hosts
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SSH_PUBLIC_KEY: ${{ secrets.SSH_PUBLIC_KEY }}
+          SSH_PUBLIC_KEY: ${{ vars.SSH_PUBLIC_KEY }}
+
+      - name: terraform-packager-scripts-path-config
+        shell: bash
+        run: |
+          echo "${{ github.workspace }}/scripts" >> $GITHUB_PATH
 
       - name: stack-variables-providers-set
         shell: bash
         run: |
-          echo "GITHUB_EVENT=${GITHUB_EVENT_NAME}"
-        with:
+          echo "ARM_SUBSCRIPTION_ID=${ARM_SUBSCRIPTION_ID}" >> "$GITHUB_ENV"
+          echo "ARM_TENANT_ID=${ARM_TENANT_ID}" >> "$GITHUB_ENV"
+          echo "ARM_CLIENT_ID=${ARM_CLIENT_ID}" >> "$GITHUB_ENV"
+          echo "ARM_CLIENT_SECRET=${ARM_CLIENT_SECRET}" >> "$GITHUB_ENV"
+          echo "ARM_STORAGE_ACCOUNT_NAME=${ARM_STORAGE_ACCOUNT_NAME}" >> "$GITHUB_ENV"
+          echo "ARM_STORAGE_ACCOUNT_CONTAINER_NAME=${ARM_STORAGE_ACCOUNT_CONTAINER_NAME}" >> "$GITHUB_ENV"
+          echo "ARM_ACCESS_KEY=${ARM_ACCESS_KEY}" >> "$GITHUB_ENV"
+        env:
           ARM_SUBSCRIPTION_ID: ${{ vars.ARM_SUBSCRIPTION_ID }}
           ARM_TENANT_ID: ${{ vars.ARM_TENANT_ID }}
           ARM_CLIENT_ID: ${{ vars.ARM_CLIENT_ID }}
@@ -47,12 +61,34 @@ jobs:
       - name: stack-variables-instance-set
         shell: bash
         run: |
-          echo "GITHUB_EVENT=${GITHUB_EVENT_NAME}"
-
           if [[ "${GITHUB_EVENT_NAME}" == "pull_request" ]]; then
-            echo "Pull Request"
-            echo "STACK_INSTANCE_NAME=pr" | tee -a "$GITHUB_ENV"
+            STACK_INSTANCE_NAME=pr
           else
-            echo "Not Pull Request (assume that is CI)"
-            echo "STACK_INSTANCE_NAME=ci" | tee -a "$GITHUB_ENV"
+            STACK_INSTANCE_NAME=ci
           fi
+          
+          echo "STACK_INSTANCE_NAME=${STACK_INSTANCE_NAME}" >> "$GITHUB_ENV"
+
+      - name: stack-variables-show
+        shell: bash
+        run: |
+          echo "GITHUB_EVENT.......................: ${GITHUB_EVENT_NAME}"
+          echo "GITHUB_WORKSPACE...................: ${GITHUB_WORKSPACE}"
+          echo "STACK_INSTANCE_NAME................: ${STACK_INSTANCE_NAME}"
+          echo "ARM_SUBSCRIPTION_ID................: ${ARM_SUBSCRIPTION_ID}"
+          echo "ARM_TENANT_ID......................: ${ARM_TENANT_ID}"
+          echo "ARM_CLIENT_ID......................: ${ARM_CLIENT_ID}"
+          echo "ARM_CLIENT_SECRET..................: ${ARM_CLIENT_SECRET:0:3}"
+          echo "ARM_STORAGE_ACCOUNT_NAME...........: ${ARM_STORAGE_ACCOUNT_NAME}"
+          echo "ARM_STORAGE_ACCOUNT_CONTAINER_NAME.: ${ARM_STORAGE_ACCOUNT_CONTAINER_NAME}"
+          echo "ARM_ACCESS_KEY.....................: ${ARM_ACCESS_KEY:0:3}"
+
+      - name: stack-build
+        shell: bash
+        run: |
+          stackbuild ${GITHUB_WORKSPACE}/examples/azure-storage-account
+
+      - name: stack-plan
+        shell: bash
+        run: |
+          stackrun azure-storage-account plan
