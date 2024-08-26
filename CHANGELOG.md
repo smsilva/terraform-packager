@@ -1,3 +1,14 @@
+## 0.34.0 (2024-08-26)
+
+### Feat
+
+- **.github/workflows/pull-request.yaml**: create
+
+### Fix
+
+- **.github/workflows/pull-request.yaml**: template
+- setup build
+
 ## 0.33.2 (2024-08-26)
 
 ### Refactor
