@@ -14,8 +14,21 @@ cp -RL "${TF_SOURCE_CODE_DIRECTORY?}" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIR
 # Copy Credentials to Download Remote Modules on Private Git Repository during the build
 cp -R "${HOME}/.ssh" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/.ssh"
 
-# Copy SSH Config File with Strict Host Checking Disabled
-cp "${TF_PACKAGER_TEMPLATES_DIRECTORY}/ssh_config" "${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/.ssh/config"
+# Set template and target .ssh/config files
+TFP_SSH_CONFIG_FILE_TEMPLATE="${TF_PACKAGER_TEMPLATES_DIRECTORY}/ssh_config"
+TFP_SSH_CONFIG_FILE_TARGET="${TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY?}/.ssh/config"
+
+# Check if config file was copied with .ssh directory
+if [ ! -e "${TFP_SSH_CONFIG_FILE_TARGET?}" ]; then
+  # Copy SSH Config File with Strict Host Checking Disabled
+  cp "${TFP_SSH_CONFIG_FILE_TEMPLATE?}" "${TFP_SSH_CONFIG_FILE_TARGET?}"
+else
+  # Check if Global Host configuration is not present
+  if ! grep --quiet "Host \*" "${TFP_SSH_CONFIG_FILE_TARGET?}"; then
+    # Add Global Host configuration
+    cat "${TFP_SSH_CONFIG_FILE_TEMPLATE?}" >> "${TFP_SSH_CONFIG_FILE_TARGET?}"
+  fi
+fi
 
 # Check if Azure Access Token exists
 TF_PACKAGER_AZURE_ACCESS_TOKEN_FILE="${TF_PACKAGER_AZURE_ACCESS_TOKEN_FILE-${HOME}/.azure/access_token.json}"

@@ -252,8 +252,7 @@ Se você precisar executar scripts durante runtime, você pode criar um diretór
 └── stack.yaml
 ```
 
-
-### Azure Credentials
+## Azure Credentials
 
 O script `stackrun' vai montar os arquivos de credenciais do Azure CLI no container caso os arquivos existam e a variável de ambiente `ARM_CLIENT_ID` esteja vazia.
 
@@ -276,6 +275,29 @@ export TF_PACKAGER_AZURE_MSAL_TOKEN_CACHE_FILE="${HOME}/.azure/msal_token_cache.
 az account get-access-token > "${TF_PACKAGER_AZURE_ACCESS_TOKEN_FILE?}"
 
 stackrun azure-cli-auth-example:latest plan
+```
+
+## Configurações SSH
+
+Se você precisar configurar chaves SSH para acessar repositórios privados, você pode criar um arquivo `${HOME}./ssh/config` seguindo exemplo abaixo:
+
+```bash
+# GitHub
+Host github.com
+    HostName github.com
+    IdentityFile ~/.ssh/id_ed25519
+
+# Azure DevOps
+Host ssh.dev.azure.com
+    HostName ssh.dev.azure.com
+    IdentityFile ~/.ssh/id_rsa
+
+# Global
+Host *
+    User git
+    PubkeyAcceptedAlgorithms +ssh-rsa
+    HostkeyAlgorithms +ssh-rsa
+    StrictHostKeyChecking no
 ```
 
 ## Variáveis de Ambiente
