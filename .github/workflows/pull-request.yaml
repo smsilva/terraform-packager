@@ -1,0 +1,58 @@
+name: pull-request
+
+on:
+  workflow_dispatch:
+
+  pull_request:
+    types:
+      - opened
+      - synchronize
+    branches:
+      - main
+      - pull-request-validation
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: ssh-configuration
+        shell: bash
+        run: |
+          mkdir -p ~/.ssh
+          echo "${SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa
+          echo "${SSH_PUBLIC_KEY}"  > ~/.ssh/id_rsa.pub
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com  >> ~/.ssh/known_hosts
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_PUBLIC_KEY: ${{ secrets.SSH_PUBLIC_KEY }}
+
+      - name: stack-variables-providers-set
+        shell: bash
+        run: |
+          echo "GITHUB_EVENT=${GITHUB_EVENT_NAME}"
+        with:
+          ARM_SUBSCRIPTION_ID: ${{ vars.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ vars.ARM_TENANT_ID }}
+          ARM_CLIENT_ID: ${{ vars.ARM_CLIENT_ID }}
+          ARM_STORAGE_ACCOUNT_NAME: ${{ vars.ARM_STORAGE_ACCOUNT_NAME }}
+          ARM_STORAGE_ACCOUNT_CONTAINER_NAME: ${{ vars.ARM_STORAGE_ACCOUNT_CONTAINER_NAME }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}
+
+      - name: stack-variables-instance-set
+        shell: bash
+        run: |
+          echo "GITHUB_EVENT=${GITHUB_EVENT_NAME}"
+
+          if [[ "${GITHUB_EVENT_NAME}" == "pull_request" ]]; then
+            echo "Pull Request"
+            echo "STACK_INSTANCE_NAME=pr" | tee -a "$GITHUB_ENV"
+          else
+            echo "Not Pull Request (assume that is CI)"
+            echo "STACK_INSTANCE_NAME=ci" | tee -a "$GITHUB_ENV"
+          fi
