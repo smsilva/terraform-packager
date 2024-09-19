@@ -314,3 +314,14 @@ Host *
 | `TF_PACKAGER_AZURE_PROFILE_FILE`                | Arquivo de perfil do Azure CLI                                    | `TF_PACKAGER_AZURE_PROFILE_FILE="${HOME}/.azure/azureProfile.json"`                    |
 | `TF_PACKAGER_DOCKER_PROGRESS`                   | Definie como exibir p progresso do build do container Docker      | `TF_PACKAGER_DOCKER_PROGRESS=plain` (`auto`, `plain`, `tty`, `rawjson`)                |
 | `TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY` | Diretório temporário para o build do container Docker             | `TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY="$(mktemp -d -t terraform-XXXXXXXXXX)"` |
+
+## Removendo logs comuns
+
+```bash
+env DEBUG=1 scripts/stackrun google-bucket:edge plan \
+| sed \
+    -e '/You may now begin working with Terraform/,/commands will detect it and remind you to do so if necessary./d' \
+    -e '/Terraform used the selected providers/,/Resource actions are indicated with the following symbols:/d' \
+    -e '/Successfully configured the backend/,/unless the backend configuration changes./d' \
+    -e '/To perform exactly these actions/,/terraform apply "\/opt\/output\/terraform.plan\"/d'
+```
