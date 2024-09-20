@@ -109,7 +109,7 @@ generate_a_script_to_run_the_command > "${STACK_RUN_GENERATED_SCRIPT}"
 
 chmod +x "${STACK_RUN_GENERATED_SCRIPT}"
 
-if [ "${DEBUG}" -gt 1 ]; then
+if [ "${DEBUG}" -gt 2 ]; then
   echo ""
   echo "Stack Runner Command"
   echo ""
