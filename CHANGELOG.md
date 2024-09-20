@@ -1,3 +1,9 @@
+## 1.0.0 (2024-09-20)
+
+### Refactor
+
+- **scripts/stackrun**: only show stacrun script when debug level is greater than 2
+
 ## 0.34.1 (2024-09-19)
 
 ### Refactor
