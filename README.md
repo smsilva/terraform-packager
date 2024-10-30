@@ -56,6 +56,20 @@ Uma imagem criada usa o conceito de Stacks e contém essencialmente:
 
 Esse conceito procura seguir a fisolofia de **"build once"**, ou seja, o build do artefato ocorre apenas uma vez e o mesmo artefato pode ser usado para criar várias instâncias da Stack usando diferentes credenciais.
 
+## Configurações
+
+O **_Terraform Packager_** depende de um container runtime como o docker para criar imagens personalizadas.
+
+Caso esteja usando docker e queira acessar os arquivos gerados pelo Terraform, você pode usar a variável de ambiente `LOCAL_TERRAFORM_OUTPUT_DIRECTORY` para definir o diretório onde os arquivos serão armazenados.
+
+Os arquivos serão gerados no diretório `/opt/output` no container. O usuário será o mesmo que executou o comando `stackrun` e o grupo será o `998 ` (docker).
+
+### Adicionando o usuário atual ao grupo docker
+
+```bash
+sudo usermod --append --groups docker ${USER##*\\}
+```
+
 ## Dependências
 
 1. Você precisará [instalar](https://github.com/smsilva/linux/blob/master/scripts/utilities/yq/install.sh) o `yq` utilitário para leitura de arquivos yaml.

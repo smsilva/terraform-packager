@@ -3,7 +3,7 @@ COMMAND="$@"
 
 THIS_SCRIPT="${0}"
 THIS_SCRIPT_FOLDER="$(dirname "${THIS_SCRIPT}")"
-TEMPLATES_FOLDER="${THIS_SCRIPT_FOLDER}/../templates"
+TEMPLATES_FOLDER="$(realpath "${THIS_SCRIPT_FOLDER}/../templates")"
 
 if [ -z "${COMMAND?}" ]; then
   echo "Command not informed."
@@ -102,7 +102,7 @@ EOF
     done
   ) | sort --unique
 
-  echo "${COMMAND?}"
+  echo "  ${COMMAND?}"
 }
 
 generate_a_script_to_run_the_command > "${STACK_RUN_GENERATED_SCRIPT}"
