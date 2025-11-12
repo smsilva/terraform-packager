@@ -13,6 +13,6 @@ resource "azurerm_storage_account" "default" {
 
 resource "azurerm_storage_container" "default" {
   name                  = "files"
-  storage_account_name  = azurerm_storage_account.default.name
+  storage_account_id    = azurerm_storage_account.default.id
   container_access_type = "private"
 }
