@@ -5,8 +5,6 @@ site_url: https://smsilva.github.io/terraform-packager/
 repo_url: https://github.com/smsilva/terraform-packager
 repo_name: smsilva/terraform-packager
 
-docs_dir: docs
-
 exclude_docs: |
   superpowers/
 
@@ -62,7 +60,6 @@ markdown_extensions:
       alternate_style: true
   - pymdownx.highlight:
       anchor_linenums: true
-      use_pygments: true
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.emoji:
@@ -90,9 +87,9 @@ nav:
 
   - Run:
     - run/overview.md
-    - Comandos: run/commands.md
-    - Variáveis: run/variables.md
-    - Credenciais: run/credentials.md
+    - Commands: run/commands.md
+    - Variables: run/variables.md
+    - Credentials: run/credentials.md
     - SSH: run/ssh.md
     - Hooks: run/hooks.md
 
