@@ -1,0 +1,104 @@
+site_name: Terraform Packager
+site_description: Empacote Terraform em imagens Docker auto-contidas
+site_author: Silvio Silva
+site_url: https://smsilva.github.io/terraform-packager/
+repo_url: https://github.com/smsilva/terraform-packager
+repo_name: smsilva/terraform-packager
+
+docs_dir: docs
+
+exclude_docs: |
+  superpowers/
+
+validation:
+  links:
+    not_found: ignore
+    anchors: ignore
+
+theme:
+  name: material
+  language: pt
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.indexes
+    - toc.integrate
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: amber
+      toggle:
+        icon: material/brightness-7
+        name: Alternar para tema escuro
+    - scheme: slate
+      primary: indigo
+      accent: amber
+      toggle:
+        icon: material/brightness-4
+        name: Alternar para tema claro
+  icon:
+    logo: material/package-variant
+
+plugins:
+  - search:
+      lang: pt
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      use_pygments: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - tables
+  - attr_list
+  - md_in_html
+  - def_list
+  - toc:
+      permalink: true
+      title: Nesta página
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+
+nav:
+  - Home: README.md
+  - Getting Started: getting-started.md
+
+  - Build:
+    - build/overview.md
+    - stack.yaml: build/stack-yaml.md
+    - Hooks: build/hooks.md
+
+  - Run:
+    - run/overview.md
+    - Comandos: run/commands.md
+    - Variáveis: run/variables.md
+    - Credenciais: run/credentials.md
+    - SSH: run/ssh.md
+    - Hooks: run/hooks.md
+
+  - Reference:
+    - Providers: reference/providers.md
+    - Backends: reference/backends.md
+    - Templates: reference/templates.md
+
+  - Examples: examples.md
