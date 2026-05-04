@@ -6,3 +6,4 @@
 **/output/
 **/terraform.tfstate*
 site/
+docs/superpowers/
