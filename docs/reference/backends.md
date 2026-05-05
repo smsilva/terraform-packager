@@ -2,6 +2,18 @@
 
 O backend define onde o Terraform state é armazenado. É configurado via `terraform.backend` no `stack.yaml`.
 
+## Placeholder obrigatório no provider.tf
+
+Todo `src/provider.tf` deve declarar `backend "local" {}` dentro do bloco `terraform {}`:
+
+```hcl
+terraform {
+  backend "local" {}
+}
+```
+
+Esse valor é um placeholder. O script `terraform_init` o substitui em runtime pela configuração real do backend (gerada a partir de `templates/backend/<nome>/`). Sem essa declaração, o `terraform init` falha.
+
 ## local
 
 State armazenado no host, no diretório `LOCAL_TERRAFORM_OUTPUT_DIRECTORY`.

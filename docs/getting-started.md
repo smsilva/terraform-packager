@@ -41,7 +41,22 @@ terraform:
 
 ### src/provider.tf
 
+O arquivo deve conter um bloco `terraform {}` com `backend "local" {}` como placeholder obrigatório. Esse valor é substituído em runtime pelo backend real configurado no `stack.yaml`.
+
 ```hcl
+terraform {
+  required_version = ">= 0.15.1, < 2.0.0"
+
+  backend "local" {}
+
+  required_providers {
+    null = {
+      source  = "hashicorp/null"
+      version = ">=3.0.0"
+    }
+  }
+}
+
 provider "null" {}
 ```
 
