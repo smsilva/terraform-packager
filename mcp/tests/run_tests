@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -e
+
+dir="$(cd "$(dirname "$0")" && pwd)"
+
+pass=0
+fail=0
+
+for test_file in "${dir}"/test_*.py; do
+  name="$(basename "${test_file}")"
+  echo "=== ${name} ==="
+  if python3 "${test_file}"; then
+    pass=$((pass + 1))
+  else
+    fail=$((fail + 1))
+  fi
+  echo
+done
+
+echo "Results: ${pass} passed, ${fail} failed"
+[[ "${fail}" -eq 0 ]]

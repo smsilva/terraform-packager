@@ -41,10 +41,10 @@ export LOCAL_EXTRA_VOLUMES="/dados/certs:/opt/certs;/dados/keys:/opt/keys"
 
 ```bash
 export STACK_INSTANCE_NAME="producao"
-scripts/stackrun azure-storage-account:latest apply
+stackrun azure-storage-account:latest apply
 
 export STACK_INSTANCE_NAME="staging"
-scripts/stackrun azure-storage-account:latest apply
+stackrun azure-storage-account:latest apply
 ```
 
 ## Debug
@@ -60,7 +60,7 @@ Todas as variáveis de ambiente com prefixo `TF_VAR_` são automaticamente injet
 ```bash
 export TF_VAR_resource_group_name="meu-grupo"
 export TF_VAR_location="brazilsouth"
-scripts/stackrun azure-storage-account:latest plan
+stackrun azure-storage-account:latest plan
 ```
 
 > Variáveis de build (`TF_PACKAGER_CONTAINER_BUILDER`, `TF_PACKAGER_DOCKER_PROGRESS`, `TF_PACKAGER_TEMPORARY_BUILD_CONTEXT_DIRECTORY`) estão documentadas em [build/overview.md](../build/overview.md).

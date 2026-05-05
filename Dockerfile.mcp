@@ -1,0 +1,15 @@
+FROM python:3.14-slim
+COPY --from=ghcr.io/astral-sh/uv:0.11.8 /uv /usr/local/bin/uv
+
+WORKDIR /app
+
+COPY mcp/pyproject.toml mcp/uv.lock ./
+RUN uv sync --frozen --no-dev
+
+COPY docs/ skills/terraform-packager/docs/
+COPY mcp/build_index.py .
+RUN uv run python build_index.py skills/terraform-packager/docs docs_index.json
+
+COPY mcp/server.py .
+
+CMD ["uv", "run", "python", "server.py"]

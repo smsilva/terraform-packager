@@ -13,7 +13,7 @@ export ARM_STORAGE_ACCOUNT_NAME="..."
 export ARM_STORAGE_ACCOUNT_CONTAINER_NAME="..."
 export ARM_SAS_TOKEN="..."
 
-scripts/stackrun azure-storage-account:latest plan
+stackrun azure-storage-account:latest plan
 ```
 
 ### Usando Azure CLI (montagem automática)
@@ -24,7 +24,7 @@ Se `ARM_CLIENT_ID` estiver vazio e os arquivos de credenciais do Azure CLI exist
 az login
 az account get-access-token > "${HOME}/.azure/access_token.json"
 
-scripts/stackrun azure-storage-account:latest plan
+stackrun azure-storage-account:latest plan
 ```
 
 Os arquivos montados são:
@@ -50,7 +50,7 @@ export AWS_ACCESS_KEY="..."
 export AWS_SECRET_KEY="..."
 export AWS_DEFAULT_REGION="us-east-1"
 
-scripts/stackrun aws-bucket:latest plan
+stackrun aws-bucket:latest plan
 ```
 
 ## Google Cloud
@@ -61,5 +61,5 @@ export GOOGLE_PROJECT="meu-projeto"
 export GOOGLE_BUCKET="meu-bucket-state"
 export GOOGLE_PREFIX="terraform"
 
-scripts/stackrun google-bucket:latest plan
+stackrun google-bucket:latest plan
 ```
