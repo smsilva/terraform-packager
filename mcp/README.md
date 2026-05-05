@@ -58,11 +58,15 @@ No API key required.
 
 ## Building and running locally
 
+All commands must be run from the repository root:
+
 ```bash
+cd /path/to/terraform-packager
+
 # Build the image
 make mcp-build
 
-# Run standalone (for testing)
+# Run standalone (stdio mode, for testing)
 make mcp-run
 
 # Push to registry
