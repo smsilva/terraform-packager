@@ -124,3 +124,23 @@ Optional extensibility hooks:
 ## Versioning
 
 Uses Commitizen (`cz.yaml`) with Conventional Commits. The current version is tracked in `cz.yaml` under `commitizen.version`. Changelog is in `CHANGELOG.md`.
+
+## Notes
+
+### MCP server (mcp/)
+
+Iniciar o servidor em modo SSE (para conectar o inspector manualmente):
+
+```bash
+cd mcp
+MCP_TRANSPORT=sse uv run server.py
+# Servidor sobe em http://127.0.0.1:8000/sse
+```
+
+Iniciar o servidor + MCP Inspector integrado (recomendado para desenvolvimento):
+
+```bash
+cd mcp
+uv run fastmcp dev inspector server.py
+# Inspector UI em http://localhost:6274 | Proxy em localhost:6277
+```

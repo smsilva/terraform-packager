@@ -8,8 +8,8 @@ from fastmcp import FastMCP
 
 _DEBUG = int(os.environ.get("DEBUG", "0"))
 _LOG_FORMAT = os.environ.get("LOG_FORMAT", "text").lower()
-
-_LOG_DIR = pathlib.Path("/logs")
+_LOG_DIRECTORY = os.environ.get("LOG_DIRECTORY", "/tmp/logs")
+_LOG_DIR = pathlib.Path(_LOG_DIRECTORY)
 _LOG_DIR.mkdir(exist_ok=True)
 
 _log_level = logging.DEBUG if _DEBUG >= 2 else logging.INFO if _DEBUG >= 1 else logging.WARNING
@@ -107,5 +107,6 @@ def search_docs(query: str) -> list[dict]:
 
 
 if __name__ == "__main__":
-    _log.info("starting terraform-packager-docs MCP (DEBUG=%d)", _DEBUG)
-    mcp.run(transport="stdio")
+    transport = os.environ.get("MCP_TRANSPORT", "stdio")
+    _log.info("starting terraform-packager-docs MCP (DEBUG=%d, transport=%s)", _DEBUG, transport)
+    mcp.run(transport=transport)

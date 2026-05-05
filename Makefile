@@ -9,7 +9,8 @@ mcp-run:
 	docker run --interactive --rm \
 		--env DEBUG \
 		--env LOG_FORMAT \
-		--volume $(MCP_LOGS_DIR):/logs \
+		--env LOG_DIRECTORY=/tmp/logs \
+		--volume $(MCP_LOGS_DIR):/tmp/logs \
 		$(IMAGE)
 
 mcp-push:
