@@ -11,6 +11,14 @@ git clone https://github.com/smsilva/terraform-packager.git
 cd terraform-packager
 ```
 
+Os scripts `stackbuild` e `stackrun` estão na pasta `scripts/` do repositório. Adicione-a ao `PATH` para chamá-los diretamente:
+
+```bash
+export PATH="/caminho/para/terraform-packager/scripts:${PATH}"
+```
+
+Ou chame com o caminho completo ou relativo: `./scripts/stackbuild`, `/opt/terraform-packager/scripts/stackrun`, etc.
+
 ## Estrutura mínima de um projeto
 
 Qualquer projeto Terraform empacotável precisa de dois arquivos obrigatórios:
@@ -40,7 +48,7 @@ provider "null" {}
 ## Primeiro build
 
 ```bash
-scripts/stackbuild examples/local-null-resource
+stackbuild examples/local-null-resource
 ```
 
 Saída esperada: imagem Docker `local-null-resource:latest` criada localmente.
@@ -48,8 +56,8 @@ Saída esperada: imagem Docker `local-null-resource:latest` criada localmente.
 ## Primeiro run
 
 ```bash
-scripts/stackrun local-null-resource:latest plan
-scripts/stackrun local-null-resource:latest apply
+stackrun local-null-resource:latest plan
+stackrun local-null-resource:latest apply
 ```
 
 ## Próximos passos

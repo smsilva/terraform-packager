@@ -3,13 +3,13 @@
 ## Comando
 
 ```bash
-scripts/stackbuild <diretório-do-projeto>
+stackbuild <diretório-do-projeto>
 ```
 
 Exemplo:
 
 ```bash
-scripts/stackbuild examples/azure-storage-account
+stackbuild examples/azure-storage-account
 ```
 
 ## Fases do build
@@ -37,7 +37,7 @@ A versão da imagem é resolvida na seguinte ordem de prioridade:
 | `TF_PACKAGER_CONTAINER_BUILDER` | `docker` | `docker`, `buildah`, `kaniko` |
 
 ```bash
-TF_PACKAGER_CONTAINER_BUILDER=buildah scripts/stackbuild examples/local-null-resource
+TF_PACKAGER_CONTAINER_BUILDER=buildah stackbuild examples/local-null-resource
 ```
 
 ## Variáveis de ambiente do build
@@ -58,6 +58,6 @@ TF_PACKAGER_CONTAINER_BUILDER=buildah scripts/stackbuild examples/local-null-res
 | `2` | Exibe parâmetros + output do builder (padrão) |
 
 ```bash
-DEBUG=0 scripts/stackbuild examples/local-null-resource  # silencioso
-DEBUG=1 scripts/stackbuild examples/local-null-resource  # só parâmetros
+DEBUG=0 stackbuild examples/local-null-resource  # silencioso
+DEBUG=1 stackbuild examples/local-null-resource  # só parâmetros
 ```

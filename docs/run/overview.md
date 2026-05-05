@@ -3,13 +3,13 @@
 ## Comando
 
 ```bash
-scripts/stackrun <image:tag> <comando> [argumentos...]
+stackrun <image:tag> <comando> [argumentos...]
 ```
 
 ## Fluxo de execução
 
 ```
-scripts/stackrun
+stackrun
     │
     ├── Gera ~/.stackrun_generated.sh (script docker run)
     │       ├── Monta volumes (output, variáveis, credenciais)
